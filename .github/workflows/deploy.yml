@@ -10,15 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Inject password into HTML
-        run: |
-          python3 -c "
-          with open('tracker.html', 'r', encoding='utf-8') as f:
-              html = f.read()
-          html = html.replace('__PASSWORD__', '${{ secrets.PASSWORD }}')
-          with open('index.html', 'w', encoding='utf-8') as f:
-              f.write(html)
-          "
+      - name: Copy HTML for deploy
+        run: cp tracker.html index.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
