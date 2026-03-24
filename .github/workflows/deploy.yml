@@ -1,0 +1,31 @@
+name: Deploy Tracker
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Inject secrets into HTML
+        run: |
+          python3 -c "
+          with open('tracker.html', 'r', encoding='utf-8') as f:
+              html = f.read()
+          html = html.replace('__SCRIPT_URL__', '${{ secrets.SCRIPT_URL }}')
+          html = html.replace('__API_TOKEN__', '${{ secrets.API_TOKEN }}')
+          html = html.replace('__PASSWORD__', '${{ secrets.PASSWORD }}')
+          with open('index.html', 'w', encoding='utf-8') as f:
+              f.write(html)
+          "
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          publish_branch: gh-pages
+          include_files: index.html
