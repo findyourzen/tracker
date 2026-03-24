@@ -342,45 +342,51 @@ const GOALS = {
 }
 
 // ─── Config (injected by GitHub Actions — never hardcode here) ────────────────
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxeqBZlUw_3mIQSf4bcyH8kUzQoiWSxByStN4HaK6M27ALN_48GxKaRIdEVlXilIb7O/exec        '
-const API_TOKEN  = 'gT9mK2pX7vR4nQ8w '
-const APP_PWD    = 'rbi2026rnk1'
+const GH_TOKEN = ''
+const APP_PWD  = 'rbi2026rnk1'
+const REPO     = 'findyourzen/tracker'
+const LOGS_FILE = 'logs.json'
 
-// ─── Storage (Google Sheets via Apps Script) ──────────────────────────────────
-let _cache = null   // in-memory log cache; null = not loaded yet
+// ─── Storage (logs.json in GitHub repo via GitHub API) ────────────────────────
+let _cache = null
 
 function getLogs() { return _cache || [] }
 
 async function _fetchLogs() {
-  return new Promise((resolve) => {
-    const cb = 'cb' + Date.now()
-    window[cb] = (data) => {
-      delete window[cb]
-      document.getElementById('jsonp-script')?.remove()
-      _cache = Array.isArray(data) ? data.map(l => ({
-        ...l,
-        id: l.id || (String(l.date) + l.goal),
-        hours: parseFloat(l.hours || 0),
-      })) : []
-      resolve()
-    }
-    const s = document.createElement('script')
-    s.id = 'jsonp-script'
-    s.src = `${SCRIPT_URL}?token=${API_TOKEN}&callback=${cb}`
-    s.onerror = () => { _cache = []; resolve() }
-    document.head.appendChild(s)
-  })
+  try {
+    const r = await fetch(
+      `https://raw.githubusercontent.com/${REPO}/main/${LOGS_FILE}?t=${Date.now()}`
+    )
+    if (r.status === 404) { _cache = []; return }
+    const data = await r.json()
+    _cache = Array.isArray(data) ? data.map(l => ({
+      ...l,
+      id: l.id || (String(l.date) + l.goal),
+      hours: parseFloat(l.hours || 0),
+    })) : []
+  } catch(e) { console.error('fetch logs failed', e); _cache = [] }
 }
 
-async function _pushEntry(entry) {
+async function _saveAllLogs() {
+  const logs = _cache || []
+  let sha = null
   try {
-    await fetch(SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: JSON.stringify({...entry, token: API_TOKEN}),
+    const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${LOGS_FILE}`, {
+      headers: { Authorization: `token ${GH_TOKEN}` }
     })
-  } catch(e) { console.error('push entry failed', e) }
-  _cache = null
+    if (r.ok) sha = (await r.json()).sha
+  } catch(e) {}
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(logs, null, 2))))
+  await fetch(`https://api.github.com/repos/${REPO}/contents/${LOGS_FILE}`, {
+    method: 'PUT',
+    headers: { Authorization: `token ${GH_TOKEN}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message: `logs: ${new Date().toISOString().slice(0,10)}`,
+      content,
+      branch: 'main',
+      ...(sha ? {sha} : {}),
+    }),
+  })
 }
 
 function today() {
@@ -842,7 +848,7 @@ async function saveLog() {
 
   closeModal()
   renderAll()
-  await _pushEntry(record)
+  await _saveAllLogs()
 }
 
 // ─── Edit / Delete ────────────────────────────────────────────────────────────
@@ -887,7 +893,7 @@ async function saveEdit() {
   _cache[idx] = record
   closeEditModal()
   renderAll()
-  await _pushEntry(record)
+  await _saveAllLogs()
 }
 
 async function deleteLog(id) {
@@ -896,11 +902,7 @@ async function deleteLog(id) {
   if (!entry) return
   _cache = _cache.filter(l => String(l.id) !== String(id))
   renderAll()
-  await fetch(SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    body: JSON.stringify({...entry, action: 'delete', token: API_TOKEN}),
-  }).catch(e => console.error('delete failed', e))
+  await _saveAllLogs()
 }
 
 // ─── Export ───────────────────────────────────────────────────────────────────
