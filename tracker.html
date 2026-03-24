@@ -342,53 +342,24 @@ const GOALS = {
   },
 }
 
-// ─── Config (injected by GitHub Actions — never hardcode here) ────────────────
-const GH_TOKEN = '__GH_TOKEN__'
-const APP_PWD  = '__PASSWORD__'
-const REPO     = 'findyourzen/tracker'
-const LOGS_FILE = 'logs.json'
+// ─── Config ───────────────────────────────────────────────────────────────────
+const APP_PWD = '__PASSWORD__'
+const STORAGE_KEY = 'goal_tracker_logs_v1'
 
-// ─── Storage (logs.json in GitHub repo via GitHub API) ────────────────────────
-let _cache = null
+// ─── Storage (localStorage) ───────────────────────────────────────────────────
+function getLogs() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]') } catch { return [] }
+}
 
-function getLogs() { return _cache || [] }
+function _saveAllLogs() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(_cache || []))
+}
 
 async function _fetchLogs() {
-  try {
-    const r = await fetch(
-      `https://raw.githubusercontent.com/${REPO}/main/${LOGS_FILE}?t=${Date.now()}`
-    )
-    if (r.status === 404) { _cache = []; return }
-    const data = await r.json()
-    _cache = Array.isArray(data) ? data.map(l => ({
-      ...l,
-      id: l.id || (String(l.date) + l.goal),
-      hours: parseFloat(l.hours || 0),
-    })) : []
-  } catch(e) { console.error('fetch logs failed', e); _cache = [] }
+  _cache = getLogs()
 }
 
-async function _saveAllLogs() {
-  const logs = _cache || []
-  let sha = null
-  try {
-    const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${LOGS_FILE}`, {
-      headers: { Authorization: `token ${GH_TOKEN}` }
-    })
-    if (r.ok) sha = (await r.json()).sha
-  } catch(e) {}
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(logs, null, 2))))
-  await fetch(`https://api.github.com/repos/${REPO}/contents/${LOGS_FILE}`, {
-    method: 'PUT',
-    headers: { Authorization: `token ${GH_TOKEN}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      message: `logs: ${new Date().toISOString().slice(0,10)}`,
-      content,
-      branch: 'main',
-      ...(sha ? {sha} : {}),
-    }),
-  })
-}
+let _cache = null
 
 function today() {
   return new Date().toISOString().split('T')[0]
@@ -847,9 +818,9 @@ async function saveLog() {
   if (existIdx >= 0) _cache[existIdx] = record
   else _cache.push(record)
 
+  _saveAllLogs()
   closeModal()
   renderAll()
-  await _saveAllLogs()
 }
 
 // ─── Edit / Delete ────────────────────────────────────────────────────────────
@@ -892,9 +863,9 @@ async function saveEdit() {
     mock: document.getElementById('edit-mock').value.trim(),
   }
   _cache[idx] = record
+  _saveAllLogs()
   closeEditModal()
   renderAll()
-  await _saveAllLogs()
 }
 
 async function deleteLog(id) {
@@ -902,8 +873,8 @@ async function deleteLog(id) {
   const entry = getLogs().find(l => String(l.id) === String(id))
   if (!entry) return
   _cache = _cache.filter(l => String(l.id) !== String(id))
+  _saveAllLogs()
   renderAll()
-  await _saveAllLogs()
 }
 
 // ─── Export ───────────────────────────────────────────────────────────────────
