@@ -352,25 +352,35 @@ let _cache = null   // in-memory log cache; null = not loaded yet
 function getLogs() { return _cache || [] }
 
 async function _fetchLogs() {
-  try {
-    const r = await fetch(`${SCRIPT_URL}?token=${API_TOKEN}`)
-    const data = await r.json()
-    _cache = Array.isArray(data) ? data.map(l => ({
-      ...l,
-      id: l.id || (String(l.date) + l.goal),
-      hours: parseFloat(l.hours || 0),
-    })) : []
-  } catch(e) { console.error('fetch logs failed', e); _cache = [] }
+  return new Promise((resolve) => {
+    const cb = 'cb' + Date.now()
+    window[cb] = (data) => {
+      delete window[cb]
+      document.getElementById('jsonp-script')?.remove()
+      _cache = Array.isArray(data) ? data.map(l => ({
+        ...l,
+        id: l.id || (String(l.date) + l.goal),
+        hours: parseFloat(l.hours || 0),
+      })) : []
+      resolve()
+    }
+    const s = document.createElement('script')
+    s.id = 'jsonp-script'
+    s.src = `${SCRIPT_URL}?token=${API_TOKEN}&callback=${cb}`
+    s.onerror = () => { _cache = []; resolve() }
+    document.head.appendChild(s)
+  })
 }
 
 async function _pushEntry(entry) {
   try {
     await fetch(SCRIPT_URL, {
       method: 'POST',
+      mode: 'no-cors',
       body: JSON.stringify({...entry, token: API_TOKEN}),
     })
   } catch(e) { console.error('push entry failed', e) }
-  _cache = null  // force re-fetch on next renderAll after bg ops
+  _cache = null
 }
 
 function today() {
@@ -888,6 +898,7 @@ async function deleteLog(id) {
   renderAll()
   await fetch(SCRIPT_URL, {
     method: 'POST',
+    mode: 'no-cors',
     body: JSON.stringify({...entry, action: 'delete', token: API_TOKEN}),
   }).catch(e => console.error('delete failed', e))
 }
