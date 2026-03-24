@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Goal Tracker 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body { background: #0a0a0f; color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; }
+    .card { background: #12121a; border: 1px solid #1e1e2e; border-radius: 1rem; }
+    .input { background: #0f0f1a; border: 1px solid #2d2d42; border-radius: 0.5rem; color: white; padding: 0.5rem 0.75rem; width: 100%; font-size: 0.8rem; outline: none; }
+    .input:focus { border-color: #6366f1; }
+    select.input option { background: #12121a; }
+    .btn { padding: 0.5rem 1.25rem; border-radius: 0.625rem; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+    .btn-primary { background: #4f46e5; color: white; }
+    .btn-primary:hover { background: #4338ca; }
+    .btn-ghost { background: #1a1a28; border: 1px solid #2d2d42; color: #94a3b8; }
+    .btn-ghost:hover { background: #242436; color: white; }
+    .tag { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 9999px; font-size: 0.65rem; font-weight: 700; }
+    .heat-cell { width: 13px; height: 13px; border-radius: 2px; flex-shrink: 0; }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: #0f0f1a; }
+    ::-webkit-scrollbar-thumb { background: #2d2d42; border-radius: 2px; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-in { animation: fadeIn 0.25s ease forwards; }
+    .streak-fire { font-size: 1.1rem; }
+    textarea.input { resize: vertical; min-height: 60px; }
+    #gate { background: #0a0a0f; }
+  </style>
+</head>
+<body class="min-h-screen">
+
+<!-- Password Gate -->
+<div id="gate" class="fixed inset-0 flex items-center justify-center z-50">
+  <div class="card p-8 w-full max-w-xs space-y-4 text-center fade-in">
+    <div class="text-4xl">🏛️</div>
+    <div class="text-white font-bold text-base">Goal Tracker 2026</div>
+    <input type="password" id="gate-pwd" class="input text-center tracking-widest" placeholder="Password"
+           onkeydown="if(event.key==='Enter')checkPwd()" autofocus />
+    <button class="btn btn-primary w-full" onclick="checkPwd()">Enter</button>
+    <div id="gate-err" class="text-red-400 text-xs hidden">Incorrect password</div>
+  </div>
+</div>
+
+<!-- Loading overlay -->
+<div id="loading-overlay" class="fixed inset-0 bg-[#0a0a0f]/80 flex items-center justify-center z-40 hidden">
+  <div class="text-slate-400 text-sm flex items-center gap-3">
+    <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg>
+    Syncing with Google Sheets…
+  </div>
+</div>
+
+<!-- Main App -->
+<div id="app" class="hidden">
+<div class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-white font-black text-2xl tracking-tight">Goal Tracker <span class="text-indigo-400">2026</span></h1>
+      <p class="text-slate-500 text-xs mt-0.5" id="today-label"></p>
+    </div>
+    <div class="flex gap-2">
+      <button class="btn btn-ghost" onclick="exportData()">↓ Export JSON</button>
+      <button class="btn btn-primary" onclick="openLogModal()">+ Log Today</button>
+    </div>
+  </div>
+
+  <!-- Goal summary cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="goal-cards"></div>
+
+  <!-- Heatmaps row -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="heatmap-row"></div>
+
+  <!-- Weekly hours chart + recent logs -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="card p-4">
+      <div class="text-white font-bold text-sm mb-3">Weekly Study Hours</div>
+      <canvas id="hoursChart" height="160"></canvas>
+    </div>
+    <div class="card p-4">
+      <div class="text-white font-bold text-sm mb-3">Recent Log Entries</div>
+      <div id="recent-logs" class="space-y-2 max-h-64 overflow-y-auto pr-1"></div>
+    </div>
+  </div>
+
+  <!-- All logs table -->
+  <div class="card overflow-hidden">
+    <div class="flex items-center justify-between px-4 py-3 border-b border-[#1e1e2e]">
+      <div class="text-white font-bold text-sm">Full Log History</div>
+      <div class="flex gap-2 items-center">
+        <select class="input" style="width:auto;padding:4px 8px" id="filter-goal" onchange="renderAll()">
+          <option value="">All Goals</option>
+          <option value="rbi">RBI Grade B</option>
+          <option value="upsc">UPSC CSE</option>
+          <option value="google">Google AI Staff</option>
+        </select>
+      </div>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-xs" id="log-table">
+        <thead>
+          <tr class="border-b border-[#1e1e2e] text-slate-500 font-medium">
+            <th class="text-left px-4 py-2">Date</th>
+            <th class="text-left px-3 py-2">Goal</th>
+            <th class="text-left px-3 py-2">Hours</th>
+            <th class="text-left px-3 py-2">Topics / Activity</th>
+            <th class="text-center px-3 py-2">Confidence</th>
+            <th class="text-left px-3 py-2">Notes</th>
+            <th class="text-center px-3 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="log-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</div> <!-- /app -->
+
+<!-- Log Modal -->
+<div id="modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4 overflow-y-auto">
+  <div class="card w-full max-w-lg p-6 space-y-4 fade-in my-auto">
+    <div class="flex items-center justify-between">
+      <h2 class="text-white font-bold text-base">Log Entry</h2>
+      <button onclick="closeModal()" class="text-slate-500 hover:text-white text-lg leading-none">✕</button>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      <!-- Date -->
+      <div>
+        <label class="text-slate-500 text-[10px] font-medium block mb-1">Date</label>
+        <input type="date" id="log-date" class="input" />
+      </div>
+      <!-- Goal -->
+      <div>
+        <label class="text-slate-500 text-[10px] font-medium block mb-1">Goal</label>
+        <select id="log-goal" class="input" onchange="updateTopicList()">
+          <option value="rbi">RBI Grade B 2026</option>
+          <option value="upsc">UPSC CSE 2026</option>
+          <option value="google">Google AI Staff</option>
+        </select>
+      </div>
+      <!-- Hours -->
+      <div>
+        <label class="text-slate-500 text-[10px] font-medium block mb-1">Study / Work Hours</label>
+        <input type="number" id="log-hours" min="0" max="24" step="0.5" placeholder="e.g. 4" class="input" />
+      </div>
+      <!-- Confidence -->
+      <div>
+        <label class="text-slate-500 text-[10px] font-medium block mb-1">Confidence Today (1–5)</label>
+        <select id="log-confidence" class="input">
+          <option value="5">5 — Crushing it</option>
+          <option value="4">4 — Good progress</option>
+          <option value="3" selected>3 — Steady</option>
+          <option value="2">2 — Struggling</option>
+          <option value="1">1 — Off day</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Topics -->
+    <div>
+      <label class="text-slate-500 text-[10px] font-medium block mb-1">Topics / Activities Covered</label>
+      <!-- Level 1: Subject pills -->
+      <div id="topic-subjects" class="flex flex-wrap gap-1.5 mb-0"></div>
+      <!-- Level 2: Topic/Group pills -->
+      <div id="topic-groups-wrap" class="hidden border-t border-[#2d2d42] pt-2 mt-2 mb-0">
+        <div class="text-slate-600 text-[9px] font-bold uppercase tracking-widest mb-1.5">Topics</div>
+        <div id="topic-groups" class="flex flex-wrap gap-1.5"></div>
+      </div>
+      <!-- Level 3: Activity chips -->
+      <div id="topic-chips-wrap" class="hidden border-t border-[#2d2d42] pt-2 mt-2 mb-2">
+        <div id="topic-chips-label" class="text-slate-600 text-[9px] font-bold uppercase tracking-widest mb-1.5">Activities</div>
+        <div id="topic-chips" class="flex flex-wrap gap-1.5"></div>
+      </div>
+      <input type="text" id="log-topics" class="input" placeholder="Select a topic above, then pick activities..." />
+    </div>
+
+    <!-- Mock score (conditional) -->
+    <div id="mock-row" class="hidden">
+      <label class="text-slate-500 text-[10px] font-medium block mb-1">Mock Test Score (optional)</label>
+      <input type="text" id="log-mock" class="input" placeholder="e.g. 142/200" />
+    </div>
+
+    <!-- Notes -->
+    <div>
+      <label class="text-slate-500 text-[10px] font-medium block mb-1">Notes</label>
+      <textarea id="log-notes" class="input" placeholder="What did you cover? Any blockers? Key insights..."></textarea>
+    </div>
+
+    <div class="flex gap-2 justify-end pt-1">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveLog()">Save Entry</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal (reuse same structure) -->
+<div id="edit-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
+  <div class="card w-full max-w-lg p-6 space-y-4 fade-in">
+    <div class="flex items-center justify-between">
+      <h2 class="text-white font-bold text-base">Edit Entry</h2>
+      <button onclick="closeEditModal()" class="text-slate-500 hover:text-white text-lg leading-none">✕</button>
+    </div>
+    <div class="grid grid-cols-2 gap-3">
+      <div>
+        <label class="text-slate-500 text-[10px] font-medium block mb-1">Date</label>
+        <input type="date" id="edit-date" class="input" />
+      </div>
+      <div>
+        <label class="text-slate-500 text-[10px] font-medium block mb-1">Goal</label>
+        <select id="edit-goal" class="input">
+          <option value="rbi">RBI Grade B 2026</option>
+          <option value="upsc">UPSC CSE 2026</option>
+          <option value="google">Google AI Staff</option>
+        </select>
+      </div>
+      <div>
+        <label class="text-slate-500 text-[10px] font-medium block mb-1">Hours</label>
+        <input type="number" id="edit-hours" min="0" max="24" step="0.5" class="input" />
+      </div>
+      <div>
+        <label class="text-slate-500 text-[10px] font-medium block mb-1">Confidence (1–5)</label>
+        <select id="edit-confidence" class="input">
+          <option value="5">5 — Crushing it</option>
+          <option value="4">4 — Good progress</option>
+          <option value="3">3 — Steady</option>
+          <option value="2">2 — Struggling</option>
+          <option value="1">1 — Off day</option>
+        </select>
+      </div>
+    </div>
+    <div>
+      <label class="text-slate-500 text-[10px] font-medium block mb-1">Topics / Activities</label>
+      <input type="text" id="edit-topics" class="input" />
+    </div>
+    <div>
+      <label class="text-slate-500 text-[10px] font-medium block mb-1">Mock Score (optional)</label>
+      <input type="text" id="edit-mock" class="input" placeholder="e.g. 142/200" />
+    </div>
+    <div>
+      <label class="text-slate-500 text-[10px] font-medium block mb-1">Notes</label>
+      <textarea id="edit-notes" class="input"></textarea>
+    </div>
+    <div class="flex gap-2 justify-end pt-1">
+      <button class="btn btn-ghost" onclick="closeEditModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEdit()">Update Entry</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Data ────────────────────────────────────────────────────────────────────
+
+const GOALS = {
+  rbi: {
+    id: 'rbi',
+    label: 'RBI Grade B',
+    sublabel: 'Phase I + II · 2026',
+    color: '#f59e0b',
+    colorDim: '#f59e0b22',
+    border: 'border-amber-500/30',
+    icon: '🏛️',
+    // 3-level hierarchy: subjects → groups → topics
+    subjects: [
+      {
+        subject: '🧠 Phase 1 · Reasoning', short: 'Reasoning',
+        groups: [
+          { group: 'Inequality', short: 'Inequality', meta: '5 Qs · 20s/Q · study 1st', topics: ['Ineq①: Theory — Read p157 (symbols ©#%$@) · memorise table once, never again','Ineq②: Direct Ineq — Solved Ex p157-158 → Drill p161 Q1-35 (direct, chain)','Ineq③: Coded Ineq — Solved Ex p158-160 (©=#, %=<…) → Drill p161 Q36-60','Ineq④: Either-or / Combined — p162 Q1-63 (mixed symbols, 3-statement chains)','Ineq⑤: Mains-level sets — p163 Q1-25 (coded+chain combo) → p164 Q26-76','Ineq⑥: PYQ bank — p170-171 (actual IBPS/RBI papers) · check every wrong Q why','Ineq⑦: Speed drill — 30 Qs in <10 min cold (p165-169) · repeat until consistent'] },
+          { group: 'Syllogism', short: 'Syllogism', meta: '5 Qs · 30s/Q · study 2nd', topics: ['Syll①: Theory — Read p241-243 · draw Venn for All/Some/No · 10 min only','Syll②: 2-statement sets — p244 Q1-10, p245 Q11-31 · check with Venn after each','Syll③: Possibility cases ("can be true") — p246-251 Q32-40 · hardest concept here','Syll④: New patterns (Only a few / At least) — p252-261 Q1-49 · these appear in RBI','Syll⑤: 3-statement sets + reverse syllogism — p256-261 (direction blocks Q1-49)','Syll⑥: PYQ bank — p260-261, p277 (actual SBI/IBPS/RBI papers) · error analysis','Syll⑦: Speed drill — 20 Qs in <10 min (p266-276 answer-key verified sets)'] },
+          { group: 'Order + Direction', short: 'Order+Dir', meta: '5 Qs · 45s/Q · study 3rd', topics: ['Rank①: Theory — p43 formulas (L+R-1=total) · 5 min · memorise 2 formulas only','Rank②: Basic ranking Qs — p43-45 Ex1-5 · then p51 Q26-28 → p52 Q29-40','Rank③: Two-row / uncertain rank — p52 Q1-5 → p53-55 Q6-26 (tricky variants)','Dir①: Direction theory — p45-46 · 8-compass + shadow rule + Pythagoras shortcut','Dir②: Basic direction sets — p53-60 Q1-69 (mixed direction+ranking blocks)','Dir③: New-pattern direction puzzles — p61-63 Q1-30 (symbol-coded directions)','Dir+Rank④: PYQ bank — p58-60 + p76-77 (actual RBI/IBPS papers) · timed 15 min'] },
+          { group: 'Alpha Series', short: 'Alpha Series', meta: '5 Qs · 30s/Q · study 4th', topics: ['ANS①: Theory — p2-3 · understand position-based counting, L+R formula','ANS②: Pure alpha series (A-Z patterns) — p3 Q1-20 → p4-5 Q11-40 · spot gap rule','ANS③: Alpha-numeric series (letters+numbers) — p5-8 Q1-49 · find position patterns','ANS④: Symbol+number series (all 3 types) — p8-11 Q1-38 · conditions-based (preceded/followed)','ANS⑤: 3-digit rearrangement — p10-11 Q25-38 (two-row type) · formulaic approach','ANS⑥: Condition-based filtering — p12-17 Q1-74 (large bank, most RBI-relevant)','ANS⑦: PYQ bank — p18-23 (answer-key sets, replicate exam conditions) · timed 15 min'] },
+          { group: 'Blood Relations', short: 'Blood Rel', meta: '3-5 Qs · 60s/Q · study 5th', topics: ['BR①: Relation chart — p195 · draw family tree template · memorise 15 relations cold','BR②: Direct pointing type — p196 Ex1-2 → solve without diagram first, verify after','BR③: Coded blood relations (A+B means…) — p196 onwards · make decode table habit','BR④: 2-generation trees — drill 10 Qs cold · aim 40s each','BR⑤: 3-generation trees — hardest · p205+ blocks · draw tree for EVERY question','BR⑥: Mixed (blood+seating) — p215+ combined sets · 5-6 min per set','BR⑦: PYQ bank — last 10 pages of chapter (p218-221) · error log every wrong Q'] },
+          { group: 'Coding-Decoding', short: 'Coding', meta: '3-5 Qs · 45s/Q · study 6th', topics: ['CD①: Letter-shift coding — p106 Ex · +1/-1/+2/reverse · do p106-107 Q1-15 cold','CD②: Coding by analogy (if METAL→LDSZK) — p106-108 Q1-20 · spot the shift rule fast','CD③: Fictitious language / word substitution — p108 Ex → p115 Q42 blocks','CD④: Number/digit coding — p109-114 Q1-41 · look for positional or mathematical rule','CD⑤: Conditional coding (4-rule tables) — p118-124 · most scoring, least attempted','CD⑥: New-pattern step rearrangement (p9 of ch) — p125-130 Ex1-5 → drill 10 sets','CD⑦: Alphanumeric table (A=1…Z=26, reverse A=26) — memorise once · p125 rule list','CD⑧: PYQ bank — p131-136 (SBI/IBPS memory-based) · timed 20 min'] },
+          { group: 'Machine Input-Output', short: 'Machine I/O', meta: '5 Qs · 5min/set · study 7th', topics: ['MIO①: Theory — p305-306 · understand 4 arrangement types (asc/desc word+number)','MIO②: Word+number alternating steps — p306-315 Ex → do 5 full sets identifying rule first','MIO③: Shift-based rearrangement — p315 Q blocks · write out Step 1-3 to find pattern','MIO④: Symbol substitution steps — p318-324 Q61-64 (store A/B coded type)','MIO⑤: Find Step N shortcut — never solve all steps · find cycle length then mod N','MIO⑥: New-pattern (multiple conditions/step) — p327 blocks (Jest→Rest type) · 3 sets','MIO⑦: PYQ bank — p328-333 (last 5 pages) · full timed sets, 5 min each max'] },
+          { group: 'Puzzles & Seating', short: 'Puzzles', meta: '15-20 Qs · HIGHEST WEIGHT · study 8th', topics: ['SA①: Linear single-row (N/S facing) — p334 Ex → p338 Q1-20 · draw boxes first always','SA②: Linear double-row parallel — p335 Ex → p345-360 Q blocks · 2 rows 2 directions','SA③: Circular all-facing-centre — p335-336 Ex → p360-375 Q blocks · clockwise rule','SA④: Circular mixed facing (in+out) — p338 Ex → p375-388 Q blocks · hardest seating type','SA⑤: Circular equidistant / 45°-90° positions — p338 Ex → p388 Q blocks','SA⑥: Figure-based seating (IBPS 2017-20 new pattern) — p418+ Q51-55 onwards · draw grid','Puzz①: Floor puzzles (7 floors, 2 vars) — p389-391 Ex(i)+(ii) → p395 Q blocks · most common','Puzz②: Box stacking — p396+ Q blocks · top-to-bottom ordering, don\'t confuse with floors','Puzz③: Month/Date scheduling — p363-397 Q blocks · fix month first, then date','Puzz④: Multi-variable (floor+month+job) — p391 Ex → p400-430 Q blocks · table method only','Puzz⑤: Year/Age-based — p427+ Q blocks · convert to absolute years immediately','Puzz⑥: 3 full mixed sets timed drill — pick any 3 from p430-443 · strict 18 min cap','Puzz⑦: PYQ RBI Grade B — search "RBI Grade B puzzle" in last 10 pages · non-negotiable','Puzz⑧: PYQ SBI PO Mains (hardest available) — p440-443 · if you can do these, RBI is easy'] },
+          { group: 'Data Sufficiency', short: 'Data Suff', meta: '3-5 Qs · 60s/Q · study 9th', topics: ['DS①: Theory — p444 Ex · understand 5 standard answer choices (A/B/C/D/E) · 10 min','DS②: DS on Numbers/Algebra — p444-450 Q blocks · check each statement independently first','DS③: DS on Blood Relations — p451-460 Q blocks · draw mini tree for each statement','DS④: DS on Direction/Distance — p461-470 Q blocks · sketch each statement separately','DS⑤: DS on Seating/Ranking — p471-480 Q blocks · hardest DS type · both statements needed','DS⑥: PYQ bank — p481-490 (last 10 pages) · timed 20 min · check every "neither" answer'] },
+          { group: 'Statement-based', short: 'Statements', meta: '5-10 Qs · 60s/Q · study 10th', topics: ['CoA①: Course of Action theory — p79-80 · 4 rules (immediate/long-term/govt action)','CoA②: 2-course sets — p80-90 Q blocks · apply rules mechanically, no intuition','CoA③: 3-course sets (harder) — p90-105 Q blocks · p27 PYQ pages (actual papers)','C&E①: Cause & Effect — p25-30 · independent/interchange/same cause type','C&E②: C&E drill — p30-42 Q blocks · pick the "original cause" rule','Assum/Concl: Statement-Assumptions + Conclusions — p137-155 (Ch03 second half)','Infer①: Statement-Inferences ("definitely/probably true") — p279-304 Q blocks','Arg: Statement-Arguments (strong/weak) — p177-194 Q blocks · "strong if relevant+practical"','Stmt⑧: PYQ RBI Grade B set — p40-42 + p102-105 pages · these exact types repeat'] },
+          { group: 'Decision Making', short: 'Decision', meta: '3-5 Qs · rare · study last', topics: ['DM①: Theory — p491 · understand bank officer scenario framework · 15 min read','DM②: Multi-condition eligibility (age/exp/marks) — p491-493 Q blocks · table approach','DM③: Refer to Senior / CMD cases — p493-494 · memorise 3 refer-conditions','DM④: PYQ IBPS PO Mains — p494-495 · only 4 pages total, do all of them'] },
+          { group: 'Speed Benchmarks', short: '⏱ Speed', meta: 'log when hit', topics: ['Speed ✓: Inequality 20 Qs in <7 min','Speed ✓: Syllogism 20 Qs in <10 min','Speed ✓: Series 20 Qs in <10 min','Speed ✓: Coding 20 Qs in <15 min','Speed ✓: Puzzle set (5 Qs) in <5 min','Speed ✓: Full Reasoning 60 Qs in <50 min','Speed ✓: Full Reasoning 60 Qs in <40 min'] },
+        ],
+      },
+      {
+        subject: '📰 Phase 1 · GA', short: 'GA',
+        topics: ['GA: RBI News & Circulars (weekly)','GA: Banking & Economy CA','GA: Government Schemes','GA: Reports & Indices (IMF/WB/RBI)','GA: Static GK (HQs/Parks)','GA: Economic Survey','GA: Monthly CA revision (Edutap)','GA: Sectional Mock — GA only'],
+      },
+      {
+        subject: '🔢 Phase 1 · Quant', short: 'Quant',
+        topics: ['QA: Data Interpretation (bar/pie/table)','QA: Number Series','QA: Quadratic Equations','QA: Percentage & Profit-Loss','QA: Time, Work & Speed','QA: Simple & Compound Interest','QA: Sectional Mock — QA only'],
+      },
+      {
+        subject: '✍️ Phase 1 · English', short: 'English',
+        topics: ['Eng: Reading Comprehension','Eng: Error Spotting','Eng: Cloze Test','Eng: Para Jumbles','Eng: Sectional Mock — English only'],
+      },
+      {
+        subject: '📈 Phase 2 · ESI', short: 'ESI',
+        topics: ['ESI: Growth & Development','ESI: Indian Economy Overview','ESI: Globalization & Trade','ESI: Social Structure in India','ESI: Govt Schemes & Reports','ESI: NCERT 11+12 revision','ESI: Current Affairs (Economy)','ESI: Answer writing practice'],
+      },
+      {
+        subject: '💰 Phase 2 · Finance', short: 'Finance',
+        topics: ['Fin: Financial System & Regulators','Fin: Financial Markets','Fin: Derivatives & Risk Management','Fin: Union Budget Analysis','Fin: Inflation & Monetary Policy','Fin: Bharti Pathak (book read)','Fin: Answer writing practice'],
+      },
+      {
+        subject: '🏢 Phase 2 · Management', short: 'Mgmt',
+        topics: ['Mgmt: Fundamentals & Principles','Mgmt: Organizational Behavior','Mgmt: Leadership Theories','Mgmt: HRD & Motivation','Mgmt: Corporate Governance & Ethics','Mgmt: Tripathi-Reddy (book read)','Mgmt: Answer writing practice'],
+      },
+      {
+        subject: '📝 Phase 2 · Descriptive', short: 'Descriptive',
+        topics: ['Desc: Essay writing (600 words timed)','Desc: Precis writing','Desc: RC + comprehension','Desc: Typing speed practice (>40 wpm)'],
+      },
+      {
+        subject: '📚 Mocks & Review', short: 'Mocks',
+        topics: ['MOCK: Full Phase 1 (200m, 120 min)','MOCK: Full Phase 2 (300m)','MOCK: Reasoning sectional only','MOCK: Error analysis session','MOCK: Weak chapter re-drill','RBI Circular reading session'],
+      },
+    ],
+    get topics() {
+      return this.subjects.flatMap(s => s.groups ? s.groups.flatMap(g => g.topics) : s.topics)
+    },
+  },
+  upsc: {
+    id: 'upsc',
+    label: 'UPSC CSE',
+    sublabel: 'Prelims + Mains · 2026',
+    color: '#10b981',
+    colorDim: '#10b98122',
+    border: 'border-emerald-500/30',
+    topics: ['GS1 (History/Geography/Society)','GS2 (Polity/Governance/IR)','GS3 (Economy/Environment/Security)','GS4 (Ethics)','Essay','Current Affairs','Optional Subject','NCERT Revision','Mock Prelims','Mock Mains','Answer Writing'],
+    icon: '📜',
+  },
+  google: {
+    id: 'google',
+    label: 'Google AI Staff DS',
+    sublabel: 'L6 Data Scientist · AI/ML',
+    color: '#6366f1',
+    colorDim: '#6366f122',
+    border: 'border-indigo-500/30',
+    topics: ['LeetCode (Easy)','LeetCode (Medium)','LeetCode (Hard)','ML System Design','Statistics & Probability','ML Theory','SQL / Data Modeling','Python / Coding','Networking / Coffee Chats','Resume & Portfolio','Behavioural Prep (STAR)','ML Project / Kaggle','Paper Reading'],
+    icon: '🤖',
+  },
+}
+
+// ─── Config (injected by GitHub Actions — never hardcode here) ────────────────
+const SCRIPT_URL = '__SCRIPT_URL__'
+const API_TOKEN  = '__API_TOKEN__'
+const APP_PWD    = '__PASSWORD__'
+
+// ─── Storage (Google Sheets via Apps Script) ──────────────────────────────────
+let _cache = null   // in-memory log cache; null = not loaded yet
+
+function getLogs() { return _cache || [] }
+
+async function _fetchLogs() {
+  try {
+    const r = await fetch(`${SCRIPT_URL}?token=${API_TOKEN}`)
+    const data = await r.json()
+    _cache = Array.isArray(data) ? data.map(l => ({
+      ...l,
+      id: l.id || (String(l.date) + l.goal),
+      hours: parseFloat(l.hours || 0),
+    })) : []
+  } catch(e) { console.error('fetch logs failed', e); _cache = [] }
+}
+
+async function _pushEntry(entry) {
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({...entry, token: API_TOKEN}),
+    })
+  } catch(e) { console.error('push entry failed', e) }
+  _cache = null  // force re-fetch on next renderAll after bg ops
+}
+
+function today() {
+  return new Date().toISOString().split('T')[0]
+}
+
+// ─── Goal summary cards ───────────────────────────────────────────────────────
+
+function calcStreak(logs, goalId) {
+  const days = [...new Set(
+    logs.filter(l => l.goal === goalId && parseFloat(l.hours) > 0)
+        .map(l => l.date)
+  )].sort().reverse()
+  if (!days.length) return 0
+  let streak = 0
+  let cursor = new Date(today())
+  for (const d of days) {
+    const diff = Math.round((cursor - new Date(d)) / 86400000)
+    if (diff > 1) break
+    streak++
+    cursor = new Date(d)
+  }
+  return streak
+}
+
+function renderGoalCards() {
+  const logs = getLogs()
+  const container = document.getElementById('goal-cards')
+  container.innerHTML = ''
+
+  Object.values(GOALS).forEach(g => {
+    const gLogs = logs.filter(l => l.goal === g.id)
+    const totalHours = gLogs.reduce((s, l) => s + parseFloat(l.hours || 0), 0)
+    const streak = calcStreak(logs, g.id)
+    const today7 = Array.from({length: 7}, (_, i) => {
+      const d = new Date(); d.setDate(d.getDate() - (6 - i))
+      return d.toISOString().split('T')[0]
+    })
+    const weekHours = today7.map(d => gLogs.filter(l => l.date === d).reduce((s, l) => s + parseFloat(l.hours || 0), 0))
+    const avgConf = gLogs.length ? (gLogs.reduce((s, l) => s + parseInt(l.confidence || 3), 0) / gLogs.length).toFixed(1) : '—'
+    const todayLogged = gLogs.some(l => l.date === today())
+    const lastEntry = gLogs.sort((a, b) => b.date.localeCompare(a.date))[0]
+
+    const card = document.createElement('div')
+    card.className = `card p-4 flex flex-col gap-3`
+    card.style.borderColor = g.color + '33'
+    card.innerHTML = `
+      <div class="flex items-start justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">${g.icon}</span>
+          <div>
+            <div class="text-white font-bold text-sm">${g.label}</div>
+            <div class="text-slate-500 text-[10px]">${g.sublabel}</div>
+          </div>
+        </div>
+        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full" style="background:${g.colorDim};color:${g.color}">
+          ${todayLogged ? '✓ Logged' : 'Not logged'}
+        </span>
+      </div>
+      <div class="grid grid-cols-3 gap-2 text-center">
+        <div class="bg-[#0f0f1a] rounded-xl p-2">
+          <div class="text-[10px] text-slate-500 mb-0.5">Total Hours</div>
+          <div class="font-bold text-base font-mono" style="color:${g.color}">${totalHours.toFixed(1)}</div>
+        </div>
+        <div class="bg-[#0f0f1a] rounded-xl p-2">
+          <div class="text-[10px] text-slate-500 mb-0.5">Streak</div>
+          <div class="font-bold text-base font-mono text-white">${streak > 0 ? '🔥' : ''} ${streak}d</div>
+        </div>
+        <div class="bg-[#0f0f1a] rounded-xl p-2">
+          <div class="text-[10px] text-slate-500 mb-0.5">Avg Confidence</div>
+          <div class="font-bold text-base font-mono" style="color:${g.color}">${avgConf}/5</div>
+        </div>
+      </div>
+      <div>
+        <div class="text-slate-600 text-[9px] mb-1 font-medium uppercase tracking-widest">Last 7 days</div>
+        <div class="flex gap-0.5 items-end h-8">
+          ${weekHours.map(h => {
+            const pct = Math.min(h / 8, 1)
+            const ht = Math.max(4, Math.round(pct * 32))
+            return `<div class="flex-1 rounded-sm" style="height:${ht}px;background:${h > 0 ? g.color + 'cc' : '#1e1e2e'}"></div>`
+          }).join('')}
+        </div>
+        <div class="flex justify-between mt-0.5">
+          ${today7.map(d => `<div class="flex-1 text-center text-slate-700" style="font-size:8px">${new Date(d + 'T00:00:00').toLocaleDateString('en', {weekday:'narrow'})}</div>`).join('')}
+        </div>
+      </div>
+      ${lastEntry ? `<div class="text-slate-600 text-[10px]">Last: ${lastEntry.date} · ${lastEntry.topics || '—'}</div>` : ''}
+    `
+    container.appendChild(card)
+  })
+}
+
+// ─── Heatmaps ────────────────────────────────────────────────────────────────
+
+function renderHeatmaps() {
+  const logs = getLogs()
+  const container = document.getElementById('heatmap-row')
+  container.innerHTML = ''
+
+  const weeks = 18
+  const cells = weeks * 7
+
+  Object.values(GOALS).forEach(g => {
+    const gLogs = logs.filter(l => l.goal === g.id)
+    const hoursMap = {}
+    gLogs.forEach(l => { hoursMap[l.date] = (hoursMap[l.date] || 0) + parseFloat(l.hours || 0) })
+
+    // Build array of last `cells` days ending today
+    const days = []
+    for (let i = cells - 1; i >= 0; i--) {
+      const d = new Date(); d.setDate(d.getDate() - i)
+      const key = d.toISOString().split('T')[0]
+      days.push({ key, hours: hoursMap[key] || 0 })
+    }
+
+    const card = document.createElement('div')
+    card.className = 'card p-4'
+    card.innerHTML = `
+      <div class="flex items-center justify-between mb-3">
+        <div class="text-white font-bold text-xs">${g.icon} ${g.label} · Activity</div>
+        <div class="text-slate-600 text-[9px]">${weeks} weeks</div>
+      </div>
+      <div class="flex gap-0.5" id="heat-${g.id}"></div>
+      <div class="flex gap-1 items-center mt-2">
+        <span class="text-slate-600 text-[9px]">Less</span>
+        ${[0,1,2,4,6].map(h => `<div class="heat-cell" style="background:${h === 0 ? '#1e1e2e' : g.color + Math.round((h/6)*255).toString(16).padStart(2,'0')}"></div>`).join('')}
+        <span class="text-slate-600 text-[9px]">More</span>
+      </div>
+    `
+    container.appendChild(card)
+
+    // Render cells as columns (week columns)
+    const heatDiv = document.getElementById(`heat-${g.id}`)
+    for (let w = 0; w < weeks; w++) {
+      const col = document.createElement('div')
+      col.className = 'flex flex-col gap-0.5'
+      for (let d = 0; d < 7; d++) {
+        const idx = w * 7 + d
+        const cell = days[idx]
+        const intensity = cell ? Math.min(cell.hours / 6, 1) : 0
+        const alpha = intensity === 0 ? '' : Math.round(intensity * 200 + 55).toString(16).padStart(2, '0')
+        const bg = cell && cell.hours > 0 ? g.color + alpha : '#1e1e2e'
+        const div = document.createElement('div')
+        div.className = 'heat-cell'
+        div.style.background = bg
+        if (cell && cell.hours > 0) div.title = `${cell.key}: ${cell.hours.toFixed(1)}h`
+        col.appendChild(div)
+      }
+      heatDiv.appendChild(col)
+    }
+  })
+}
+
+// ─── Weekly hours chart ───────────────────────────────────────────────────────
+
+let hoursChartInst = null
+
+function renderHoursChart() {
+  const logs = getLogs()
+  const weeks = 8
+  const labels = []
+  const datasets = Object.values(GOALS).map(g => ({ goal: g, data: [] }))
+
+  for (let w = weeks - 1; w >= 0; w--) {
+    const start = new Date(); start.setDate(start.getDate() - w * 7 - 6)
+    const end = new Date(); end.setDate(end.getDate() - w * 7)
+    const label = start.toLocaleDateString('en', { month: 'short', day: 'numeric' })
+    labels.push(label)
+    datasets.forEach(({ goal, data }) => {
+      const hrs = logs
+        .filter(l => l.goal === goal.id)
+        .filter(l => { const d = new Date(l.date + 'T00:00:00'); return d >= start && d <= end })
+        .reduce((s, l) => s + parseFloat(l.hours || 0), 0)
+      data.push(parseFloat(hrs.toFixed(1)))
+    })
+  }
+
+  const ctx = document.getElementById('hoursChart').getContext('2d')
+  if (hoursChartInst) hoursChartInst.destroy()
+  hoursChartInst = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: datasets.map(({ goal, data }) => ({
+        label: goal.label,
+        data,
+        backgroundColor: goal.color + '99',
+        borderColor: goal.color,
+        borderWidth: 1,
+        borderRadius: 3,
+      }))
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { labels: { color: '#94a3b8', font: { size: 10 }, boxWidth: 10 } },
+        tooltip: { backgroundColor: '#12121a', borderColor: '#2d2d42', borderWidth: 1, titleColor: '#fff', bodyColor: '#94a3b8' },
+      },
+      scales: {
+        x: { stacked: false, ticks: { color: '#4b5563', font: { size: 9 } }, grid: { color: '#1e1e2e' } },
+        y: { ticks: { color: '#4b5563', font: { size: 9 } }, grid: { color: '#1e1e2e' } },
+      },
+    }
+  })
+}
+
+// ─── Recent logs ─────────────────────────────────────────────────────────────
+
+function renderRecentLogs() {
+  const logs = getLogs().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 8)
+  const container = document.getElementById('recent-logs')
+  if (!logs.length) {
+    container.innerHTML = '<div class="text-slate-600 text-xs text-center py-6">No entries yet. Log your first session!</div>'
+    return
+  }
+  container.innerHTML = logs.map(l => {
+    const g = GOALS[l.goal]
+    const conf = parseInt(l.confidence || 3)
+    const confEmoji = ['😔','😐','🙂','😊','🔥'][conf - 1]
+    return `
+      <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-[#0f0f1a] border border-[#1e1e2e]">
+        <span class="text-base mt-0.5">${g?.icon || '📌'}</span>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-semibold text-xs text-white">${g?.label}</span>
+            <span class="text-slate-500 text-[10px]">${l.date}</span>
+            <span class="font-bold text-[10px]" style="color:${g?.color}">${parseFloat(l.hours || 0)}h</span>
+            <span>${confEmoji}</span>
+          </div>
+          ${l.topics ? `<div class="text-slate-400 text-[10px] truncate mt-0.5">${l.topics}</div>` : ''}
+        </div>
+      </div>
+    `
+  }).join('')
+}
+
+// ─── Log table ───────────────────────────────────────────────────────────────
+
+function renderLogTable() {
+  const filterGoal = document.getElementById('filter-goal')?.value || ''
+  let logs = getLogs().sort((a, b) => b.date.localeCompare(a.date))
+  if (filterGoal) logs = logs.filter(l => l.goal === filterGoal)
+  const tbody = document.getElementById('log-tbody')
+  if (!logs.length) {
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-slate-600 text-xs py-8">No entries yet.</td></tr>'
+    return
+  }
+  const confEmojis = ['😔','😐','🙂','😊','🔥']
+  tbody.innerHTML = logs.map((l, i) => {
+    const g = GOALS[l.goal]
+    const conf = parseInt(l.confidence || 3)
+    return `
+      <tr class="border-b border-[#0f0f1a] hover:bg-[#1a1a28] transition-colors">
+        <td class="px-4 py-2 font-mono text-slate-400">${l.date}</td>
+        <td class="px-3 py-2">
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full" style="background:${g?.colorDim};color:${g?.color}">${g?.icon} ${g?.label}</span>
+        </td>
+        <td class="px-3 py-2 font-bold font-mono" style="color:${g?.color}">${parseFloat(l.hours || 0)}h</td>
+        <td class="px-3 py-2 text-slate-300 max-w-xs truncate">${l.topics || '—'}</td>
+        <td class="px-3 py-2 text-center text-base">${confEmojis[conf - 1]} <span class="text-xs text-slate-500">${conf}</span></td>
+        <td class="px-3 py-2 text-slate-500 max-w-xs truncate">${l.notes || '—'}</td>
+        <td class="px-3 py-2 text-center">
+          <div class="flex gap-1 justify-center">
+            <button onclick="editLog(${l.id})" class="text-slate-500 hover:text-indigo-400 text-xs px-2 py-0.5 rounded hover:bg-indigo-500/10 transition-colors">Edit</button>
+            <button onclick="deleteLog(${l.id})" class="text-slate-500 hover:text-red-400 text-xs px-2 py-0.5 rounded hover:bg-red-500/10 transition-colors">Del</button>
+          </div>
+        </td>
+      </tr>
+    `
+  }).join('')
+}
+
+function renderAll() {
+  renderGoalCards()
+  renderHeatmaps()
+  renderHoursChart()
+  renderRecentLogs()
+  renderLogTable()
+}
+
+// ─── Modal ───────────────────────────────────────────────────────────────────
+
+const TOPIC_CHIPS_CACHE = {}
+
+let _activeSubjIdx = null
+let _activeGroupIdx = null
+
+function _chipBtns(items, onclickFn, color, selectedSet) {
+  return items.map((item, i) => {
+    const label = item.short || item
+    const isSelected = selectedSet && selectedSet.has(item.group || item)
+    const bg = isSelected ? color + '22' : 'transparent'
+    const bc = isSelected ? color + '88' : '#2d2d42'
+    const col = isSelected ? color : '#64748b'
+    return `<button type="button" id="${onclickFn}-btn-${i}"
+      onclick="${onclickFn}(${i})"
+      class="tag border transition-all text-[10px]"
+      style="border-color:${bc};color:${col};background:${bg}">${label}</button>`
+  }).join('')
+}
+
+function _highlightBtn(prefix, activeIdx, color) {
+  document.querySelectorAll(`[id^="${prefix}-btn-"]`).forEach((b, i) => {
+    b.style.background = i === activeIdx ? color + '22' : 'transparent'
+    b.style.borderColor = i === activeIdx ? color + '88' : '#2d2d42'
+    b.style.color = i === activeIdx ? color : '#64748b'
+  })
+}
+
+function updateTopicList() {
+  const goal = document.getElementById('log-goal').value
+  const g = GOALS[goal]
+  _activeSubjIdx = null
+  _activeGroupIdx = null
+  document.getElementById('topic-chips').innerHTML = ''
+  document.getElementById('topic-chips-wrap').classList.add('hidden')
+  document.getElementById('topic-groups').innerHTML = ''
+  document.getElementById('topic-groups-wrap').classList.add('hidden')
+
+  if (g.subjects) {
+    document.getElementById('topic-subjects').innerHTML = _chipBtns(g.subjects, 'selectSubject', g.color, null)
+  } else {
+    // Flat (UPSC/Google): show activities directly
+    document.getElementById('topic-subjects').innerHTML = ''
+    document.getElementById('topic-chips-label').textContent = 'Activities'
+    document.getElementById('topic-chips-wrap').classList.remove('hidden')
+    document.getElementById('topic-chips').innerHTML = g.topics.map(t =>
+      `<button type="button" onclick="toggleTopic(this,'${t.replace(/'/g,"\\'")}')"
+        class="tag border transition-colors"
+        style="border-color:#2d2d42;color:#64748b;background:transparent"
+        data-topic="${t}">${t}</button>`
+    ).join('')
+  }
+  document.getElementById('mock-row').classList.toggle('hidden', !['rbi','upsc'].includes(goal))
+}
+
+function selectSubject(idx) {
+  const goal = document.getElementById('log-goal').value
+  const g = GOALS[goal]
+  const subj = g.subjects[idx]
+
+  if (_activeSubjIdx === idx) {
+    _activeSubjIdx = null
+    _activeGroupIdx = null
+    _highlightBtn('selectSubject', -1, g.color)
+    document.getElementById('topic-groups-wrap').classList.add('hidden')
+    document.getElementById('topic-chips-wrap').classList.add('hidden')
+    return
+  }
+
+  _activeSubjIdx = idx
+  _activeGroupIdx = null
+  _highlightBtn('selectSubject', idx, g.color)
+
+  // Reset level 3
+  document.getElementById('topic-chips').innerHTML = ''
+  document.getElementById('topic-chips-wrap').classList.add('hidden')
+
+  if (subj.groups) {
+    // Show level 2: topic groups
+    document.getElementById('topic-groups').innerHTML = _chipBtns(subj.groups, 'selectGroup', g.color, null)
+    document.getElementById('topic-groups-wrap').classList.remove('hidden')
+  } else {
+    // No sub-groups: skip to activities directly
+    document.getElementById('topic-groups-wrap').classList.add('hidden')
+    _showActivityChips(subj.topics, g)
+  }
+}
+
+function selectGroup(idx) {
+  const goal = document.getElementById('log-goal').value
+  const g = GOALS[goal]
+  const subj = g.subjects[_activeSubjIdx]
+  const grp = subj.groups[idx]
+
+  if (_activeGroupIdx === idx) {
+    _activeGroupIdx = null
+    _highlightBtn('selectGroup', -1, g.color)
+    document.getElementById('topic-chips-wrap').classList.add('hidden')
+    return
+  }
+
+  _activeGroupIdx = idx
+  _highlightBtn('selectGroup', idx, g.color)
+  document.getElementById('topic-chips-label').textContent = grp.meta ? `${grp.group} — ${grp.meta}` : grp.group
+  _showActivityChips(grp.topics, g)
+}
+
+function _showActivityChips(topics, g) {
+  const selected = new Set(
+    document.getElementById('log-topics').value.split(',').map(t => t.trim()).filter(Boolean)
+  )
+  document.getElementById('topic-chips').innerHTML = topics.map(t => {
+    const sel = selected.has(t)
+    return `<button type="button" onclick="toggleTopic(this,'${t.replace(/'/g,"\\'")}')"
+      class="tag border transition-colors"
+      style="border-color:${sel ? g.color+'88' : '#2d2d42'};color:${sel ? g.color : '#64748b'};background:${sel ? g.color+'22' : 'transparent'}"
+      data-topic="${t}" data-active="${sel ? '1' : '0'}">${t}</button>`
+  }).join('')
+  document.getElementById('topic-chips-wrap').classList.remove('hidden')
+}
+
+function toggleTopic(btn, topic) {
+  const input = document.getElementById('log-topics')
+  const active = btn.dataset.active === '1'
+  if (active) {
+    btn.dataset.active = '0'
+    btn.style.background = 'transparent'
+    btn.style.borderColor = '#2d2d42'
+    btn.style.color = '#64748b'
+    const topics = input.value.split(',').map(t => t.trim()).filter(t => t && t !== topic)
+    input.value = topics.join(', ')
+  } else {
+    btn.dataset.active = '1'
+    const g = GOALS[document.getElementById('log-goal').value]
+    btn.style.background = g.color + '22'
+    btn.style.borderColor = g.color + '66'
+    btn.style.color = g.color
+    const existing = input.value.trim()
+    input.value = existing ? existing + ', ' + topic : topic
+  }
+}
+
+function openLogModal() {
+  document.getElementById('log-date').value = today()
+  document.getElementById('log-hours').value = ''
+  document.getElementById('log-confidence').value = '3'
+  document.getElementById('log-topics').value = ''
+  document.getElementById('log-notes').value = ''
+  document.getElementById('log-mock').value = ''
+  _activeSubjIdx = null
+  _activeGroupIdx = null
+  updateTopicList()
+  document.getElementById('modal').classList.remove('hidden')
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.add('hidden')
+}
+
+async function saveLog() {
+  const date = document.getElementById('log-date').value
+  const goal = document.getElementById('log-goal').value
+  const hours = document.getElementById('log-hours').value
+  const confidence = document.getElementById('log-confidence').value
+  const topics = document.getElementById('log-topics').value.trim()
+  const notes = document.getElementById('log-notes').value.trim()
+  const mock = document.getElementById('log-mock').value.trim()
+
+  if (!date || !goal || hours === '') { alert('Please fill in date, goal and hours.'); return }
+
+  const logs = getLogs()
+  const existIdx = logs.findIndex(l => l.goal === goal && l.date === date)
+  const record = { id: existIdx >= 0 ? logs[existIdx].id : Date.now(), date, goal, hours: parseFloat(hours), confidence, topics, notes, mock }
+  // Optimistic update
+  if (!_cache) _cache = []
+  if (existIdx >= 0) _cache[existIdx] = record
+  else _cache.push(record)
+
+  closeModal()
+  renderAll()
+  await _pushEntry(record)
+}
+
+// ─── Edit / Delete ────────────────────────────────────────────────────────────
+
+let editingId = null
+
+function editLog(id) {
+  const logs = getLogs()
+  const log = logs.find(l => l.id === id)
+  if (!log) return
+  editingId = id
+  document.getElementById('edit-date').value = log.date
+  document.getElementById('edit-goal').value = log.goal
+  document.getElementById('edit-hours').value = log.hours
+  document.getElementById('edit-confidence').value = log.confidence || '3'
+  document.getElementById('edit-topics').value = log.topics || ''
+  document.getElementById('edit-notes').value = log.notes || ''
+  document.getElementById('edit-mock').value = log.mock || ''
+  document.getElementById('edit-modal').classList.remove('hidden')
+}
+
+function closeEditModal() {
+  document.getElementById('edit-modal').classList.add('hidden')
+  editingId = null
+}
+
+async function saveEdit() {
+  if (!editingId) return
+  const logs = getLogs()
+  const idx = logs.findIndex(l => String(l.id) === String(editingId))
+  if (idx < 0) return
+  const record = {
+    ...logs[idx],
+    date: document.getElementById('edit-date').value,
+    goal: document.getElementById('edit-goal').value,
+    hours: parseFloat(document.getElementById('edit-hours').value),
+    confidence: document.getElementById('edit-confidence').value,
+    topics: document.getElementById('edit-topics').value.trim(),
+    notes: document.getElementById('edit-notes').value.trim(),
+    mock: document.getElementById('edit-mock').value.trim(),
+  }
+  _cache[idx] = record
+  closeEditModal()
+  renderAll()
+  await _pushEntry(record)
+}
+
+async function deleteLog(id) {
+  if (!confirm('Delete this entry?')) return
+  const entry = getLogs().find(l => String(l.id) === String(id))
+  if (!entry) return
+  _cache = _cache.filter(l => String(l.id) !== String(id))
+  renderAll()
+  await fetch(SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({...entry, action: 'delete', token: API_TOKEN}),
+  }).catch(e => console.error('delete failed', e))
+}
+
+// ─── Export ───────────────────────────────────────────────────────────────────
+
+function exportData() {
+  const logs = getLogs()
+  const blob = new Blob([JSON.stringify({ exported: new Date().toISOString(), logs }, null, 2)], { type: 'application/json' })
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = `goal_tracker_export_${today()}.json`
+  a.click()
+  URL.revokeObjectURL(a.href)
+}
+
+// ─── Password gate ────────────────────────────────────────────────────────────
+
+function checkPwd() {
+  if (document.getElementById('gate-pwd').value === APP_PWD) {
+    sessionStorage.setItem('tracker_auth', '1')
+    document.getElementById('gate').classList.add('hidden')
+    document.getElementById('app').classList.remove('hidden')
+    initApp()
+  } else {
+    document.getElementById('gate-err').classList.remove('hidden')
+    document.getElementById('gate-pwd').value = ''
+    document.getElementById('gate-pwd').focus()
+  }
+}
+
+async function initApp() {
+  document.getElementById('today-label').textContent =
+    new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+  document.getElementById('modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal() })
+  document.getElementById('edit-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeEditModal() })
+  document.getElementById('loading-overlay').classList.remove('hidden')
+  await _fetchLogs()
+  document.getElementById('loading-overlay').classList.add('hidden')
+  renderAll()
+}
+
+// Auto-login if session still valid (survives page refresh, clears on tab close)
+if (sessionStorage.getItem('tracker_auth') === '1') {
+  document.getElementById('gate').classList.add('hidden')
+  document.getElementById('app').classList.remove('hidden')
+  initApp()
+}
+</script>
+</body>
+</html>
