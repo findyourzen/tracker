@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tonight — Memory Drill</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0f0f1a; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; padding: 24px 16px 60px; }
+  h1 { color: #818cf8; font-size: 1.3rem; margin-bottom: 4px; }
+  .sub { color: #475569; font-size: 0.8rem; margin-bottom: 32px; }
+  h2 { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+  .section { margin-bottom: 36px; }
+
+  /* Tables grid */
+  .tables-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .tbl-card { background: #1a1a2e; border: 1px solid #2d2d42; border-radius: 12px; padding: 12px; }
+  .tbl-card .n { color: #818cf8; font-size: 0.8rem; font-weight: 700; margin-bottom: 6px; }
+  .tbl-card .row { display: flex; justify-content: space-between; font-size: 0.75rem; color: #94a3b8; padding: 1px 0; }
+  .tbl-card .row .res { color: #e2e8f0; font-weight: 600; }
+  .tbl-card .row.hi .res { color: #f59e0b; }
+
+  /* Squares / Cubes */
+  .num-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; }
+  .num-card { background: #1a1a2e; border: 1px solid #2d2d42; border-radius: 10px; padding: 10px 12px; }
+  .num-card .base { font-size: 0.7rem; color: #64748b; }
+  .num-card .val { font-size: 1rem; font-weight: 700; color: #e2e8f0; }
+  .num-card.sq .val { color: #34d399; }
+  .num-card.cu .val { color: #f472b6; }
+  .num-card.sq5 .val { color: #fbbf24; }  /* multiples of 5 - easier anchors */
+
+  /* Fractions */
+  .frac-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+  .frac-card { background: #1a1a2e; border: 1px solid #2d2d42; border-radius: 10px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; }
+  .frac-card .frac { color: #818cf8; font-size: 0.85rem; font-weight: 700; }
+  .frac-card .pct  { color: #fbbf24; font-size: 0.9rem; font-weight: 700; }
+  .frac-card .dec  { color: #475569; font-size: 0.7rem; }
+
+  /* Powers */
+  .pow-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
+  .pow-card { background: #1a1a2e; border: 1px solid #2d2d42; border-radius: 10px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; }
+  .pow-card .exp { color: #64748b; font-size: 0.75rem; }
+  .pow-card .val { color: #a78bfa; font-weight: 700; font-size: 0.9rem; }
+
+  /* Method box */
+  .method { background: #1a1a2e; border: 1px solid #2d2d42; border-radius: 12px; padding: 16px 20px; }
+  .method p { font-size: 0.82rem; color: #94a3b8; line-height: 1.7; margin-bottom: 8px; }
+  .method .ex { background: #0f0f1a; border-radius: 8px; padding: 10px 14px; font-size: 0.82rem; color: #e2e8f0; margin-top: 8px; line-height: 1.8; }
+  .tag { display: inline-block; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 8px; border-radius: 99px; margin-bottom: 10px; }
+  .tag.r { background: #312e81; color: #818cf8; }
+  .tag.q { background: #064e3b; color: #34d399; }
+  .tag.m { background: #78350f; color: #fbbf24; }
+  .tip { background: #1e1b4b; border: 1px solid #4338ca; border-radius: 10px; padding: 10px 14px; font-size: 0.78rem; color: #a5b4fc; margin-top: 10px; }
+  .tip b { color: #818cf8; }
+</style>
+</head>
+<body>
+
+<h1>Tonight — Memorisation Drill</h1>
+<div class="sub">Before Day 1 starts · Cover everything on this page cold · No calculator ever again</div>
+
+<!-- MULTIPLICATION TABLES -->
+<div class="section">
+  <div class="tag m">Must Know Cold</div>
+  <h2 style="color:#fbbf24">Multiplication Tables · 2 to 20</h2>
+  <div class="tables-grid" id="tables-grid"></div>
+  <div class="tip" style="margin-top:14px"><b>21–30 shortcut:</b> You don't memorise 23×7. You do 20×7 + 3×7 = 140 + 21 = 161. Train this split mentally — it's faster than recall for big tables.</div>
+</div>
+
+<!-- SQUARES -->
+<div class="section">
+  <div class="tag q">Essential</div>
+  <h2 style="color:#34d399">Squares · 1² to 35²</h2>
+  <div class="num-grid" id="sq-grid"></div>
+  <div class="tip"><b>Pattern anchor:</b> n² = (n−1)² + (2n−1). So 18² = 17² + 35 = 289 + 35 = 324. Use this to reconstruct if you blank.</div>
+  <div class="tip" style="margin-top:8px"><b>Ending digits pattern:</b> squares end in 0,1,4,5,6,9 — never 2,3,7,8. Instant check.</div>
+</div>
+
+<!-- CUBES -->
+<div class="section">
+  <div class="tag q">Essential</div>
+  <h2 style="color:#f472b6">Cubes · 1³ to 15³</h2>
+  <div class="num-grid" id="cu-grid"></div>
+  <div class="tip"><b>Why cubes matter:</b> Number series, DI, and simplification questions use cube roots. Know 1–15 cold.</div>
+</div>
+
+<!-- FRACTION–PERCENT -->
+<div class="section">
+  <div class="tag m">Non-Negotiable</div>
+  <h2 style="color:#fbbf24">Fraction → Percentage Equivalents</h2>
+  <div class="frac-grid" id="frac-grid"></div>
+  <div class="tip"><b>The golden rule:</b> Never multiply by 0.1667 — instead think "1/6". All % calculations are fraction-first. Build from 10%: find 10%, halve it for 5%, quarter it for 2.5%, add combinations.</div>
+</div>
+
+<!-- POWERS OF 2 AND 3 -->
+<div class="section">
+  <div class="tag r">Bonus — High ROI</div>
+  <h2 style="color:#818cf8">Powers of 2 · 3 · 5</h2>
+  <div class="pow-grid" id="pow-grid"></div>
+</div>
+
+<!-- TONIGHT'S METHOD -->
+<div class="section">
+  <div class="tag m">How to drill tonight</div>
+  <h2 style="color:#fbbf24">The 90-Minute Method</h2>
+  <div class="method">
+    <p><b style="color:#e2e8f0">Round 1 — Read (20 min):</b> Scan every table, square, cube, fraction on this page. Don't try to memorise yet. Just get familiar. Two passes.</p>
+    <p><b style="color:#e2e8f0">Round 2 — Cover & Recall (30 min):</b> Cover the answers. Say the value out loud before uncovering. Go through squares first (fastest ROI), then tables 2–12, then fractions.</p>
+    <p><b style="color:#e2e8f0">Round 3 — Weak spots only (20 min):</b> Write down every value you blanked on. These are your weak spots. Drill only those 10 more times.</p>
+    <p><b style="color:#e2e8f0">Round 4 — Speed test (15 min):</b> Random quiz yourself. Say the answer in under 2 seconds. If it takes longer, it's not memorised yet — it's calculated. Memorised = instant.</p>
+    <div class="ex">
+      Target: Tables 2–12 = instant (&lt;1s)<br>
+      Target: Tables 13–20 = fast (&lt;2s)<br>
+      Target: Squares 1–25 = instant<br>
+      Target: Squares 26–35 = fast (&lt;3s)<br>
+      Target: All fractions = instant<br>
+      <br>
+      Sleep after. Memory consolidates during sleep — this is not optional.
+    </div>
+  </div>
+</div>
+
+<script>
+// Tables 2–20
+const tg = document.getElementById('tables-grid')
+for (let n = 2; n <= 20; n++) {
+  const card = document.createElement('div')
+  card.className = 'tbl-card'
+  let rows = `<div class="n">× ${n}</div>`
+  for (let i = 1; i <= 12; i++) {
+    const res = n * i
+    const hi = i === 10 || i === 11 || i === 12
+    rows += `<div class="row ${hi?'hi':''}"><span>${n} × ${i}</span><span class="res">${res}</span></div>`
+  }
+  card.innerHTML = rows
+  tg.appendChild(card)
+}
+
+// Squares 1–35
+const sq = document.getElementById('sq-grid')
+const sq5s = new Set([5,10,15,20,25,30,35])
+for (let n = 1; n <= 35; n++) {
+  const card = document.createElement('div')
+  const cls = sq5s.has(n) ? 'sq5' : 'sq'
+  card.className = `num-card ${cls}`
+  card.innerHTML = `<div class="base">${n}²</div><div class="val">${n*n}</div>`
+  sq.appendChild(card)
+}
+
+// Cubes 1–15
+const cu = document.getElementById('cu-grid')
+for (let n = 1; n <= 15; n++) {
+  const card = document.createElement('div')
+  card.className = 'num-card cu'
+  card.innerHTML = `<div class="base">${n}³</div><div class="val">${n**3}</div>`
+  cu.appendChild(card)
+}
+
+// Fractions
+const fracs = [
+  ['1/2','50%','0.5'],['1/3','33.33%','0.333'],['2/3','66.67%','0.667'],
+  ['1/4','25%','0.25'],['3/4','75%','0.75'],
+  ['1/5','20%','0.2'],['2/5','40%','0.4'],['3/5','60%','0.6'],['4/5','80%','0.8'],
+  ['1/6','16.67%','0.1667'],['5/6','83.33%','0.8333'],
+  ['1/7','14.29%','0.1429'],['2/7','28.57%','0.2857'],
+  ['1/8','12.5%','0.125'],['3/8','37.5%','0.375'],['5/8','62.5%','0.625'],['7/8','87.5%','0.875'],
+  ['1/9','11.11%','0.111'],['2/9','22.22%','0.222'],
+  ['1/10','10%','0.1'],['1/11','9.09%','0.0909'],
+  ['1/12','8.33%','0.0833'],['1/15','6.67%','0.0667'],
+  ['1/16','6.25%','0.0625'],['1/20','5%','0.05'],
+  ['1/25','4%','0.04'],['1/50','2%','0.02'],
+]
+const fg = document.getElementById('frac-grid')
+fracs.forEach(([f, p, d]) => {
+  const card = document.createElement('div')
+  card.className = 'frac-card'
+  card.innerHTML = `<div><div class="frac">${f}</div><div class="dec">${d}</div></div><div class="pct">${p}</div>`
+  fg.appendChild(card)
+})
+
+// Powers
+const pows = [
+  ['2¹','2'],['2²','4'],['2³','8'],['2⁴','16'],['2⁵','32'],
+  ['2⁶','64'],['2⁷','128'],['2⁸','256'],['2⁹','512'],['2¹⁰','1024'],['2¹¹','2048'],['2¹²','4096'],
+  ['3¹','3'],['3²','9'],['3³','27'],['3⁴','81'],['3⁵','243'],['3⁶','729'],['3⁷','2187'],['3⁸','6561'],
+  ['5¹','5'],['5²','25'],['5³','125'],['5⁴','625'],['5⁵','3125'],['5⁶','15625'],
+]
+const pg = document.getElementById('pow-grid')
+pows.forEach(([e, v]) => {
+  const card = document.createElement('div')
+  card.className = 'pow-card'
+  card.innerHTML = `<span class="exp">${e}</span><span class="val">${v}</span>`
+  pg.appendChild(card)
+})
+</script>
+</body>
+</html>
