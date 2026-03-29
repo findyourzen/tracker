@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Management Day 2 — Motivation & Reinforcement</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0f0f1a; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; font-size: 0.87rem; line-height: 1.65; }
+
+nav { position: sticky; top: 0; z-index: 100; background: #0d0d1a; border-bottom: 1px solid #1e1e35; display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 16px; }
+nav a { color: #64748b; font-size: 0.68rem; text-decoration: none; padding: 3px 10px; border-radius: 99px; border: 1px solid #2d2d42; }
+nav a:hover { background: #1a1a2e; color: #e2e8f0; }
+
+.page { max-width: 880px; margin: 0 auto; padding: 24px 16px 80px; }
+h1 { color: #818cf8; font-size: 1.35rem; margin-bottom: 3px; }
+.sub { color: #475569; font-size: 0.75rem; margin-bottom: 8px; }
+.pyq-top { background: #1c0a00; border: 1px solid #7c2d12; border-radius: 8px; padding: 8px 14px; font-size: 0.75rem; color: #fb923c; margin-bottom: 28px; }
+.pyq-top b { color: #fcd34d; }
+
+/* ── Part headings ── */
+.part { margin: 36px 0 18px; padding: 12px 18px; background: linear-gradient(135deg,#1e1b4b,#1a1a2e); border-left: 4px solid #818cf8; border-radius: 0 10px 10px 0; }
+.part h2 { color: #818cf8; font-size: 1.05rem; }
+.part .ps { color: #475569; font-size: 0.68rem; margin-top: 2px; }
+
+/* ── PYQ badge per topic ── */
+.pyq-badge { display: inline-block; background: #1c0a00; border: 1px solid #7c2d12; border-radius: 6px; padding: 4px 10px; font-size: 0.68rem; color: #fb923c; margin-bottom: 10px; }
+
+/* ── Analogy (16yr intro) ── */
+.intro16 { background: #0b1a0b; border-left: 3px solid #22c55e; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-bottom: 14px; font-size: 0.8rem; color: #86efac; }
+.intro16 .i-label { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #4ade80; margin-bottom: 4px; }
+
+/* ── Shreyans-style TREE ── */
+.stree { margin: 12px 0 18px; }
+.stree-root { display: inline-block; border: 2px solid #818cf8; border-radius: 8px; padding: 6px 14px; color: #818cf8; font-weight: 700; font-size: 0.88rem; background: #13132a; margin-bottom: 2px; }
+.stree-root.amber { border-color: #f59e0b; color: #f59e0b; }
+.stree-root.green { border-color: #34d399; color: #34d399; }
+.stree-root.pink  { border-color: #f472b6; color: #f472b6; }
+.stree-root.red   { border-color: #f87171; color: #f87171; }
+.stree-root.blue  { border-color: #60a5fa; color: #60a5fa; }
+
+.branches { border-left: 2px solid #2d2d42; margin-left: 14px; padding-left: 0; margin-top: 4px; }
+.br { display: flex; align-items: flex-start; margin-bottom: 3px; }
+.br-line { width: 16px; height: 1px; background: #2d2d42; margin-top: 12px; flex-shrink: 0; }
+.bn { background: #13131f; border: 1px solid #2d2d42; border-radius: 7px; padding: 6px 11px; flex: 1; margin-left: 0; }
+.bn .t { font-weight: 700; font-size: 0.81rem; margin-bottom: 2px; }
+.bn .d { font-size: 0.76rem; color: #64748b; line-height: 1.5; }
+.bn .d b { color: #cbd5e1; }
+
+/* nested sub-branches */
+.sub-br { border-left: 2px solid #1e1e35; margin-left: 12px; padding-left: 0; margin-top: 3px; }
+.sub-br .br { margin-bottom: 2px; }
+.sub-br .br-line { width: 10px; background: #1e1e35; }
+.sub-br .bn { background: #0f0f1a; border-color: #1e1e35; }
+.sub-br .bn .t { font-size: 0.75rem; color: #94a3b8; }
+.sub-br .bn .d { font-size: 0.72rem; }
+
+/* color variants */
+.bn.amber .t { color: #fbbf24; }
+.bn.green .t { color: #34d399; }
+.bn.pink  .t { color: #f472b6; }
+.bn.blue  .t { color: #60a5fa; }
+.bn.purple .t { color: #a78bfa; }
+.bn.red   .t { color: #f87171; }
+.bn.teal  .t { color: #2dd4bf; }
+
+/* ── Highlights ── */
+.hl  { background: #fef08a; color: #1a1400; padding: 0 3px; border-radius: 3px; font-weight: 700; }
+.hl-r { background: #fecaca; color: #450a0a; padding: 0 3px; border-radius: 3px; font-weight: 700; }
+.hl-g { background: #bbf7d0; color: #052e16; padding: 0 3px; border-radius: 3px; font-weight: 700; }
+.hl-p { background: #ddd6fe; color: #2e1065; padding: 0 3px; border-radius: 3px; font-weight: 700; }
+
+/* ── Tags ── */
+.tag { display: inline-block; font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 8px; border-radius: 99px; margin-right: 5px; }
+.tag.must  { background: #312e81; color: #818cf8; }
+.tag.pyq   { background: #7c2d12; color: #fb923c; }
+.tag.upsc  { background: #4a1d96; color: #c4b5fd; }
+.tag.crit  { background: #450a0a; color: #fca5a5; }
+.tag.tip   { background: #1c1917; color: #a8a29e; }
+
+/* ── Formula box ── */
+.fbox { background: #0d1117; border: 2px solid #818cf8; border-radius: 10px; padding: 14px 18px; margin: 12px 0; text-align: center; }
+.fbox .f  { font-size: 1.4rem; font-weight: 700; color: #818cf8; letter-spacing: 0.05em; }
+.fbox .fs { font-size: 0.72rem; color: #475569; margin-top: 4px; }
+
+/* ── Maslow pyramid ── */
+.pyr { margin: 16px auto; max-width: 480px; }
+.pl { margin: 2px auto; border-radius: 5px; padding: 9px 8px; text-align: center; }
+.pl .pn { font-weight: 700; font-size: 0.78rem; letter-spacing: 0.04em; }
+.pl .pi { font-size: 0.65rem; margin-top: 2px; opacity: 0.85; }
+.p5 { background: #6d28d9; color:#fff; width:58%; }
+.p4 { background: #1d4ed8; color:#fff; width:68%; }
+.p3 { background: #047857; color:#fff; width:78%; }
+.p2 { background: #b45309; color:#fff; width:88%; }
+.p1 { background: #b91c1c; color:#fff; width:100%; }
+
+/* ── Two-col / Three-col ── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 10px 0; }
+@media(max-width:580px) { .g2,.g3 { grid-template-columns: 1fr; } }
+.gc { background: #13131f; border: 1px solid #2d2d42; border-radius: 9px; padding: 11px 13px; }
+.gc .gt { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 7px; }
+.gc .gb { font-size: 0.77rem; color: #94a3b8; line-height: 1.6; }
+.gc .gb b { color: #e2e8f0; }
+.gc ul { list-style: none; }
+.gc ul li { font-size: 0.76rem; color: #94a3b8; padding: 2px 0; border-bottom: 1px solid #1e1e35; }
+.gc ul li:last-child { border-bottom: none; }
+.gc ul li::before { content: '→ '; color: #475569; }
+
+/* ── Reinf 2×2 ── */
+.r4 { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #2d2d42; border-radius: 10px; overflow: hidden; margin: 12px 0; }
+.r4-hdr { grid-column: 1/-1; display: grid; grid-template-columns: 1fr 1fr; background: #1e1e35; }
+.r4-hdr div { padding: 5px 14px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #475569; }
+.rc { padding: 12px 14px; }
+.rc .rs { font-size: 1.4rem; font-weight: 900; margin-bottom: 3px; }
+.rc .rn { font-size: 0.82rem; font-weight: 700; margin-bottom: 4px; }
+.rc .rd { font-size: 0.74rem; color: #94a3b8; margin-bottom: 5px; }
+.rc .re { font-size: 0.7rem; color: #64748b; font-style: italic; }
+.rc.pp { background: #052e16; border-right: 1px solid #2d2d42; } .rc.pp .rs,.rc.pp .rn { color: #34d399; }
+.rc.np { background: #1c1700; border-right: 1px solid #2d2d42; } .rc.np .rs,.rc.np .rn { color: #fbbf24; }
+.rc.pn { background: #2d0f0f; } .rc.pn .rs,.rc.pn .rn { color: #f87171; }
+.rc.nn { background: #0f1a2d; } .rc.nn .rs,.rc.nn .rn { color: #60a5fa; }
+
+/* ── Herzberg spectrum ── */
+.spec { margin: 12px 0; }
+.spec-bar { height: 28px; border-radius: 5px; background: linear-gradient(90deg,#34d399 0%,#1e293b 50%,#f87171 100%); display: flex; align-items: center; position: relative; }
+.spec-bar span { position: absolute; font-size: 0.65rem; font-weight: 700; padding: 0 8px; }
+.spec-bar .sl { left:0; color:#052e16; }
+.spec-bar .sm { left:50%; transform:translateX(-50%); color:#64748b; }
+.spec-bar .sr { right:0; color:#450a0a; }
+.spec-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.sc { border-radius: 9px; padding: 11px 13px; }
+.sc.sat { background:#052e16; border:1px solid #166534; }
+.sc.hyg { background:#1c0a00; border:1px solid #7c2d12; }
+.sc .sct { font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 7px; }
+.sc.sat .sct { color:#4ade80; } .sc.hyg .sct { color:#fb923c; }
+.sc ul { list-style: none; }
+.sc ul li { font-size: 0.76rem; padding: 2px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.sc ul li:last-child { border-bottom: none; }
+.sc.sat ul li { color:#86efac; } .sc.hyg ul li { color:#fcd34d; }
+
+/* ── X/Y split ── */
+.xy { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #2d2d42; border-radius: 10px; overflow: hidden; margin: 12px 0; }
+.xy-col { padding: 14px; }
+.xy-col.x { background:#1c0d0d; } .xy-col.y { background:#0d1c0d; }
+.xy-col .xh { font-size: 1.1rem; font-weight: 900; margin-bottom: 3px; }
+.xy-col.x .xh { color:#f87171; } .xy-col.y .xh { color:#4ade80; }
+.xy-col .xs { font-size: 0.67rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; opacity: 0.5; }
+.xy-col ul { list-style: none; }
+.xy-col ul li { font-size: 0.77rem; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.xy-col ul li:last-child { border-bottom: none; }
+.xy-col.x ul li { color:#fca5a5; } .xy-col.y ul li { color:#86efac; }
+.xy-col ul li::before { content: '→ '; opacity:0.4; }
+
+/* ── Tip / Note ── */
+.tip { background: #1e1b4b; border: 1px solid #4338ca; border-radius: 8px; padding: 9px 13px; font-size: 0.77rem; color: #a5b4fc; margin: 10px 0; }
+.tip b { color: #818cf8; }
+.crit { background: #1c0505; border: 1px solid #7c2d12; border-radius: 8px; padding: 9px 13px; margin: 10px 0; }
+.crit .ct { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #f87171; margin-bottom: 6px; }
+.crit ul { list-style: none; }
+.crit ul li { font-size: 0.77rem; color: #fca5a5; padding: 2px 0; }
+.crit ul li::before { content: '✗ '; opacity: 0.6; }
+
+.upsc-box { background: #1a0f3a; border: 1px solid #6d28d9; border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+.upsc-box .ut { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #c4b5fd; margin-bottom: 6px; }
+.upsc-box ul li,.upsc-box p { font-size: 0.78rem; color: #a78bfa; padding: 2px 0; }
+.upsc-box ul { list-style: none; }
+.upsc-box ul li::before { content: '→ '; opacity: 0.5; }
+
+.mnem { background: #0f172a; border: 1px solid #1e3a5f; border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+.mnem .mt { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #60a5fa; margin-bottom: 4px; }
+.mnem .mw { font-size: 1.05rem; font-weight: 700; color: #93c5fd; letter-spacing: 0.1em; margin-bottom: 3px; }
+.mnem .me { font-size: 0.76rem; color: #475569; }
+.mnem .me b { color: #60a5fa; }
+
+/* ── Tables ── */
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.77rem; }
+th { background: #1e1e35; color: #818cf8; padding: 7px 10px; text-align: left; font-weight: 700; }
+td { padding: 6px 10px; border-bottom: 1px solid #1e1e35; color: #cbd5e1; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+td b { color: #e2e8f0; } td .hi { color:#fbbf24; font-weight:700; } td .gr { color:#34d399; font-weight:700; } td .re { color:#f87171; } td .pu { color:#a78bfa; }
+
+/* ── MCQ ── */
+.mcq { background: #13131f; border: 1px solid #2d2d42; border-radius: 9px; padding: 12px 14px; margin-bottom: 8px; }
+.mcq .q { color: #e2e8f0; font-size: 0.8rem; font-weight: 600; margin-bottom: 7px; }
+.mcq .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 7px; }
+.mcq .opt { font-size: 0.74rem; color: #64748b; padding: 1px 0; }
+.mcq .opt.ok { color: #34d399; font-weight: 700; }
+.mcq .ans { font-size: 0.7rem; color: #475569; border-top: 1px solid #1e1e35; padding-top: 5px; margin-top: 3px; }
+
+/* combo grid */
+.cg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+.cc { border-radius: 8px; padding: 10px 13px; }
+.cc .ct { font-size: 0.78rem; font-weight: 700; margin-bottom: 3px; }
+.cc .cd { font-size: 0.74rem; color: #94a3b8; }
+.cc.best { background:#052e16; border:1px solid #166534; } .cc.best .ct { color:#34d399; }
+.cc.ok   { background:#1c1700; border:1px solid #713f12; } .cc.ok .ct   { color:#fbbf24; }
+.cc.bad  { background:#1c0a00; border:1px solid #7c2d12; } .cc.bad .ct  { color:#fb923c; }
+.cc.wrst { background:#1c0505; border:1px solid #450a0a; } .cc.wrst .ct { color:#f87171; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#mot">Motivation</a>
+  <a href="#reinf">Reinforcement</a>
+  <a href="#maslow">Maslow</a>
+  <a href="#erg">ERG</a>
+  <a href="#mcl">McClelland</a>
+  <a href="#hb">Herzberg</a>
+  <a href="#xy">X & Y</a>
+  <a href="#tz">Theory Z</a>
+  <a href="#eq">Equity</a>
+  <a href="#vr">Vroom</a>
+  <a href="#cmp">Compare</a>
+  <a href="#pyq">MCQs</a>
+  <a href="#upsc">UPSC</a>
+</nav>
+
+<div class="page">
+  <h1>Management — Day 2 · Motivation & Reinforcement Theory</h1>
+  <div class="sub">RBI Grade B Phase 2 Paper 3 · 2026-03-29 · Style: Shreyans Kumat (AIR 4) adapted</div>
+  <div class="pyq-top">
+    <b>PYQ HITS (this entire chapter):</b> Prelims — 8–10 times (2015–2024) · Mains GS2/GS4 — indirect · RBI Grade B Phase 2 — 4–6 marks guaranteed every year ·
+    <b>Last asked RBI:</b> Herzberg's Two-Factor (2023), Maslow Hierarchy (2022), McClelland nAch (2021), Vroom formula (2019)
+  </div>
+
+  <!-- ══════════════════════════ PART 1 ══════ -->
+  <div id="mot"></div>
+  <div class="part"><h2>Part 1 — Motivation</h2><div class="ps">What it is · 3 components · Features · Why RBI loves this topic</div></div>
+
+  <span class="tag must">Must Know</span><span class="tag pyq">PYQ Every Year</span>
+  <div class="pyq-badge">PYQ: RBI Grade B 2022, 2021 | UPSC Prelims 2017, 2019</div>
+
+  <div class="intro16">
+    <div class="i-label">Plain English — Read Once, Never Again</div>
+    You and your friend both have the same exam tomorrow. You study 4 hours. They study 30 min.
+    Same intelligence, same syllabus — different <b>motivation</b>. Now imagine 10,000 bank employees.
+    The RBI literally cannot function if its people aren't motivated. That's why this is <b>4–6 marks guaranteed</b> in Paper 3.
+  </div>
+
+  <div class="stree">
+    <div class="stree-root">MOTIVATION</div>
+    <div class="branches">
+      <div class="br"><div class="br-line"></div><div class="bn amber">
+        <div class="t">Definition — Robbins</div>
+        <div class="d">Process accounting for individual's <span class="hl">intensity</span>, <span class="hl">direction</span>, <span class="hl">persistence</span> of effort toward a goal</div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn green">
+        <div class="t">Rensis Likert — Quote this in answers</div>
+        <div class="d">"<span class="hl">Motivation is the core of management.</span> Poorly motivated people do almost nothing to identify the soundest organisation."</div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn blue">
+        <div class="t">3 Core Dimensions</div>
+        <div class="d"></div>
+        <div class="sub-br">
+          <div class="br"><div class="br-line"></div><div class="bn pink"><div class="t">Intensity</div><div class="d"><b>How hard</b> → effort put in. High intensity alone ≠ success — must be directed</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn green"><div class="t">Direction</div><div class="d"><b>What you aim at</b> → must channel toward org goals, not random effort</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn amber"><div class="t">Persistence</div><div class="d"><b>How long</b> → sustained effort; motivated employees don't quit when it's hard</div></div></div>
+        </div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn purple">
+        <div class="t">Features of Motivation</div>
+        <div class="d"></div>
+        <div class="sub-br">
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Psychological</div><div class="d">Internal force → invisible, inferred from behaviour</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Goal-directed</div><div class="d">Always toward satisfying a need. No need = no motivation</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Continuous</div><div class="d">Satisfying one need creates the next → never-ending process</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Complex + Unpredictable</div><div class="d">Same reward ≠ same effect on all people → individual differences</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Intrinsic OR Extrinsic</div><div class="d"><span class="hl-g">Intrinsic</span>: pride, satisfaction, growth · <span class="hl-r">Extrinsic</span>: salary, bonus, promotion</div></div></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════ PART 2 ══════ -->
+  <div id="reinf"></div>
+  <div class="part"><h2>Part 2 — Reinforcement Theory</h2><div class="ps">B.F. Skinner · Law of Effect · 4 Types · External behaviour focus</div></div>
+
+  <span class="tag must">Must Know</span><span class="tag pyq">Confusion MCQ — Neg Reinf vs Punishment</span>
+  <div class="pyq-badge">PYQ: RBI Grade B 2023 | UPSC Prelims 2018</div>
+
+  <div class="intro16">
+    <div class="i-label">Plain English</div>
+    Skinner said: forget feelings, forget needs. Just watch what happens <b>after</b> someone acts.
+    Good consequence → they do it again. Bad consequence → they stop. It's how you train a dog.
+    It's also how bad managers accidentally train employees to do the wrong things.
+  </div>
+
+  <div class="stree">
+    <div class="stree-root amber">REINFORCEMENT THEORY — B.F. SKINNER</div>
+    <div class="branches">
+      <div class="br"><div class="br-line"></div><div class="bn amber">
+        <div class="t">Core — Law of Effect (Thorndike → Skinner)</div>
+        <div class="d"><span class="hl">Behaviour = f(consequences)</span> · Positive consequence → repeat · Negative consequence → avoid · <b>Ignores internal states entirely</b></div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn blue">
+        <div class="t">Key Distinction from Content Theories</div>
+        <div class="d">Content theories ask "WHAT motivates?" · Reinforcement says "don't ask — just shape behaviour through consequences"</div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="r4">
+    <div class="r4-hdr">
+      <div>+ ADD to environment</div>
+      <div>− REMOVE from environment</div>
+    </div>
+    <div class="rc pp">
+      <div class="rs">+ +</div>
+      <div class="rn">Positive Reinforcement</div>
+      <div class="rd">Add <span class="hl-g">pleasant stimulus</span> after desired behaviour → <b>behaviour increases</b></div>
+      <div class="re">Eg: Bonus after hitting targets · Praise for good work</div>
+    </div>
+    <div class="rc np">
+      <div class="rs">− +</div>
+      <div class="rn">Negative Reinforcement</div>
+      <div class="rd">Remove <span class="hl-r">unpleasant stimulus</span> after desired behaviour → <b>behaviour increases</b></div>
+      <div class="re">Eg: Stop micromanaging when employee performs → relief = reward</div>
+    </div>
+    <div class="rc pn">
+      <div class="rs">+ −</div>
+      <div class="rn">Punishment</div>
+      <div class="rd">Add <span class="hl-r">unpleasant stimulus</span> after undesired behaviour → <b>behaviour decreases</b></div>
+      <div class="re">Eg: Fine for being late · Demotion after poor results</div>
+    </div>
+    <div class="rc nn">
+      <div class="rs">− −</div>
+      <div class="rn">Extinction</div>
+      <div class="rd">Remove <span class="hl-g">pleasant stimulus</span> after undesired behaviour → <b>behaviour decreases</b></div>
+      <div class="re">Eg: Stop praising show-off behaviour → they lose reward → stop the behaviour</div>
+    </div>
+  </div>
+
+  <div class="tip"><b>Exam trap:</b> <span class="hl">Negative Reinforcement INCREASES behaviour</span> (removes something bad) · <span class="hl-r">Punishment DECREASES behaviour</span> (adds something bad) · Both involve something negative — <b>opposite effects on behaviour</b></div>
+  <div class="mnem">
+    <div class="mt">Memory</div>
+    <div class="mw">PP · NP · PN · NN</div>
+    <div class="me"><b>PP</b>=+ve reinf · <b>NP</b>=−ve reinf · <b>PN</b>=punishment · <b>NN</b>=extinction | First letter = what you add/remove · Second = effect (+increase/−decrease)</div>
+  </div>
+
+  <!-- ══════════════════════════ PART 3 ══════ -->
+  <div class="part"><h2>Part 3 — Content Theories (WHAT Motivates)</h2><div class="ps">Need-based · Maslow · ERG · McClelland · Content = identifies the need driving behaviour</div></div>
+  <div class="tip"><b>Content vs Process:</b> <span class="hl">Content</span> = identify WHAT needs drive behaviour (Maslow, Herzberg, McClelland, ERG) · <span class="hl-p">Process</span> = explain HOW motivation works (Vroom, Adams, McGregor)</div>
+
+  <!-- MASLOW -->
+  <div id="maslow"></div>
+  <span class="tag must">Must Know</span><span class="tag pyq">PYQ Every Year</span>
+  <div class="pyq-badge">PYQ: RBI 2022, 2020 | UPSC Prelims 2017, 2015 | Mains GS-IV 2018 (indirect)</div>
+
+  <div class="intro16">
+    <div class="i-label">Plain English</div>
+    You can't focus on JEE prep if you haven't eaten in 2 days. You can't pursue "becoming your best self"
+    if you're worried about losing your job. Maslow said: humans satisfy needs in a fixed order — bottom to top.
+    <b>Managers must first pay people well before expecting passion and creativity.</b>
+  </div>
+
+  <div class="stree">
+    <div class="stree-root green">MASLOW'S HIERARCHY — Abraham Maslow [1943]</div>
+    <div class="branches">
+      <div class="br"><div class="br-line"></div><div class="bn blue">
+        <div class="t">Core Principle</div>
+        <div class="d"><span class="hl">Satisfied need ≠ motivator</span> · Once met → next higher need takes over · Strict hierarchy — must satisfy lower first</div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn amber">
+        <div class="t">D-Needs (Deficiency — bottom 4) vs B-Needs (Being — top 1)</div>
+        <div class="d"><span class="hl-r">D-Needs</span>: motivated by absence (levels 1–4) · <span class="hl-g">B-Needs</span>: motivated by desire to grow (level 5 only)</div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="pyr">
+    <div class="pl p5"><div class="pn">5 · SELF-ACTUALISATION</div><div class="pi">morality · creativity · inner potential · meaning · B-Need</div></div>
+    <div class="pl p4"><div class="pn">4 · ESTEEM</div><div class="pi">confidence · achievement · recognition · respect · uniqueness</div></div>
+    <div class="pl p3"><div class="pn">3 · LOVE & BELONGING</div><div class="pi">friendship · family · intimacy · group membership</div></div>
+    <div class="pl p2"><div class="pn">2 · SAFETY & SECURITY</div><div class="pi">employment · health · property · family security · stability</div></div>
+    <div class="pl p1"><div class="pn">1 · PHYSIOLOGICAL</div><div class="pi">food · water · shelter · clothing · sleep · breathing</div></div>
+  </div>
+
+  <div class="mnem">
+    <div class="mt">Mnemonic — bottom to top</div>
+    <div class="mw">Please Stop Letting Students Excel</div>
+    <div class="me"><b>P</b>hysiological · <b>S</b>afety · <b>L</b>ove/Belonging · <b>S</b>teem (Esteem) · <b>E</b>xcellence (Self-Actualisation)</div>
+  </div>
+
+  <table>
+    <tr><th>Level</th><th>Manager Action</th><th>Examples in Workplace</th></tr>
+    <tr><td><b class="hi">1 Physiological</b></td><td>Pay living wage, safe workspace, breaks</td><td>Salary, canteen, toilet facilities</td></tr>
+    <tr><td><b class="hi">2 Safety</b></td><td>Job security, fair procedures</td><td>Contracts, no-harassment policy, insurance</td></tr>
+    <tr><td><b class="hi">3 Social</b></td><td>Team culture, inclusion</td><td>Team events, open-door, mentoring</td></tr>
+    <tr><td><b class="hi">4 Esteem</b></td><td>Recognition, appraisals, promotions</td><td>Awards, titles, performance reviews</td></tr>
+    <tr><td><b class="hi">5 Self-Act.</b></td><td>Challenging work, autonomy</td><td>Stretch projects, creative freedom, leadership</td></tr>
+  </table>
+
+  <div class="crit">
+    <div class="ct">Criticism — Know for MCQs</div>
+    <ul>
+      <li>No empirical basis for strict hierarchy order</li>
+      <li>Western / individualistic bias — collectivist cultures prioritise social needs first</li>
+      <li>Multiple needs can be active simultaneously</li>
+      <li>Satisfied need can still motivate (self-actualisation never "done")</li>
+      <li>Hard to measure which level an employee is at</li>
+      <li>Frustration can push needs backward → Alderfer fixed this with ERG</li>
+    </ul>
+  </div>
+
+  <!-- ERG -->
+  <div id="erg"></div>
+  <span class="tag must">Must Know</span>
+  <div class="pyq-badge">PYQ: RBI 2021 (Compare with Maslow) | UPSC Prelims 2020</div>
+
+  <div class="stree">
+    <div class="stree-root blue">ALDERFER'S ERG THEORY [1969] — Clayton Alderfer</div>
+    <div class="branches">
+      <div class="br"><div class="br-line"></div><div class="bn amber">
+        <div class="t">E — Existence</div>
+        <div class="d">Maslow's Physiological + Safety · Basic material needs · Job, salary, working conditions</div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn green">
+        <div class="t">R — Relatedness</div>
+        <div class="d">Maslow's Social + External Esteem · Relationships with colleagues, family, recognition from others</div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn purple">
+        <div class="t">G — Growth</div>
+        <div class="d">Maslow's Internal Esteem + Self-Actualisation · Personal development, creativity, realising potential</div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn red">
+        <div class="t">★ KEY: Frustration-Regression (Maslow doesn't have this)</div>
+        <div class="d">If <span class="hl">higher need frustrated</span> → person regresses to lower need · Eg: Can't get promotion (Growth) → focuses on salary/job security (Existence)</div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn teal">
+        <div class="t">Also: Multiple needs active simultaneously — not strictly sequential</div>
+        <div class="d">More flexible than Maslow · Empirically tested in real workplaces</div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- McCLELLAND -->
+  <div id="mcl"></div>
+  <span class="tag must">Must Know</span><span class="tag pyq">High PYQ</span>
+  <div class="pyq-badge">PYQ: RBI Grade B 2021, 2019 | UPSC Prelims 2016</div>
+
+  <div class="intro16">
+    <div class="i-label">Plain English</div>
+    McClelland said needs aren't born — they're <b>learned through life experiences</b>.
+    Three big ones: wanting to <b>achieve</b> (nAch), wanting to <b>control</b> (nPow), wanting to be <b>liked</b> (nAff).
+    Problem: leaders with high nAff make terrible decisions — they won't fire the friend who keeps failing.
+  </div>
+
+  <div class="stree">
+    <div class="stree-root pink">McCLELLAND'S ACQUIRED NEEDS [1961] — David McClelland</div>
+    <div class="branches">
+      <div class="br"><div class="br-line"></div><div class="bn purple">
+        <div class="t">nAch — Need for Achievement</div>
+        <div class="d">
+          <div class="sub-br" style="border-left:none; padding:0; margin:4px 0 0;">
+            <div class="br" style="margin-bottom:2px"><div class="br-line"></div><div class="bn"><div class="t">Drive to excel vs standards</div><div class="d">Want <span class="hl">challenging but realistic</span> goals (not too easy, not impossible)</div></div></div>
+            <div class="br" style="margin-bottom:2px"><div class="br-line"></div><div class="bn"><div class="t">Personal responsibility</div><div class="d">Want to own the outcome → dislike luck-based tasks</div></div></div>
+            <div class="br" style="margin-bottom:2px"><div class="br-line"></div><div class="bn"><div class="t">Rapid concrete feedback</div><div class="d">Need to know fast how they're doing</div></div></div>
+            <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Money = measurement not motivation</div><div class="d">Use salary as scoreboard, not the goal itself · Typical of entrepreneurs</div></div></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn red">
+        <div class="t">nPow — Need for Power</div>
+        <div class="d">Want to <span class="hl">influence and control others</span> ·
+          <span class="hl-g">Institutional power</span>: for org benefit = good manager ·
+          <span class="hl-r">Personal power</span>: for self-gain = toxic ·
+          <b>High nPow + Low nAff = ideal manager profile</b></div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn green">
+        <div class="t">nAff — Need for Affiliation</div>
+        <div class="d">Desire for <span class="hl">friendly, close relationships</span> · Avoids conflict · <span class="hl-r">High nAff managers = problematic</span> — won't make tough calls · Good for customer-facing, team-building roles</div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn amber">
+        <div class="t">Conclusion</div>
+        <div class="d">Needs are <span class="hl">learned through life experience</span>, culture, upbringing — not innate like Maslow suggests</div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════ PART 4 ══════ -->
+  <div class="part"><h2>Part 4 — Process Theories (HOW Motivation Works)</h2><div class="ps">Herzberg · McGregor · Ouchi · Adams · Vroom</div></div>
+
+  <!-- HERZBERG -->
+  <div id="hb"></div>
+  <span class="tag must">Must Know</span><span class="tag pyq">PYQ — Distinction Table</span>
+  <div class="pyq-badge">PYQ: RBI Grade B 2023, 2020 | UPSC Prelims 2019, 2015</div>
+
+  <div class="intro16">
+    <div class="i-label">Plain English</div>
+    Think of hygiene in your bathroom. If it's dirty → you're unhappy. But cleaning it doesn't make you <b>happy</b> — just <b>not unhappy</b>.
+    That's exactly how <b>salary, job security, and good working conditions</b> work in an office.
+    They remove complaints — but they <b>never motivate</b>. What actually motivates? Achievement, recognition, meaningful work.
+  </div>
+
+  <div class="stree">
+    <div class="stree-root amber">HERZBERG'S TWO-FACTOR THEORY [1950s] — Frederick Herzberg</div>
+    <div class="branches">
+      <div class="br"><div class="br-line"></div><div class="bn blue">
+        <div class="t">Research basis</div>
+        <div class="d">Studied <span class="hl">200 accountants & engineers</span> in Pittsburgh · Asked what made them feel good/bad at work · Discovered 2 completely separate factor sets</div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn amber">
+        <div class="t">Key Insight</div>
+        <div class="d">Opposite of job satisfaction ≠ job dissatisfaction · <span class="hl">Two separate continuums</span>, not one · Hygiene prevents dissatisfaction; Motivators create satisfaction</div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="spec-bar">
+      <span class="sl">EXTREMELY SATISFIED</span>
+      <span class="sm">NEUTRAL</span>
+      <span class="sr">EXTREMELY DISSATISFIED</span>
+    </div>
+    <div class="spec-cols">
+      <div class="sc sat">
+        <div class="sct">Motivators — Intrinsic (Satisfiers)</div>
+        <ul>
+          <li>Achievement</li><li>Recognition</li><li>Work Itself (meaningful)</li>
+          <li>Responsibility</li><li>Advancement / Promotion</li><li>Growth (personal development)</li>
+        </ul>
+      </div>
+      <div class="sc hyg">
+        <div class="sct">Hygiene Factors — Extrinsic (Maintenance)</div>
+        <ul>
+          <li>Company Policy & Administration</li><li>Supervision quality</li>
+          <li>Relationship with Supervisor</li><li>Working Conditions</li>
+          <li>Salary</li><li>Relationship with Peers</li>
+          <li>Status · Security</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="mnem">
+    <div class="mt">Motivators mnemonic</div>
+    <div class="mw">ARRWAG</div>
+    <div class="me"><b>A</b>chievement · <b>R</b>ecognition · <b>R</b>esponsibility · <b>W</b>ork itself · <b>A</b>dvancement · <b>G</b>rowth</div>
+  </div>
+
+  <div class="cg">
+    <div class="cc best"><div class="ct">✓ High Hygiene + High Motivators</div><div class="cd">Ideal. Few complaints AND highly motivated. "I love this job and the company treats me well."</div></div>
+    <div class="cc ok"><div class="ct">◑ High Hygiene + Low Motivators</div><div class="cd">No complaints but zero motivation. "Here for the pay cheque." Show up, do minimum, leave.</div></div>
+    <div class="cc bad"><div class="ct">◑ Low Hygiene + High Motivators</div><div class="cd">Motivated but complaining constantly. "I love my work but hate this company." Common in NGOs/startups.</div></div>
+    <div class="cc wrst"><div class="ct">✗ Low Hygiene + Low Motivators</div><div class="cd">Worst. Unmotivated AND complaining. High attrition. Organisation in crisis.</div></div>
+  </div>
+
+  <div class="crit">
+    <div class="ct">Criticism</div>
+    <ul>
+      <li>Sample bias — only white-collar workers (accountants, engineers)</li>
+      <li>Self-serving bias in responses — attribute success to self, failure to environment</li>
+      <li>No overall job satisfaction measure</li>
+      <li>Later research: salary CAN motivate in some cultures</li>
+    </ul>
+  </div>
+
+  <!-- McGREGOR -->
+  <div id="xy"></div>
+  <span class="tag must">Must Know</span><span class="tag pyq">Always Compared</span>
+  <div class="pyq-badge">PYQ: RBI Grade B 2022 | UPSC Prelims 2018, 2016</div>
+
+  <div class="intro16">
+    <div class="i-label">Plain English</div>
+    McGregor said: every manager secretly believes one of two things about their team.
+    Theory X = "they're lazy, I need to watch them." Theory Y = "they're responsible, I should empower them."
+    Whichever you believe — you act on it — and your team <b>becomes what you believe</b>. Self-fulfilling prophecy.
+  </div>
+
+  <div class="stree">
+    <div class="stree-root">"The Human Side of Enterprise" — Douglas McGregor [1960]</div>
+    <div class="branches">
+      <div class="br"><div class="br-line"></div><div class="bn blue">
+        <div class="t">Core thesis</div>
+        <div class="d">Manager <span class="hl">assumptions</span> about workers shape how they manage → shapes how workers actually behave → <span class="hl">self-fulfilling prophecy</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="xy">
+    <div class="xy-col x">
+      <div class="xh">Theory X</div>
+      <div class="xs">Pessimistic · Authoritarian · Control</div>
+      <ul>
+        <li>Workers <span class="hl-r">dislike work</span> by nature</li>
+        <li>No ambition, avoid responsibility</li>
+        <li>Want security above all</li>
+        <li>Need <span class="hl-r">threats, coercion, control</span></li>
+        <li>Self-centred, resist change</li>
+        <li>Focus: Physiological + Safety needs</li>
+        <li>Result: micromanage, punish, monitor</li>
+      </ul>
+    </div>
+    <div class="xy-col y">
+      <div class="xh">Theory Y</div>
+      <div class="xs">Optimistic · Participative · Trust</div>
+      <ul>
+        <li>Work is <span class="hl-g">natural</span> — can be enjoyed</li>
+        <li>People are <span class="hl-g">ambitious, seek responsibility</span></li>
+        <li>Can exercise self-direction when committed</li>
+        <li>Rewards + recognition motivate</li>
+        <li>People are creative, intellectual potential underused</li>
+        <li>Focus: Esteem + Self-Actualisation</li>
+        <li>Result: <span class="hl-g">delegate, empower, trust</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tip"><b>Link:</b> Theory Y ↔ Maslow's higher needs ↔ Herzberg's Motivators. All point to same direction: intrinsic, growth-oriented management.</div>
+
+  <!-- THEORY Z -->
+  <div id="tz"></div>
+  <span class="tag must">Must Know</span>
+  <div class="pyq-badge">PYQ: RBI Grade B 2019 | UPSC GS-II (governance reform questions)</div>
+
+  <div class="stree">
+    <div class="stree-root teal">THEORY Z — William Ouchi [1981]</div>
+    <div class="branches">
+      <div class="br"><div class="br-line"></div><div class="bn amber">
+        <div class="t">Origin</div>
+        <div class="d">Ouchi studied <span class="hl">Japanese management</span> → why Japan outperformed USA in 1970s manufacturing · Extension of McGregor's Theory Y + Japanese work culture</div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn green">
+        <div class="t">Core Features</div>
+        <div class="d"></div>
+        <div class="sub-br">
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Long-term employment</div><div class="d">Treat workers like family — lifetime commitment</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Collective decision-making</div><div class="d">Consensus (ringi system) — all levels consulted</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Individual responsibility</div><div class="d">Even in group decisions — personal accountability</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Slow evaluation + promotion</div><div class="d">Patience rewarded · Not fast-track culture</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Holistic concern for employee</div><div class="d">Company cares about life, family, wellbeing — not just work output</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Moderate specialisation</div><div class="d">Workers rotated across roles → generalists, not narrow specialists</div></div></div>
+        </div>
+      </div></div>
+      <div class="br"><div class="br-line"></div><div class="bn blue">
+        <div class="t">Worker ↔ Manager Flow</div>
+        <div class="d"><span class="hl-g">Worker (bottom-up)</span>: Estimate → Perform → <b>Supervise Self</b> → Report ·
+        <span class="hl-p">Manager (top-down)</span>: Plan → Control Environment → Review</div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="crit">
+    <div class="ct">Limitations</div>
+    <ul>
+      <li>Lifetime employment = costly, inflexible in Western economies</li>
+      <li>Slow promotion frustrates ambitious employees</li>
+      <li>Cultural fit — works in collectivist Japan, not always in individualist cultures</li>
+      <li>Group decisions → risk of groupthink</li>
+    </ul>
+  </div>
+
+  <!-- EQUITY -->
+  <div id="eq"></div>
+  <span class="tag must">Must Know</span>
+  <div class="pyq-badge">PYQ: RBI Grade B 2020 | UPSC Prelims 2017</div>
+
+  <div class="intro16">
+    <div class="i-label">Plain English</div>
+    You find out your colleague — same job, same experience — earns ₹5,000 more. Suddenly you're demotivated,
+    even though nothing about your job changed. Adams said: we don't measure pay in absolute terms.
+    We compare our <b>input:outcome ratio</b> with others'. The moment it feels unfair, motivation drops.
+  </div>
+
+  <div class="stree">
+    <div class="stree-root red">ADAMS' EQUITY THEORY [1963] — John Stacey Adams</div>
+    <div class="branches">
+      <div class="br"><div class="br-line"></div><div class="bn amber">
+        <div class="t">Core Formula</div>
+        <div class="d"></div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="fbox">
+    <div class="f">My Outcomes / My Inputs = Their Outcomes / Their Inputs</div>
+    <div class="fs">Equal ratios → perceived equity → motivation sustained · Unequal → inequity → behaviour change</div>
+  </div>
+
+  <div class="g2" style="margin-top:10px">
+    <div class="gc"><div class="gt" style="color:#fbbf24">Inputs (What you give)</div>
+      <ul><li>Education & qualifications</li><li>Experience & skills</li><li>Effort & hard work</li><li>Loyalty & commitment</li><li>Risk-taking, adaptability</li></ul>
+    </div>
+    <div class="gc"><div class="gt" style="color:#34d399">Outcomes (What you get)</div>
+      <ul><li>Salary & bonus</li><li>Recognition & praise</li><li>Promotions</li><li>Work flexibility</li><li>Status & job security</li></ul>
+    </div>
+  </div>
+
+  <div class="g3" style="margin-top:8px">
+    <div class="gc"><div class="gt" style="color:#34d399">Equitable → Continue</div><div class="gb">My O/I = Their O/I → sustain same effort</div></div>
+    <div class="gc"><div class="gt" style="color:#f87171">Under-rewarded → React</div><div class="gb">My O/I &lt; Their O/I → reduce effort, complain, quit</div></div>
+    <div class="gc"><div class="gt" style="color:#fbbf24">Over-rewarded → Guilt</div><div class="gb">My O/I &gt; Their O/I → work harder briefly, then rationalise inputs upward</div></div>
+  </div>
+
+  <!-- VROOM -->
+  <div id="vr"></div>
+  <span class="tag must">Must Know</span><span class="tag pyq">Formula MCQ</span>
+  <div class="pyq-badge">PYQ: RBI Grade B 2019, 2017 | UPSC Prelims 2020</div>
+
+  <div class="intro16">
+    <div class="i-label">Plain English</div>
+    Before you decide to work hard on anything, you subconsciously run 3 checks:
+    ① Can I actually do this if I try? ② If I perform, will I get the reward? ③ Do I even want that reward?
+    If ANY ONE of these is zero — motivation = zero. That's why a talented employee stays demotivated
+    when they don't trust the appraisal system. <b>Instrumentality is zero → game over.</b>
+  </div>
+
+  <div class="stree">
+    <div class="stree-root blue">VROOM'S EXPECTANCY THEORY [1964] — Victor Vroom</div>
+    <div class="branches">
+      <div class="br"><div class="br-line"></div><div class="bn blue">
+        <div class="t">Core: MF = E × I × V</div>
+        <div class="d">If <span class="hl">ANY one = 0 → Motivation = 0</span> · Multiply, not add · All three must be non-zero for motivation to exist</div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="fbox"><div class="f">MF = E × I × V</div><div class="fs">Motivational Force = Expectancy × Instrumentality × Valence</div></div>
+
+  <div class="g3">
+    <div class="gc">
+      <div class="gt" style="color:#818cf8">E — Expectancy (0→1)</div>
+      <div class="gb">"Will my effort lead to performance?"<br><br>0 = "I can't do this even if I try"<br>1 = "I'm confident I'll nail it"<br><br><b>Affected by:</b> skills, past experience, resources, self-confidence</div>
+    </div>
+    <div class="gc">
+      <div class="gt" style="color:#34d399">I — Instrumentality (0→1)</div>
+      <div class="gb">"If I perform, will I get the reward?"<br><br>0 = "Good work is never rewarded here"<br>1 = "Performance always leads to promised reward"<br><br><b>Affected by:</b> trust in management, past precedent, reward clarity</div>
+    </div>
+    <div class="gc">
+      <div class="gt" style="color:#fbbf24">V — Valence (−1→+1)</div>
+      <div class="gb">"Do I want the reward?"<br><br>+1 = strongly want it<br>0 = indifferent<br><span class="hl-r">−1 = want to AVOID it</span><br><br><b>Eg:</b> Introvert doesn't want public award ceremony = negative valence</div>
+    </div>
+  </div>
+
+  <div class="tip"><b>Porter & Lawler Extension [1968]:</b> Added intrinsic vs extrinsic rewards + perceived equitable rewards · Key finding: <span class="hl">Satisfaction is a RESULT of performance</span> — not a cause · Reversed the common assumption</div>
+
+  <!-- ══════════════════════════ COMPARE ══════ -->
+  <div id="cmp"></div>
+  <div class="part"><h2>Part 5 — Master Comparison Table</h2><div class="ps">All theories · Revise this cold before exam</div></div>
+
+  <table>
+    <tr><th>Theory</th><th>Theorist [Year]</th><th>Type</th><th>Core Idea</th><th>Key Terms</th><th>Weakness</th></tr>
+    <tr><td><b class="hi">Reinforcement</b></td><td>Skinner</td><td><span class="pu">Neither</span></td><td>Behaviour = f(consequences)</td><td>+ve/-ve reinf, punishment, extinction</td><td>Ignores internal states</td></tr>
+    <tr><td><b class="hi">Maslow</b></td><td>Maslow [1943]</td><td><span class="gr">Content</span></td><td>5 needs, strict hierarchy, bottom-up</td><td>PSLSE, D-needs, B-needs</td><td>No empirical basis; Western bias</td></tr>
+    <tr><td><b class="hi">ERG</b></td><td>Alderfer [1969]</td><td><span class="gr">Content</span></td><td>3 needs; frustration-regression; multiple active</td><td>Existence, Relatedness, Growth</td><td>Less tested than Maslow</td></tr>
+    <tr><td><b class="hi">McClelland</b></td><td>McClelland [1961]</td><td><span class="gr">Content</span></td><td>3 learned needs; ideal manager = high nPow + low nAff</td><td>nAch, nPow, nAff</td><td>Hard to measure; culturally variable</td></tr>
+    <tr><td><b class="hi">Herzberg</b></td><td>Herzberg [1950s]</td><td><span class="gr">Content</span></td><td>Separate factors for satisfaction vs dissatisfaction</td><td>Motivators (ARRWAG), Hygiene</td><td>Sample bias; self-serving</td></tr>
+    <tr><td><b class="hi">Theory X & Y</b></td><td>McGregor [1960]</td><td><span class="gr">Content</span></td><td>Manager assumptions → self-fulfilling prophecy</td><td>Theory X (control), Theory Y (empower)</td><td>Binary; ignores situation</td></tr>
+    <tr><td><b class="hi">Theory Z</b></td><td>Ouchi [1981]</td><td><span class="gr">Content</span></td><td>Japanese: long-term, collective, holistic</td><td>Ringi, lifetime employment</td><td>Culture-specific; slow</td></tr>
+    <tr><td><b class="hi">Equity</b></td><td>Adams [1963]</td><td><span class="pu">Process</span></td><td>O/I ratio comparison with referent</td><td>Inputs, Outcomes, Inequity</td><td>Subjective comparison</td></tr>
+    <tr><td><b class="hi">Expectancy</b></td><td>Vroom [1964]</td><td><span class="pu">Process</span></td><td>MF = E × I × V; all must be non-zero</td><td>Expectancy, Instrumentality, Valence</td><td>Complex; hard to measure</td></tr>
+  </table>
+
+  <!-- ══════════════════════════ PYQ ══════ -->
+  <div id="pyq"></div>
+  <div class="part"><h2>Part 6 — MCQ Practice (20 Questions)</h2><div class="ps">RBI Grade B pattern · Answer then reveal</div></div>
+
+  <div class="mcq"><div class="q">1. According to Herzberg, salary is classified as a:</div><div class="opts"><div class="opt">(a) Motivator</div><div class="opt ok">(b) Hygiene factor</div><div class="opt">(c) Both</div><div class="opt">(d) Neither</div></div><div class="ans">Salary prevents dissatisfaction but does not motivate. Hygiene factor.</div></div>
+
+  <div class="mcq"><div class="q">2. Vroom's Motivational Force formula is:</div><div class="opts"><div class="opt">(a) E + I + V</div><div class="opt ok">(b) E × I × V</div><div class="opt">(c) E / I × V</div><div class="opt">(d) E + I × V</div></div><div class="ans">MF = Expectancy × Instrumentality × Valence. Multiplicative — any zero = total zero.</div></div>
+
+  <div class="mcq"><div class="q">3. Frustration-Regression concept is unique to:</div><div class="opts"><div class="opt">(a) Maslow</div><div class="opt ok">(b) Alderfer ERG</div><div class="opt">(c) McClelland</div><div class="opt">(d) Herzberg</div></div><div class="ans">Alderfer's ERG: if higher need frustrated, person regresses to lower need. Maslow doesn't have this.</div></div>
+
+  <div class="mcq"><div class="q">4. Removing praise from an employee who shows off = which reinforcement type?</div><div class="opts"><div class="opt">(a) Punishment</div><div class="opt">(b) Negative reinforcement</div><div class="opt ok">(c) Extinction</div><div class="opt">(d) Positive reinforcement</div></div><div class="ans">Extinction = remove pleasant stimulus (praise) to decrease undesired behaviour.</div></div>
+
+  <div class="mcq"><div class="q">5. McClelland's ideal manager profile:</div><div class="opts"><div class="opt">(a) High nAch, High nAff</div><div class="opt">(b) High nAff, Low nPow</div><div class="opt ok">(c) High nPow (institutional), Low nAff</div><div class="opt">(d) Equal all three</div></div><div class="ans">High nAff = avoids tough calls. Ideal manager: institutional power + ability to make hard decisions without needing to be liked.</div></div>
+
+  <div class="mcq"><div class="q">6. Theory Z was developed in the context of which country's management?</div><div class="opts"><div class="opt">(a) USA</div><div class="opt ok">(b) Japan</div><div class="opt">(c) Germany</div><div class="opt">(d) South Korea</div></div><div class="ans">William Ouchi studied Japanese companies and extracted their management principles.</div></div>
+
+  <div class="mcq"><div class="q">7. "A satisfied need is not a motivator" — which theory?</div><div class="opts"><div class="opt ok">(a) Maslow</div><div class="opt">(b) McClelland</div><div class="opt">(c) Vroom</div><div class="opt">(d) Herzberg</div></div><div class="ans">Maslow's core principle: satisfied need no longer motivates. Next higher need takes over.</div></div>
+
+  <div class="mcq"><div class="q">8. Porter & Lawler concluded that:</div><div class="opts"><div class="opt">(a) Satisfaction leads to performance</div><div class="opt ok">(b) Performance leads to satisfaction</div><div class="opt">(c) Both are unrelated</div><div class="opt">(d) Motivation = satisfaction</div></div><div class="ans">Porter & Lawler reversed common assumption: performance → rewards → satisfaction. Not the other way.</div></div>
+
+  <div class="mcq"><div class="q">9. ERG Theory's "G" corresponds to which Maslow levels?</div><div class="opts"><div class="opt">(a) Physiological + Safety</div><div class="opt">(b) Safety + Social</div><div class="opt">(c) Social + Esteem</div><div class="opt ok">(d) Internal Esteem + Self-Actualisation</div></div><div class="ans">Growth = internal esteem (confidence, achievement) + self-actualisation (creativity, inner potential).</div></div>
+
+  <div class="mcq"><div class="q">10. Which is a Motivator in Herzberg's theory?</div><div class="opts"><div class="opt">(a) Company policy</div><div class="opt">(b) Salary</div><div class="opt">(c) Working conditions</div><div class="opt ok">(d) Recognition</div></div><div class="ans">Recognition is intrinsic — creates genuine satisfaction. Others are Hygiene factors.</div></div>
+
+  <div class="mcq"><div class="q">11. Negative Reinforcement vs Punishment — key difference:</div><div class="opts"><div class="opt ok">(a) Neg reinf increases behaviour; punishment decreases it</div><div class="opt">(b) Both decrease behaviour</div><div class="opt">(c) Both increase behaviour</div><div class="opt">(d) Neg reinf decreases; punishment increases</div></div><div class="ans">Both involve something negative. But neg reinf REMOVES the unpleasant thing → behaviour increases. Punishment ADDS unpleasant → decreases.</div></div>
+
+  <div class="mcq"><div class="q">12. "Motivation is the core of management" — who said this?</div><div class="opts"><div class="opt">(a) Drucker</div><div class="opt ok">(b) Rensis Likert</div><div class="opt">(c) Fayol</div><div class="opt">(d) Taylor</div></div><div class="ans">Rensis Likert. Good quote to use in RBI Grade B answers.</div></div>
+
+  <div class="mcq"><div class="q">13. Theory Y is most consistent with which motivation theory?</div><div class="opts"><div class="opt">(a) Maslow's physiological needs</div><div class="opt ok">(b) Maslow's higher needs + Herzberg's Motivators</div><div class="opt">(c) Skinner's Reinforcement</div><div class="opt">(d) Adams' Equity Theory</div></div><div class="ans">Theory Y = workers seek intrinsic rewards, growth. Aligns with Maslow Esteem/Self-actualisation + Herzberg Motivators.</div></div>
+
+  <div class="mcq"><div class="q">14. If employee doesn't believe good performance leads to reward, which Vroom variable = 0?</div><div class="opts"><div class="opt">(a) Expectancy</div><div class="opt ok">(b) Instrumentality</div><div class="opt">(c) Valence</div><div class="opt">(d) MF</div></div><div class="ans">Instrumentality = "will performance → reward?" If broken trust/appraisal system = Instrumentality zero = zero motivation.</div></div>
+
+  <div class="mcq"><div class="q">15. Adams' Equity Theory is based on:</div><div class="opts"><div class="opt">(a) Needs hierarchy</div><div class="opt">(b) Manager assumptions</div><div class="opt ok">(c) Social comparison of input-outcome ratios</div><div class="opt">(d) External reinforcement</div></div><div class="ans">Compare own O/I ratio with referent. Perceived inequity → motivation changes.</div></div>
+
+  <div class="mcq"><div class="q">16. Who studied 200 engineers & accountants in Pittsburgh?</div><div class="opts"><div class="opt">(a) Maslow</div><div class="opt">(b) McClelland</div><div class="opt ok">(c) Herzberg</div><div class="opt">(d) Alderfer</div></div><div class="ans">Herzberg's Two-Factor Theory research base: 200 accountants & engineers, Pittsburgh, 1950s.</div></div>
+
+  <div class="mcq"><div class="q">17. Maslow's D-Needs (Deficiency Needs) include:</div><div class="opts"><div class="opt">(a) Self-Actualisation only</div><div class="opt">(b) Esteem + Self-Actualisation</div><div class="opt ok">(c) Physiological, Safety, Love/Belonging, Esteem</div><div class="opt">(d) All 5 levels</div></div><div class="ans">D-Needs = lower 4 levels. B-Needs = only Self-Actualisation (level 5).</div></div>
+
+  <div class="mcq"><div class="q">18. Theory Z's "ringi" system refers to:</div><div class="opts"><div class="opt">(a) Individual performance appraisal</div><div class="opt ok">(b) Collective consensus decision-making</div><div class="opt">(c) Fast-track promotion</div><div class="opt">(d) Quality control circles</div></div><div class="ans">Ringi = Japanese consensus-building decision process. All levels consulted before decisions made.</div></div>
+
+  <div class="mcq"><div class="q">19. High hygiene + low motivators → employees:</div><div class="opts"><div class="opt">(a) Highly motivated, few complaints</div><div class="opt ok">(b) Few complaints but not motivated</div><div class="opt">(c) Motivated but complaining</div><div class="opt">(d) Immediately resign</div></div><div class="ans">Good salary removes dissatisfaction. But without recognition, growth, meaningful work → "pay cheque only" employees.</div></div>
+
+  <div class="mcq"><div class="q">20. "Self-fulfilling prophecy" is most associated with:</div><div class="opts"><div class="opt">(a) Maslow</div><div class="opt">(b) Vroom</div><div class="opt ok">(c) McGregor Theory X & Y</div><div class="opt">(d) Adams</div></div><div class="ans">Theory X belief → micromanage → workers become lazy. Theory Y belief → empower → workers rise. The belief creates the reality.</div></div>
+
+  <!-- ══════════════════════════ UPSC ══════ -->
+  <div id="upsc"></div>
+  <div class="part"><h2>Part 7 — UPSC Overlap</h2><div class="ps">GS2 Governance · GS4 Ethics · Essay</div></div>
+
+  <div class="upsc-box">
+    <div class="ut">GS2 — Governance & Public Administration</div>
+    <ul>
+      <li><b>Why civil servants underperform:</b> Herzberg — job security (hygiene only) ≠ motivation → use Motivators (recognition, growth, meaningful work)</li>
+      <li><b>NPM reforms:</b> Theory Y-style — autonomy, accountability, results-focus in government</li>
+      <li><b>Pay Commission + equity:</b> Government employees compare with private sector → Adams' Equity Theory</li>
+      <li><b>Low productivity in PSUs:</b> Vroom — low Instrumentality ("hard work never rewarded here")</li>
+    </ul>
+  </div>
+
+  <div class="upsc-box">
+    <div class="ut">GS4 — Ethics, Integrity & Aptitude</div>
+    <ul>
+      <li><b>Why join civil services:</b> Self-actualisation (Maslow) + nAch (McClelland) + intrinsic motivation (Herzberg)</li>
+      <li><b>Corruption explained:</b> Equity Theory (underpaid vs private peers → inequity → rationalise corrupt behaviour) + Reinforcement (corrupt behaviour rewarded historically)</li>
+      <li><b>Whistle-blowing:</b> Self-actualisation + high nAch → act even at personal risk</li>
+      <li><b>Ethical leadership:</b> Theory Y → trust, empower → public servants act ethically when trusted</li>
+    </ul>
+  </div>
+
+  <div class="upsc-box">
+    <div class="ut">Essay Paper — Use These Angles</div>
+    <ul>
+      <li>"Money is not everything" → Herzberg Two-Factor as central argument</li>
+      <li>"Art of governance = motivating people to give their best" → full framework essay</li>
+      <li>"Building a motivated India" → Maslow applied to national development</li>
+    </ul>
+  </div>
+
+  <div class="tip" style="margin-top:20px"><b>Day 2 Cold Recall Checklist:</b><br>
+  ① Reinforcement: 4 types (PP/NP/PN/NN) — neg reinf INCREASES behaviour<br>
+  ② Maslow: PSLSE · D-needs (1–4) · B-needs (5 only)<br>
+  ③ ERG: Frustration-Regression = unique vs Maslow<br>
+  ④ McClelland: nAch (challenging goals) · nPow (control) · nAff (relationships) · ideal manager = high nPow + low nAff<br>
+  ⑤ Herzberg: ARRWAG motivators · Hygiene prevents dissatisfaction, NOT motivates<br>
+  ⑥ Theory X (lazy/control) vs Theory Y (responsible/empower) = self-fulfilling prophecy<br>
+  ⑦ Theory Z: Japanese · long-term · collective · ringi · holistic<br>
+  ⑧ Equity: My O/I = Their O/I → equity maintained<br>
+  ⑨ Vroom: MF = E×I×V · any one zero = total zero<br>
+  ⑩ Porter & Lawler: Performance → Satisfaction (NOT reverse)
+  </div>
+
+</div>
+</body>
+</html>
