@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Day 2 Flashcards — Motivation & Reinforcement</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f1a;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;height:100vh;overflow:hidden;user-select:none}
+#app{display:flex;flex-direction:column;height:100vh;padding:12px}
+#header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+#progress-text{font-size:0.8rem;color:#94a3b8}
+#category{font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em}
+#prog-bar{width:100%;height:4px;background:#1e293b;border-radius:2px;margin-bottom:8px}
+#prog-fill{height:100%;background:#a78bfa;border-radius:2px;transition:width 0.3s}
+#card-area{flex:1;display:flex;align-items:center;justify-content:center;perspective:1000px}
+.card{width:100%;max-width:440px;height:320px;position:relative;transform-style:preserve-3d;transition:transform 0.4s ease;cursor:pointer}
+.card.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+.front{background:#1e1e3a;border:1px solid #334155}
+.back{background:#1a0f2e;border:1px solid #a78bfa;transform:rotateY(180deg)}
+.face-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;opacity:0.5}
+.front .face-label{color:#94a3b8}
+.back .face-label{color:#a78bfa}
+.q-text{font-size:1.05rem;line-height:1.5;color:#e2e8f0}
+.a-text{font-size:0.95rem;line-height:1.6;color:#ddd6fe}
+.tap-hint{font-size:0.7rem;color:#475569;margin-top:12px}
+#buttons{display:flex;gap:10px;margin-top:12px}
+.btn{flex:1;padding:14px;border:none;border-radius:12px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:opacity 0.15s}
+.btn:active{opacity:0.7}
+#btn-again{background:#451a1a;color:#fca5a5}
+#btn-got{background:#2e1065;color:#c4b5fd}
+#bottom{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+#counter{font-size:0.75rem;color:#475569}
+#weak-btn{font-size:0.7rem;color:#fbbf24;background:none;border:1px solid #78350f;border-radius:6px;padding:4px 8px;cursor:pointer}
+#weak-btn.active{background:#78350f}
+#done-screen{display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;gap:16px}
+#done-screen h2{font-size:1.4rem;color:#a78bfa}
+#done-screen p{color:#94a3b8;font-size:0.9rem}
+.restart-btn{padding:12px 28px;background:#1e1035;border:1px solid #a78bfa;color:#a78bfa;border-radius:10px;font-size:0.9rem;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="header">
+    <span id="progress-text">Card 1 of 42</span>
+    <span id="category">Motivation Basics</span>
+  </div>
+  <div id="prog-bar"><div id="prog-fill" style="width:0%"></div></div>
+  <div id="card-area">
+    <div class="card" id="card" onclick="flipCard()">
+      <div class="face front">
+        <div class="face-label">Question</div>
+        <div class="q-text" id="q-text"></div>
+        <div class="tap-hint">tap to reveal</div>
+      </div>
+      <div class="face back">
+        <div class="face-label">Answer</div>
+        <div class="a-text" id="a-text"></div>
+      </div>
+    </div>
+  </div>
+  <div id="buttons">
+    <button class="btn" id="btn-again" onclick="grade(false)">✗ Again</button>
+    <button class="btn" id="btn-got" onclick="grade(true)">✓ Got it</button>
+  </div>
+  <div id="bottom">
+    <span id="counter"></span>
+    <button id="weak-btn" onclick="toggleWeak()">Weak Spots Only</button>
+  </div>
+</div>
+<div id="done-screen">
+  <h2>Session Complete!</h2>
+  <p id="done-stats"></p>
+  <button class="restart-btn" onclick="restart()">Restart</button>
+  <button class="restart-btn" onclick="restartWeak()">Weak Spots Only</button>
+</div>
+
+<script>
+const ALL_CARDS = [
+  // Motivation Basics
+  {c:"Motivation Basics", q:"Motivation — definition", a:"Internal drive that initiates, directs, and sustains behaviour towards a goal"},
+  {c:"Motivation Basics", q:"Intrinsic vs Extrinsic motivation", a:"Intrinsic = from within (interest, passion, satisfaction); Extrinsic = external rewards (money, praise, promotion)"},
+  {c:"Motivation Basics", q:"Who proposed Reinforcement Theory?", a:"B.F. Skinner — based on Operant Conditioning; behaviour shaped by consequences"},
+  {c:"Motivation Basics", q:"Content theories vs Process theories", a:"Content = WHAT motivates (needs); Process = HOW motivation works (cognitive processes)"},
+  // Reinforcement Theory
+  {c:"Reinforcement Theory", q:"4 types of reinforcement (Skinner)", a:"① Positive Reinforcement ② Negative Reinforcement ③ Punishment ④ Extinction"},
+  {c:"Reinforcement Theory", q:"Positive Reinforcement", a:"Add pleasant stimulus to increase desired behaviour (e.g., bonus for hitting targets)"},
+  {c:"Reinforcement Theory", q:"Negative Reinforcement", a:"Remove unpleasant stimulus to increase behaviour (e.g., stop criticism when employee improves)"},
+  {c:"Reinforcement Theory", q:"Punishment (reinforcement)", a:"Add unpleasant stimulus to decrease unwanted behaviour (e.g., reprimand for lateness)"},
+  {c:"Reinforcement Theory", q:"Extinction (reinforcement)", a:"Withdraw positive reinforcement to eliminate behaviour (e.g., ignore attention-seeking)"},
+  {c:"Reinforcement Theory", q:"Schedules of Reinforcement — 4 types", a:"Fixed Ratio · Variable Ratio · Fixed Interval · Variable Interval"},
+  {c:"Reinforcement Theory", q:"Most powerful (extinction-resistant) schedule", a:"Variable Ratio — unpredictable reward; e.g., gambling, social media likes"},
+  {c:"Reinforcement Theory", q:"Fixed Ratio schedule example", a:"Piecework pay — reward after every N responses (fast but post-reinforcement pause)"},
+  // Content Theories — Maslow
+  {c:"Maslow's Hierarchy", q:"Maslow's 5 levels (bottom → top)", a:"Physiological → Safety → Social/Love & Belonging → Esteem → Self-Actualisation"},
+  {c:"Maslow's Hierarchy", q:"Maslow's key assumption", a:"Lower-order needs must be substantially satisfied before higher needs emerge as motivators"},
+  {c:"Maslow's Hierarchy", q:"Physiological needs examples", a:"Food, water, shelter, sleep, warmth — basic survival"},
+  {c:"Maslow's Hierarchy", q:"Esteem needs — 2 types", a:"Lower esteem: status, recognition from others; Upper esteem: self-respect, achievement, confidence"},
+  {c:"Maslow's Hierarchy", q:"Self-Actualisation", a:"Reaching full potential; becoming what one is capable of being — differs person to person"},
+  // ERG Theory
+  {c:"ERG Theory", q:"ERG Theory — proposed by", a:"Clayton Alderfer (1969)"},
+  {c:"ERG Theory", q:"ERG stands for", a:"Existence · Relatedness · Growth"},
+  {c:"ERG Theory", q:"ERG vs Maslow — 2 key differences", a:"① Multiple needs active simultaneously (not strictly sequential) ② Frustration-Regression — if higher need frustrated, regress to lower need"},
+  {c:"ERG Theory", q:"Maslow → ERG mapping", a:"Physiological + Safety = Existence; Social = Relatedness; Esteem + Self-Actualisation = Growth"},
+  // McClelland
+  {c:"McClelland's Theory", q:"McClelland's 3 needs", a:"nAch (Achievement) · nPow (Power) · nAff (Affiliation)"},
+  {c:"McClelland's Theory", q:"Who suits entrepreneurship — McClelland", a:"High nAch — set challenging goals, want immediate feedback, take moderate risks"},
+  {c:"McClelland's Theory", q:"High nPow person", a:"Wants to influence/control others; can be social power (org benefit) or personal power (self-interest)"},
+  {c:"McClelland's Theory", q:"High nAff person", a:"Wants close relationships, approval, cooperative work — poor at objective decisions"},
+  // Herzberg
+  {c:"Herzberg's Theory", q:"Herzberg's 2-Factor Theory — 2 categories", a:"Hygiene Factors (prevent dissatisfaction) + Motivators (create satisfaction)"},
+  {c:"Herzberg's Theory", q:"Hygiene factors examples (6)", a:"Salary · Job security · Working conditions · Company policy · Supervision · Interpersonal relations"},
+  {c:"Herzberg's Theory", q:"Motivators examples (5)", a:"Achievement · Recognition · Responsibility · Advancement · Growth/Work itself"},
+  {c:"Herzberg's Theory", q:"Herzberg's key insight", a:"Opposite of dissatisfaction ≠ satisfaction — they are on separate scales; hygiene only prevents dissatisfaction"},
+  {c:"Herzberg's Theory", q:"Herzberg theory also called", a:"Two-Factor Theory / Motivation-Hygiene Theory"},
+  // McGregor & Ouchi
+  {c:"McGregor & Theory Z", q:"Theory X assumptions about workers", a:"Lazy · dislike work · need control/threats · avoid responsibility · motivated only by money"},
+  {c:"McGregor & Theory Z", q:"Theory Y assumptions about workers", a:"Self-motivated · seek responsibility · creative · enjoy work under right conditions · capable of self-direction"},
+  {c:"McGregor & Theory Z", q:"Theory X manager style", a:"Autocratic, micromanage, close supervision, top-down control"},
+  {c:"McGregor & Theory Z", q:"Theory Y manager style", a:"Participative, delegate, empower, trust employees to self-direct"},
+  {c:"McGregor & Theory Z", q:"Theory Z — proposed by & year", a:"William Ouchi (1981) — inspired by Japanese management practices"},
+  {c:"McGregor & Theory Z", q:"Theory Z features (4)", a:"Lifetime employment · Slow promotion · Collective decision-making · Holistic concern for employee (family too)"},
+  // Vroom & Adams
+  {c:"Vroom's Expectancy Theory", q:"Vroom's formula", a:"Motivation = Expectancy (E) × Instrumentality (I) × Valence (V)"},
+  {c:"Vroom's Expectancy Theory", q:"Expectancy (Vroom)", a:"Belief that effort → performance (can I do it?)"},
+  {c:"Vroom's Expectancy Theory", q:"Instrumentality (Vroom)", a:"Belief that performance → reward (will I get rewarded?)"},
+  {c:"Vroom's Expectancy Theory", q:"Valence (Vroom)", a:"Value/attractiveness of the reward to the individual (do I want it?)"},
+  {c:"Adams Equity Theory", q:"Adams Equity Theory — core idea", a:"People compare their input/output ratio to others; perceived inequity creates tension → motivation to restore balance"},
+  {c:"Adams Equity Theory", q:"Ways to restore equity (4)", a:"① Change inputs ② Change outputs ③ Change perception ④ Leave the job"},
+  // Comparisons / PYQ
+  {c:"Comparisons & PYQ", q:"Which theory uses Valence-Instrumentality-Expectancy?", a:"Vroom's Expectancy Theory (VIE model)"},
+  {c:"Comparisons & PYQ", q:"Herzberg said salary is a ____ factor", a:"Hygiene factor (prevents dissatisfaction; NOT a true motivator)"},
+  {c:"Comparisons & PYQ", q:"Alderfer's frustration-regression principle", a:"If a higher-order need is frustrated, person regresses to seeking more of a lower-order need"},
+  {c:"Comparisons & PYQ", q:"Who coined Theory Z and when?", a:"William Ouchi, 1981 — blended American + Japanese management styles"},
+];
+
+let deck=[], weakSet=new Set(), isFlipped=false, isWeakMode=false, gotCount=0, againCount=0;
+
+function loadWeak(){try{const w=JSON.parse(localStorage.getItem('d2-weak')||'[]');weakSet=new Set(w)}catch(e){}}
+function saveWeak(){localStorage.setItem('d2-weak',JSON.stringify([...weakSet]))}
+
+function buildDeck(weakOnly){
+  const src = weakOnly ? ALL_CARDS.filter((_,i)=>weakSet.has(i)) : [...ALL_CARDS];
+  if(src.length===0&&weakOnly){deck=[...ALL_CARDS];isWeakMode=false;document.getElementById('weak-btn').classList.remove('active')}
+  else deck=src.map((c,i)=>({...c,origIdx:weakOnly?[...weakSet][i]:i}));
+  gotCount=0;againCount=0;
+}
+
+function showCard(){
+  if(deck.length===0){showDone();return}
+  const c=deck[0];
+  document.getElementById('q-text').textContent=c.q;
+  document.getElementById('a-text').textContent=c.a;
+  document.getElementById('category').textContent=c.c;
+  const el=document.getElementById('card');
+  el.classList.remove('flipped');isFlipped=false;
+  const total=isWeakMode?weakSet.size:ALL_CARDS.length;
+  const done=total-deck.length;
+  document.getElementById('progress-text').textContent=`Card ${done+1} of ${total}`;
+  document.getElementById('prog-fill').style.width=`${(done/total)*100}%`;
+  document.getElementById('counter').textContent=`✓ ${gotCount}  ✗ ${againCount}`;
+}
+
+function flipCard(){
+  const el=document.getElementById('card');
+  el.classList.toggle('flipped');isFlipped=!isFlipped;
+}
+
+function grade(got){
+  if(!isFlipped){flipCard();return}
+  const c=deck.shift();
+  if(got){gotCount++;weakSet.delete(c.origIdx)}
+  else{againCount++;weakSet.add(c.origIdx);deck.splice(Math.min(4,deck.length),0,c)}
+  saveWeak();showCard();
+}
+
+function toggleWeak(){
+  loadWeak();
+  if(weakSet.size===0){alert('No weak spots saved yet!');return}
+  isWeakMode=!isWeakMode;
+  document.getElementById('weak-btn').classList.toggle('active',isWeakMode);
+  buildDeck(isWeakMode);showCard();
+  document.getElementById('app').style.display='flex';
+  document.getElementById('done-screen').style.display='none';
+}
+
+function showDone(){
+  document.getElementById('app').style.display='none';
+  document.getElementById('done-screen').style.display='flex';
+  document.getElementById('done-stats').textContent=`Got it: ${gotCount} · Again: ${againCount} · Weak spots saved: ${weakSet.size}`;
+}
+
+function restart(){
+  buildDeck(false);isWeakMode=false;
+  document.getElementById('weak-btn').classList.remove('active');
+  document.getElementById('app').style.display='flex';
+  document.getElementById('done-screen').style.display='none';
+  showCard();
+}
+
+function restartWeak(){
+  loadWeak();
+  if(weakSet.size===0){restart();return}
+  isWeakMode=true;buildDeck(true);
+  document.getElementById('weak-btn').classList.add('active');
+  document.getElementById('app').style.display='flex';
+  document.getElementById('done-screen').style.display='none';
+  showCard();
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.code==='Space'){e.preventDefault();flipCard()}
+  else if(e.code==='ArrowRight')grade(true);
+  else if(e.code==='ArrowLeft')grade(false);
+});
+
+let tx=0;
+document.getElementById('card').addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+document.getElementById('card').addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>60){grade(dx>0)}
+  else flipCard();
+});
+
+loadWeak();buildDeck(false);showCard();
+</script>
+</body>
+</html>

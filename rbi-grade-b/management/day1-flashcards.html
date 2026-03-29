@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Day 1 Flashcards — Management Fundamentals</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f1a;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;height:100vh;overflow:hidden;user-select:none}
+#app{display:flex;flex-direction:column;height:100vh;padding:12px}
+#header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+#progress-text{font-size:0.8rem;color:#94a3b8}
+#category{font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em}
+#prog-bar{width:100%;height:4px;background:#1e293b;border-radius:2px;margin-bottom:8px}
+#prog-fill{height:100%;background:#34d399;border-radius:2px;transition:width 0.3s}
+#card-area{flex:1;display:flex;align-items:center;justify-content:center;perspective:1000px}
+.card{width:100%;max-width:440px;height:320px;position:relative;transform-style:preserve-3d;transition:transform 0.4s ease;cursor:pointer}
+.card.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+.front{background:#1e1e3a;border:1px solid #334155}
+.back{background:#0f2a1f;border:1px solid #34d399;transform:rotateY(180deg)}
+.face-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;opacity:0.5}
+.front .face-label{color:#94a3b8}
+.back .face-label{color:#34d399}
+.q-text{font-size:1.05rem;line-height:1.5;color:#e2e8f0}
+.a-text{font-size:0.95rem;line-height:1.6;color:#a7f3d0}
+.tap-hint{font-size:0.7rem;color:#475569;margin-top:12px}
+#buttons{display:flex;gap:10px;margin-top:12px}
+.btn{flex:1;padding:14px;border:none;border-radius:12px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:opacity 0.15s}
+.btn:active{opacity:0.7}
+#btn-again{background:#451a1a;color:#fca5a5}
+#btn-got{background:#14532d;color:#86efac}
+#bottom{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+#counter{font-size:0.75rem;color:#475569}
+#weak-btn{font-size:0.7rem;color:#fbbf24;background:none;border:1px solid #78350f;border-radius:6px;padding:4px 8px;cursor:pointer}
+#weak-btn.active{background:#78350f}
+#done-screen{display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;gap:16px}
+#done-screen h2{font-size:1.4rem;color:#34d399}
+#done-screen p{color:#94a3b8;font-size:0.9rem}
+.restart-btn{padding:12px 28px;background:#1e3a2f;border:1px solid #34d399;color:#34d399;border-radius:10px;font-size:0.9rem;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="header">
+    <span id="progress-text">Card 1 of 49</span>
+    <span id="category">Management Basics</span>
+  </div>
+  <div id="prog-bar"><div id="prog-fill" style="width:0%"></div></div>
+  <div id="card-area">
+    <div class="card" id="card" onclick="flipCard()">
+      <div class="face front">
+        <div class="face-label">Question</div>
+        <div class="q-text" id="q-text"></div>
+        <div class="tap-hint">tap to reveal</div>
+      </div>
+      <div class="face back">
+        <div class="face-label">Answer</div>
+        <div class="a-text" id="a-text"></div>
+      </div>
+    </div>
+  </div>
+  <div id="buttons">
+    <button class="btn" id="btn-again" onclick="grade(false)">✗ Again</button>
+    <button class="btn" id="btn-got" onclick="grade(true)">✓ Got it</button>
+  </div>
+  <div id="bottom">
+    <span id="counter"></span>
+    <button id="weak-btn" onclick="toggleWeak()">Weak Spots Only</button>
+  </div>
+</div>
+<div id="done-screen">
+  <h2>Session Complete!</h2>
+  <p id="done-stats"></p>
+  <button class="restart-btn" onclick="restart()">Restart</button>
+  <button class="restart-btn" onclick="restartWeak()">Weak Spots Only</button>
+</div>
+
+<script>
+const ALL_CARDS = [
+  // Management Basics
+  {c:"Management Basics", q:"Define Management (Fayol)", a:"To forecast, plan, organise, command, coordinate and control"},
+  {c:"Management Basics", q:"Koontz's definition of Management", a:"Getting things done through and with people in formally organised groups"},
+  {c:"Management Basics", q:"Mary Parker Follett on management", a:"Art of getting things done through people"},
+  {c:"Management Basics", q:"Top management role", a:"Set vision/policy — Board of Directors, CEO, MD"},
+  {c:"Management Basics", q:"Middle management role", a:"Implement top-level plans — Dept heads, branch managers"},
+  {c:"Management Basics", q:"Lower management role", a:"Supervise workers directly — Foremen, supervisors"},
+  {c:"Management Basics", q:"Administration vs Management — key diff", a:"Administration = policy making (higher level); Management = policy execution (operative level)"},
+  // Fayol
+  {c:"Fayol's 14 Principles", q:"Fayol's 14 Principles — first 7", a:"Division of Work · Authority & Responsibility · Discipline · Unity of Command · Unity of Direction · Subordination (individual to general) · Remuneration"},
+  {c:"Fayol's 14 Principles", q:"Fayol's 14 Principles — last 7", a:"Centralisation · Scalar Chain · Order · Equity · Stability of Tenure · Initiative · Esprit de Corps"},
+  {c:"Fayol's 14 Principles", q:"Unity of Command means", a:"Each employee receives orders from ONE superior only"},
+  {c:"Fayol's 14 Principles", q:"Unity of Direction means", a:"One head, one plan for activities with the same objective"},
+  {c:"Fayol's 14 Principles", q:"Scalar Chain means", a:"Line of authority top→bottom; Gangplank = direct horizontal communication allowed in emergencies"},
+  {c:"Fayol's 14 Principles", q:"Esprit de Corps", a:"Team spirit — union is strength; avoid divide and rule"},
+  {c:"Fayol's 14 Principles", q:"Centralisation vs Decentralisation (Fayol)", a:"Balance depends on situation — no absolute rule; managers must find right mix"},
+  // Taylor
+  {c:"Taylor's Scientific Management", q:"Taylor's 4 principles", a:"① Science not rule of thumb ② Scientific selection & training ③ Cooperation not individualism ④ Equal division of work & responsibility"},
+  {c:"Taylor's Scientific Management", q:"Differential Piece Rate system", a:"Higher rate for output above standard; lower rate for below — incentivises efficiency"},
+  {c:"Taylor's Scientific Management", q:"Taylor vs Fayol — key contrast", a:"Taylor = shop floor / operative level / scientific method; Fayol = top management / administrative / universally applicable"},
+  {c:"Taylor's Scientific Management", q:"Time and Motion Study (Taylor)", a:"Analyse tasks to find the 'one best way' — eliminate wasted movements, set standard time"},
+  // Schools
+  {c:"Schools of Thought", q:"Classical School — 3 theorists", a:"Taylor (Scientific Mgmt) · Fayol (Administrative) · Weber (Bureaucracy)"},
+  {c:"Schools of Thought", q:"Weber's Bureaucracy — key features", a:"Fixed rules · Hierarchy · Impersonality · Written records · Merit-based selection"},
+  {c:"Schools of Thought", q:"Hawthorne Studies — who conducted & where", a:"Elton Mayo at Western Electric Co., Chicago (1924–1932)"},
+  {c:"Schools of Thought", q:"Hawthorne Effect", a:"Workers perform better when they know they're being observed/attention given"},
+  {c:"Schools of Thought", q:"Hawthorne Studies — key finding", a:"Social factors, group norms, and human relations matter MORE than physical working conditions"},
+  {c:"Schools of Thought", q:"Systems Approach (Modern School)", a:"Organisation = open system with inputs → process → output → feedback; all parts interrelated"},
+  {c:"Schools of Thought", q:"Contingency Approach", a:"No one best way — management depends on situation; 'it depends' approach"},
+  // Mintzberg
+  {c:"Mintzberg's Roles", q:"Mintzberg's 3 role categories", a:"Interpersonal · Informational · Decisional"},
+  {c:"Mintzberg's Roles", q:"Interpersonal roles (3)", a:"Figurehead · Leader · Liaison"},
+  {c:"Mintzberg's Roles", q:"Informational roles (3)", a:"Monitor · Disseminator · Spokesperson"},
+  {c:"Mintzberg's Roles", q:"Decisional roles (4)", a:"Entrepreneur · Disturbance Handler · Resource Allocator · Negotiator"},
+  {c:"Mintzberg's Roles", q:"Figurehead role", a:"Ceremonial duties — signing documents, attending functions, representing org"},
+  {c:"Mintzberg's Roles", q:"Disturbance Handler role", a:"Handles unexpected crises, conflicts, involuntary situations"},
+  // Functions
+  {c:"Functions of Management", q:"POSDCORB — Gulick's 7 functions", a:"Planning · Organising · Staffing · Directing · Coordinating · Reporting · Budgeting"},
+  {c:"Functions of Management", q:"Modern 4 functions of management", a:"Planning · Organising · Leading · Controlling"},
+  {c:"Functions of Management", q:"Planning types — 3 levels", a:"Strategic (long-term) · Tactical (medium-term) · Operational (short-term)"},
+  {c:"Functions of Management", q:"MBO — full form & who coined it", a:"Management by Objectives — Peter Drucker; jointly set goals, review performance against them"},
+  // Decision Making
+  {c:"Decision Making", q:"Programmed vs Non-programmed decisions", a:"Programmed = routine, structured, repetitive; Non-programmed = novel, unstructured, unique"},
+  {c:"Decision Making", q:"Bounded Rationality — Herbert Simon", a:"Decisions made with limited info and cognitive limits → 'satisficing' (good enough) not maximising"},
+  {c:"Decision Making", q:"Delphi Technique", a:"Expert opinions collected anonymously, multiple rounds until consensus — no face-to-face bias"},
+  {c:"Decision Making", q:"Brainstorming rule", a:"No criticism during idea generation; quantity over quality first; build on others' ideas"},
+  // Personality
+  {c:"Personality", q:"Big Five — OCEAN", a:"Openness · Conscientiousness · Extraversion · Agreeableness · Neuroticism"},
+  {c:"Personality", q:"Type A personality traits", a:"Competitive · time-urgent · workaholic · impatient · prone to stress/heart disease"},
+  {c:"Personality", q:"Type B personality traits", a:"Relaxed · less competitive · creative · not time-pressured"},
+  {c:"Personality", q:"Locus of Control — internal", a:"Believe they control own outcomes — higher job satisfaction, better at complex tasks"},
+  {c:"Personality", q:"Locus of Control — external", a:"Believe external forces/luck control outcomes — less initiative"},
+  {c:"Personality", q:"Self-efficacy (Bandura)", a:"Belief in one's own ability to succeed at a task — higher self-efficacy → better performance"},
+  // Perception
+  {c:"Perception", q:"Perception process — 3 steps", a:"Selection → Organisation → Interpretation"},
+  {c:"Perception", q:"Halo Effect", a:"One positive trait colours entire impression (e.g., attractive person assumed competent)"},
+  {c:"Perception", q:"Stereotyping", a:"Judging a person based on the group they belong to (age, gender, race, etc.)"},
+  {c:"Perception", q:"Projection (perceptual error)", a:"Attributing your own feelings/traits to others"},
+  {c:"Perception", q:"Fundamental Attribution Error", a:"Overestimate internal factors for others' failures; underestimate situational factors"},
+];
+
+let deck=[], weakSet=new Set(), isFlipped=false, isWeakMode=false, gotCount=0, againCount=0;
+
+function loadWeak(){try{const w=JSON.parse(localStorage.getItem('d1-weak')||'[]');weakSet=new Set(w)}catch(e){}}
+function saveWeak(){localStorage.setItem('d1-weak',JSON.stringify([...weakSet]))}
+
+function buildDeck(weakOnly){
+  const src = weakOnly ? ALL_CARDS.filter((_,i)=>weakSet.has(i)) : [...ALL_CARDS];
+  if(src.length===0&&weakOnly){deck=[...ALL_CARDS];isWeakMode=false;document.getElementById('weak-btn').classList.remove('active')}
+  else deck=src.map((c,i)=>({...c,origIdx:weakOnly?[...weakSet][i]:i}));
+  gotCount=0;againCount=0;
+}
+
+function showCard(){
+  if(deck.length===0){showDone();return}
+  const c=deck[0];
+  document.getElementById('q-text').textContent=c.q;
+  document.getElementById('a-text').textContent=c.a;
+  document.getElementById('category').textContent=c.c;
+  const el=document.getElementById('card');
+  el.classList.remove('flipped');isFlipped=false;
+  const total=isWeakMode?weakSet.size:ALL_CARDS.length;
+  const done=total-deck.length;
+  document.getElementById('progress-text').textContent=`Card ${done+1} of ${total}`;
+  document.getElementById('prog-fill').style.width=`${(done/total)*100}%`;
+  document.getElementById('counter').textContent=`✓ ${gotCount}  ✗ ${againCount}`;
+}
+
+function flipCard(){
+  const el=document.getElementById('card');
+  el.classList.toggle('flipped');
+  isFlipped=!isFlipped;
+}
+
+function grade(got){
+  if(!isFlipped){flipCard();return}
+  const c=deck.shift();
+  if(got){gotCount++;weakSet.delete(c.origIdx)}
+  else{againCount++;weakSet.add(c.origIdx);deck.splice(Math.min(4,deck.length),0,c)}
+  saveWeak();showCard();
+}
+
+function toggleWeak(){
+  loadWeak();
+  if(weakSet.size===0){alert('No weak spots saved yet!');return}
+  isWeakMode=!isWeakMode;
+  document.getElementById('weak-btn').classList.toggle('active',isWeakMode);
+  buildDeck(isWeakMode);showCard();
+  document.getElementById('app').style.display='flex';
+  document.getElementById('done-screen').style.display='none';
+}
+
+function showDone(){
+  document.getElementById('app').style.display='none';
+  document.getElementById('done-screen').style.display='flex';
+  document.getElementById('done-stats').textContent=`Got it: ${gotCount} · Again: ${againCount} · Weak spots saved: ${weakSet.size}`;
+}
+
+function restart(){
+  buildDeck(false);isWeakMode=false;
+  document.getElementById('weak-btn').classList.remove('active');
+  document.getElementById('app').style.display='flex';
+  document.getElementById('done-screen').style.display='none';
+  showCard();
+}
+
+function restartWeak(){
+  loadWeak();
+  if(weakSet.size===0){restart();return}
+  isWeakMode=true;buildDeck(true);
+  document.getElementById('weak-btn').classList.add('active');
+  document.getElementById('app').style.display='flex';
+  document.getElementById('done-screen').style.display='none';
+  showCard();
+}
+
+// Keyboard
+document.addEventListener('keydown',e=>{
+  if(e.code==='Space'){e.preventDefault();flipCard()}
+  else if(e.code==='ArrowRight')grade(true);
+  else if(e.code==='ArrowLeft')grade(false);
+});
+
+// Swipe
+let tx=0;
+document.getElementById('card').addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+document.getElementById('card').addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>60){grade(dx>0)}
+  else flipCard();
+});
+
+// Init
+loadWeak();buildDeck(false);showCard();
+</script>
+</body>
+</html>
