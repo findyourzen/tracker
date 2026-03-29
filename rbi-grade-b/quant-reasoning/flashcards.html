@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>RBI — Quant Flashcards</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; background: #0f0f1a; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+
+.screen { position: absolute; inset: 0; display: flex; flex-direction: column; }
+.screen.hidden { display: none; }
+
+/* ── HOME ── */
+#home { overflow-y: auto; padding: 28px 20px 48px; }
+.home-title { color: #818cf8; font-size: 1.4rem; font-weight: 700; margin-bottom: 4px; }
+.home-sub   { color: #475569; font-size: 0.78rem; margin-bottom: 28px; }
+.sec-label  { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #475569; margin-bottom: 10px; }
+
+.cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.cat-btn {
+  background: #1a1a2e; border: 2px solid #2d2d42; border-radius: 12px;
+  padding: 14px 12px; cursor: pointer; text-align: left; transition: all 0.15s;
+}
+.cat-btn.active { border-color: #818cf8; background: #1e1b4b; }
+.cat-name { display: block; font-size: 0.82rem; font-weight: 600; color: #94a3b8; margin-bottom: 3px; }
+.cat-btn.active .cat-name { color: #e2e8f0; }
+.cat-count { font-size: 0.7rem; color: #2d2d42; }
+.cat-btn.active .cat-count { color: #818cf8; }
+
+.weak-row {
+  background: #1a1a2e; border: 1px solid #2d2d42; border-radius: 12px;
+  padding: 14px 16px; margin-bottom: 20px; display: flex; align-items: center;
+  justify-content: space-between; cursor: pointer; transition: all 0.15s;
+}
+.weak-row.on { border-color: #f59e0b; background: #1c1800; }
+.weak-row .wr-left .wr-title { font-size: 0.85rem; font-weight: 600; color: #f59e0b; }
+.weak-row .wr-left .wr-sub   { font-size: 0.72rem; color: #475569; margin-top: 2px; }
+.wr-check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid #f59e0b; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: #f59e0b; }
+
+.start-btn {
+  width: 100%; background: #818cf8; color: #fff; border: none; border-radius: 14px;
+  padding: 18px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-bottom: 8px; transition: background 0.15s;
+}
+.start-btn:active { background: #6366f1; }
+.start-btn:disabled { background: #1e1e30; color: #374151; cursor: not-allowed; }
+.start-hint { text-align: center; font-size: 0.72rem; color: #374151; }
+
+/* ── DRILL ── */
+#drill { overflow: hidden; }
+.drill-top { padding: 14px 16px 8px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.back-btn { background: none; border: none; color: #475569; font-size: 1.3rem; cursor: pointer; padding: 2px 6px; line-height: 1; }
+.drill-info { flex: 1; font-size: 0.75rem; color: #475569; }
+.drill-info b { color: #e2e8f0; }
+.drill-info .again-c { color: #f87171; }
+
+.pbar { height: 3px; background: #1a1a2e; flex-shrink: 0; }
+.pfill { height: 100%; background: linear-gradient(90deg, #818cf8, #6366f1); transition: width 0.4s; }
+
+.card-area {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 16px 20px 20px; gap: 16px; overflow: hidden;
+}
+
+.flashcard {
+  width: 100%; max-width: 420px; flex: 1; max-height: 320px;
+  background: #1a1a2e; border: 2px solid #2d2d42; border-radius: 22px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 28px 24px; cursor: pointer; user-select: none; position: relative;
+  transition: border-color 0.2s, transform 0.12s;
+}
+.flashcard:active { transform: scale(0.985); }
+.flashcard.flipped { border-color: #34d399; }
+.flashcard.wrong   { border-color: #f87171; }
+
+.fc-cat { position: absolute; top: 14px; left: 16px; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+.fc-pos { position: absolute; top: 14px; right: 16px; font-size: 0.65rem; color: #2d2d42; }
+
+.fc-q    { font-size: 2.4rem; font-weight: 700; text-align: center; margin-bottom: 6px; }
+.fc-tap  { font-size: 0.7rem; color: #2d2d42; margin-top: 10px; }
+.fc-a    { font-size: 3rem; font-weight: 700; color: #34d399; text-align: center; }
+.fc-hint { font-size: 0.78rem; color: #475569; margin-top: 8px; text-align: center; }
+
+.action-row { display: flex; gap: 12px; width: 100%; max-width: 420px; flex-shrink: 0; }
+.act-btn {
+  flex: 1; padding: 18px 0; border: none; border-radius: 14px; font-size: 1rem;
+  font-weight: 700; cursor: pointer; transition: transform 0.1s, opacity 0.15s;
+}
+.act-btn:active { transform: scale(0.95); }
+.act-btn.again { background: #450a0a; color: #fca5a5; }
+.act-btn.got   { background: #052e16; color: #6ee7b7; }
+.act-btn:disabled { opacity: 0; pointer-events: none; }
+
+/* ── END ── */
+#end { padding: 36px 20px 40px; align-items: center; justify-content: center; gap: 18px; overflow-y: auto; }
+.end-title { font-size: 1.7rem; font-weight: 700; color: #818cf8; }
+.end-tag   { font-size: 0.75rem; color: #475569; margin-top: -10px; }
+
+.stats-row { display: flex; gap: 12px; width: 100%; }
+.stat-box  { flex: 1; background: #1a1a2e; border: 1px solid #2d2d42; border-radius: 14px; padding: 16px 0; text-align: center; }
+.sval { font-size: 2.2rem; font-weight: 700; }
+.sval.g { color: #34d399; }
+.sval.r { color: #f87171; }
+.slbl { font-size: 0.68rem; color: #475569; margin-top: 3px; }
+
+.end-btns { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+.ebtn { width: 100%; padding: 16px; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; cursor: pointer; }
+.ebtn.primary   { background: #f59e0b; color: #1a1200; }
+.ebtn.secondary { background: #1a1a2e; color: #818cf8; border: 1px solid #2d2d42; }
+
+.weak-list-wrap { width: 100%; }
+.wl { background: #1a1a2e; border: 1px solid #2d2d42; border-radius: 14px; padding: 14px 16px; max-height: 220px; overflow-y: auto; }
+.wl-title { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #f59e0b; margin-bottom: 10px; }
+.wi { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #1e1e30; font-size: 0.82rem; }
+.wi:last-child { border-bottom: none; }
+.wi-q { color: #64748b; }
+.wi-a { color: #fbbf24; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HOME ═══════════════════════════════════════════════════════════════ -->
+<div class="screen" id="home">
+  <div class="home-title">Quant Flashcards</div>
+  <div class="home-sub">RBI Grade B · No calculator · No mercy</div>
+
+  <div class="sec-label">Pick categories</div>
+  <div class="cat-grid" id="cat-grid"></div>
+
+  <div id="weak-wrap"></div>
+
+  <button class="start-btn" id="start-btn" onclick="startDrill()">Start Drill</button>
+  <div class="start-hint" id="start-hint"></div>
+</div>
+
+<!-- ═══ DRILL ══════════════════════════════════════════════════════════════ -->
+<div class="screen hidden" id="drill">
+  <div class="drill-top">
+    <button class="back-btn" onclick="goHome()">←</button>
+    <div class="drill-info" id="drill-info"></div>
+  </div>
+  <div class="pbar"><div class="pfill" id="pfill"></div></div>
+
+  <div class="card-area">
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="fc-cat" id="fc-cat"></div>
+      <div class="fc-pos" id="fc-pos"></div>
+      <div id="fc-front">
+        <div class="fc-q" id="fc-q"></div>
+        <div class="fc-tap">tap to reveal</div>
+      </div>
+      <div id="fc-back" style="display:none; text-align:center;">
+        <div class="fc-a" id="fc-a"></div>
+        <div class="fc-hint" id="fc-hint"></div>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button class="act-btn again" id="btn-again" disabled onclick="markAgain()">✗  Again</button>
+      <button class="act-btn got"   id="btn-got"   disabled onclick="markGot()">✓  Got it</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ END ════════════════════════════════════════════════════════════════ -->
+<div class="screen hidden" id="end">
+  <div class="end-title" id="end-title">Session Done!</div>
+  <div class="end-tag" id="end-tag"></div>
+  <div class="stats-row">
+    <div class="stat-box"><div class="sval g" id="sv-got">0</div><div class="slbl">Got it</div></div>
+    <div class="stat-box"><div class="sval r" id="sv-weak">0</div><div class="slbl">Weak</div></div>
+    <div class="stat-box"><div class="sval"   id="sv-pct" style="color:#818cf8">0%</div><div class="slbl">Score</div></div>
+  </div>
+  <div class="end-btns" id="end-btns"></div>
+  <div class="weak-list-wrap" id="wl-wrap"></div>
+</div>
+
+<script>
+// ── Card data ────────────────────────────────────────────────────────────────
+
+const META = {
+  fractions: { label: 'Fractions → %', color: '#fbbf24' },
+  sq25:      { label: 'Squares 1–25',  color: '#34d399' },
+  sq35:      { label: 'Squares 26–35', color: '#34d399' },
+  cubes:     { label: 'Cubes 1–15',    color: '#f472b6' },
+  tbl2:      { label: 'Tables 2–12',   color: '#818cf8' },
+  tbl13:     { label: 'Tables 13–20',  color: '#a78bfa' },
+  powers:    { label: 'Powers 2/3/5',  color: '#60a5fa' },
+}
+
+function buildAll() {
+  const R = {}
+
+  const fracs = [
+    ['1/2','50%','0.5'],['1/3','33.33%','0.333'],['2/3','66.67%','0.667'],
+    ['1/4','25%','0.25'],['3/4','75%','0.75'],
+    ['1/5','20%','0.2'],['2/5','40%','0.4'],['3/5','60%','0.6'],['4/5','80%','0.8'],
+    ['1/6','16.67%','0.1667'],['5/6','83.33%','0.8333'],
+    ['1/7','14.29%','0.1429'],['2/7','28.57%','0.2857'],
+    ['1/8','12.5%','0.125'],['3/8','37.5%','0.375'],['5/8','62.5%','0.625'],['7/8','87.5%','0.875'],
+    ['1/9','11.11%','0.111'],['2/9','22.22%','0.222'],
+    ['1/10','10%','0.1'],['1/11','9.09%','0.0909'],
+    ['1/12','8.33%','0.0833'],['1/15','6.67%','0.0667'],
+    ['1/16','6.25%','0.0625'],['1/20','5%','0.05'],
+    ['1/25','4%','0.04'],['1/50','2%','0.02'],
+  ]
+  R.fractions = fracs.map(([f,p,d]) => ({ q:f, a:p, hint:d, cat:'fractions' }))
+
+  R.sq25  = Array.from({length:25}, (_,i) => ({ q:`${i+1}²`,    a:`${(i+1)**2}`,  hint:'', cat:'sq25'  }))
+  R.sq35  = Array.from({length:10}, (_,i) => ({ q:`${i+26}²`,   a:`${(i+26)**2}`, hint:'', cat:'sq35'  }))
+  R.cubes = Array.from({length:15}, (_,i) => ({ q:`${i+1}³`,    a:`${(i+1)**3}`,  hint:'', cat:'cubes' }))
+
+  R.tbl2  = []
+  for (let n=2; n<=12; n++) for (let i=2; i<=12; i++) R.tbl2.push({ q:`${n} × ${i}`, a:`${n*i}`, hint:'', cat:'tbl2' })
+
+  R.tbl13 = []
+  for (let n=13; n<=20; n++) for (let i=2; i<=12; i++) R.tbl13.push({ q:`${n} × ${i}`, a:`${n*i}`, hint:'', cat:'tbl13' })
+
+  const pows = [
+    ['2¹','2'],['2²','4'],['2³','8'],['2⁴','16'],['2⁵','32'],
+    ['2⁶','64'],['2⁷','128'],['2⁸','256'],['2⁹','512'],['2¹⁰','1024'],['2¹¹','2048'],['2¹²','4096'],
+    ['3¹','3'],['3²','9'],['3³','27'],['3⁴','81'],['3⁵','243'],['3⁶','729'],['3⁷','2187'],['3⁸','6561'],
+    ['5¹','5'],['5²','25'],['5³','125'],['5⁴','625'],['5⁵','3125'],['5⁶','15625'],
+  ]
+  R.powers = pows.map(([e,v]) => ({ q:e, a:v, hint:'', cat:'powers' }))
+
+  return R
+}
+
+const CARDS = buildAll()
+
+// ── Weak spot persistence ────────────────────────────────────────────────────
+
+const LS_KEY = 'rbi_quant_weak'
+function loadWeak() { try { return JSON.parse(localStorage.getItem(LS_KEY) || '{}') } catch { return {} } }
+function saveWeak(obj) { localStorage.setItem(LS_KEY, JSON.stringify(obj)) }
+
+// ── State ────────────────────────────────────────────────────────────────────
+
+let selected    = new Set(['fractions','sq25','sq35','cubes'])
+let weakOnly    = false
+let deck        = []
+let cur         = 0
+let isFlipped   = false
+let gotCount    = 0
+let sessionWeak = new Set()   // _wids marked Again this session (unique)
+let origTotal   = 0
+
+// ── Home ─────────────────────────────────────────────────────────────────────
+
+function renderHome() {
+  // Category buttons
+  const cg = document.getElementById('cat-grid')
+  cg.innerHTML = ''
+  for (const [id, meta] of Object.entries(META)) {
+    const n = CARDS[id].length
+    const on = !weakOnly && selected.has(id)
+    const btn = document.createElement('button')
+    btn.className = 'cat-btn' + (on ? ' active' : '')
+    btn.innerHTML = `<span class="cat-name">${meta.label}</span><span class="cat-count">${n} cards</span>`
+    btn.onclick = () => toggleCat(id)
+    cg.appendChild(btn)
+  }
+
+  // Weak bar
+  const weak = loadWeak()
+  const wc   = Object.keys(weak).length
+  const wrap = document.getElementById('weak-wrap')
+  if (wc > 0) {
+    wrap.innerHTML = `
+      <div class="weak-row ${weakOnly?'on':''}" id="weak-row" onclick="toggleWeak()" style="margin-bottom:20px">
+        <div class="wr-left">
+          <div class="wr-title">Weak Spots Only</div>
+          <div class="wr-sub">${wc} card${wc!==1?'s':''} flagged for review</div>
+        </div>
+        <div class="wr-check">${weakOnly?'✓':''}</div>
+      </div>`
+  } else {
+    wrap.innerHTML = '<div style="margin-bottom:20px"></div>'
+  }
+
+  updateStart()
+}
+
+function toggleCat(id) {
+  if (weakOnly) return
+  selected.has(id) ? selected.delete(id) : selected.add(id)
+  renderHome()
+}
+
+function toggleWeak() {
+  weakOnly = !weakOnly
+  if (weakOnly) selected.clear()
+  else selected = new Set(['fractions','sq25','sq35','cubes'])
+  renderHome()
+}
+
+function countCards() {
+  if (weakOnly) return Object.keys(loadWeak()).length
+  let n = 0; for (const id of selected) n += CARDS[id].length; return n
+}
+
+function updateStart() {
+  const n   = countCards()
+  const btn = document.getElementById('start-btn')
+  const h   = document.getElementById('start-hint')
+  btn.disabled  = n === 0
+  btn.textContent = n > 0 ? `Start Drill` : 'Select categories'
+  h.textContent   = n > 0 ? `${n} cards` : ''
+}
+
+// ── Drill ─────────────────────────────────────────────────────────────────────
+
+function shuffle(a) {
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]]
+  }
+  return a
+}
+
+function startDrill() {
+  const weak = loadWeak()
+  if (weakOnly) {
+    deck = Object.entries(weak).map(([id, c]) => ({ ...c, _wid: id }))
+  } else {
+    deck = []
+    for (const id of selected) {
+      CARDS[id].forEach((c, i) => deck.push({ ...c, _wid: `${id}_${i}` }))
+    }
+  }
+  shuffle(deck)
+  cur = 0; isFlipped = false; gotCount = 0; sessionWeak = new Set()
+  origTotal = deck.length
+  showScreen('drill')
+  renderCard()
+}
+
+function renderCard() {
+  if (cur >= deck.length) { endSession(); return }
+
+  const card = deck[cur]
+  const remaining = deck.length - cur
+
+  // Info bar
+  const ai = sessionWeak.size
+  document.getElementById('drill-info').innerHTML =
+    `<b>${remaining}</b> left · <span class="again-c">${ai > 0 ? ai+' weak' : ''}</span>`
+
+  // Progress: fraction of unique cards answered correctly
+  const pct = origTotal > 0 ? (gotCount / origTotal) * 100 : 0
+  document.getElementById('pfill').style.width = Math.min(pct, 100) + '%'
+
+  // Populate
+  const m = META[card.cat]
+  document.getElementById('fc-cat').textContent  = m.label
+  document.getElementById('fc-cat').style.color  = m.color
+  document.getElementById('fc-pos').textContent  = `${cur+1}/${deck.length}`
+  document.getElementById('fc-q').textContent    = card.q
+  document.getElementById('fc-q').style.color    = m.color
+  document.getElementById('fc-a').textContent    = card.a
+  document.getElementById('fc-hint').textContent = card.hint || ''
+
+  // Reset
+  isFlipped = false
+  document.getElementById('fc-front').style.display = ''
+  document.getElementById('fc-back').style.display  = 'none'
+  document.getElementById('flashcard').classList.remove('flipped','wrong')
+  document.getElementById('btn-again').disabled = true
+  document.getElementById('btn-got').disabled   = true
+}
+
+function flipCard() {
+  if (isFlipped) return
+  isFlipped = true
+  document.getElementById('fc-front').style.display = 'none'
+  document.getElementById('fc-back').style.display  = ''
+  document.getElementById('flashcard').classList.add('flipped')
+  document.getElementById('btn-again').disabled = false
+  document.getElementById('btn-got').disabled   = false
+}
+
+function markGot() {
+  gotCount++
+  cur++
+  renderCard()
+}
+
+function markAgain() {
+  const card = deck[cur]
+  sessionWeak.add(card._wid)
+  document.getElementById('flashcard').classList.add('wrong')
+  setTimeout(() => {
+    // Put card back ~4 positions ahead (but at least 1, at most remaining)
+    const rest = deck.length - cur - 1
+    if (rest > 0) {
+      const ins = cur + 1 + Math.min(3, Math.floor(Math.random() * rest))
+      deck.splice(ins, 0, card)
+    } else {
+      deck.push(card)
+    }
+    cur++
+    renderCard()
+  }, 200)
+}
+
+function goHome() { showScreen('home'); renderHome() }
+
+// ── End session ───────────────────────────────────────────────────────────────
+
+function endSession() {
+  // Persist weak spots
+  const prev = loadWeak()
+  const next = {}
+  const allSessionIds = new Set(deck.map(c => c._wid))
+
+  // Keep prev spots not in this session
+  for (const [id, card] of Object.entries(prev)) {
+    if (!allSessionIds.has(id)) next[id] = card
+  }
+  // Add/keep cards still weak this session
+  for (const id of sessionWeak) {
+    const card = deck.find(c => c._wid === id)
+    if (card) next[id] = { q:card.q, a:card.a, hint:card.hint, cat:card.cat }
+  }
+  saveWeak(next)
+
+  // UI
+  const wc  = sessionWeak.size
+  const tot = gotCount + wc
+  const pct = tot > 0 ? Math.round((gotCount / origTotal) * 100) : 100
+
+  document.getElementById('end-title').textContent = pct >= 90 ? 'Nailed it!' : pct >= 70 ? 'Good session!' : 'Keep drilling.'
+  document.getElementById('end-tag').textContent   = `${origTotal} cards · ${pct}% clean`
+  document.getElementById('sv-got').textContent  = gotCount
+  document.getElementById('sv-weak').textContent = wc
+  document.getElementById('sv-pct').textContent  = pct + '%'
+
+  const btns = document.getElementById('end-btns')
+  btns.innerHTML = ''
+  const newWeakCount = Object.keys(next).length
+  if (newWeakCount > 0) {
+    const b1 = document.createElement('button')
+    b1.className = 'ebtn primary'
+    b1.textContent = `Drill Weak Spots (${newWeakCount})`
+    b1.onclick = () => { weakOnly = true; startDrill() }
+    btns.appendChild(b1)
+  }
+  const b2 = document.createElement('button')
+  b2.className = 'ebtn secondary'
+  b2.textContent = 'New Session'
+  b2.onclick = () => { weakOnly = false; goHome() }
+  btns.appendChild(b2)
+
+  // Weak list
+  const wlw = document.getElementById('wl-wrap')
+  if (wc > 0) {
+    const items = [...sessionWeak].map(id => {
+      const c = deck.find(x => x._wid === id)
+      return c ? `<div class="wi"><span class="wi-q">${c.q}</span><span class="wi-a">${c.a}</span></div>` : ''
+    }).join('')
+    wlw.innerHTML = `<div class="wl"><div class="wl-title">Review these (${wc})</div>${items}</div>`
+  } else {
+    wlw.innerHTML = ''
+  }
+
+  showScreen('end')
+}
+
+// ── Keyboard ──────────────────────────────────────────────────────────────────
+
+document.addEventListener('keydown', e => {
+  if (document.getElementById('drill').classList.contains('hidden')) return
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flipCard() }
+  if (isFlipped) {
+    if (e.key === 'ArrowRight' || e.key === '1') markGot()
+    if (e.key === 'ArrowLeft'  || e.key === '2') markAgain()
+  }
+})
+
+// ── Touch swipe ───────────────────────────────────────────────────────────────
+
+let tx0 = 0, ty0 = 0
+const fc = document.getElementById('flashcard')
+fc.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; ty0 = e.touches[0].clientY }, { passive: true })
+fc.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx0
+  const dy = e.changedTouches[0].clientY - ty0
+  if (!isFlipped || Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx)) return
+  dx > 0 ? markGot() : markAgain()
+}, { passive: true })
+
+// ── Utils ─────────────────────────────────────────────────────────────────────
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'))
+  document.getElementById(id).classList.remove('hidden')
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+
+renderHome()
+</script>
+</body>
+</html>
