@@ -3,1300 +3,1297 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Management Day 1 — RBI Grade B Topper Notes</title>
+<title>Management Day 1 — Foundations, Fayol, Taylor, Schools, Mintzberg</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: #0f0f1a; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; font-size: 0.88rem; line-height: 1.7; }
+body { background: #0f0f1a; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; font-size: 0.87rem; line-height: 1.65; }
 
-/* NAV */
 nav { position: sticky; top: 0; z-index: 100; background: #0d0d1a; border-bottom: 1px solid #1e1e35; display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 16px; }
-nav a { color: #94a3b8; font-size: 0.7rem; text-decoration: none; padding: 4px 10px; border-radius: 99px; border: 1px solid #2d2d42; white-space: nowrap; }
+nav a { color: #64748b; font-size: 0.68rem; text-decoration: none; padding: 3px 10px; border-radius: 99px; border: 1px solid #2d2d42; }
 nav a:hover { background: #1a1a2e; color: #e2e8f0; }
 
-.page { max-width: 860px; margin: 0 auto; padding: 24px 16px 80px; }
-h1 { color: #818cf8; font-size: 1.4rem; margin-bottom: 4px; }
-.sub { color: #475569; font-size: 0.78rem; margin-bottom: 32px; }
+.page { max-width: 880px; margin: 0 auto; padding: 24px 16px 80px; }
+h1 { color: #818cf8; font-size: 1.35rem; margin-bottom: 3px; }
+.sub { color: #475569; font-size: 0.75rem; margin-bottom: 8px; }
+.pyq-top { background: #1c0a00; border: 1px solid #7c2d12; border-radius: 8px; padding: 8px 14px; font-size: 0.75rem; color: #fb923c; margin-bottom: 28px; }
+.pyq-top b { color: #fcd34d; }
 
-/* Section headings */
-.part-head { margin: 40px 0 20px; padding: 14px 20px; background: linear-gradient(135deg,#1e1b4b,#1a1a2e); border-left: 4px solid #818cf8; border-radius: 0 12px 12px 0; }
-.part-head h2 { color: #818cf8; font-size: 1.1rem; }
-.part-head .part-sub { color: #475569; font-size: 0.72rem; margin-top: 2px; }
+/* ── Part headings ── */
+.part { margin: 36px 0 18px; padding: 12px 18px; background: linear-gradient(135deg,#1e1b4b,#1a1a2e); border-left: 4px solid #818cf8; border-radius: 0 10px 10px 0; }
+.part h2 { color: #818cf8; font-size: 1.05rem; }
+.part .ps { color: #475569; font-size: 0.68rem; margin-top: 2px; }
 
-.section-head { margin: 30px 0 14px; padding: 10px 16px; background: #1a1a2e; border-left: 3px solid #34d399; border-radius: 0 8px 8px 0; }
-.section-head h3 { color: #34d399; font-size: 0.95rem; }
+/* ── PYQ badge ── */
+.pyq-badge { display: inline-block; background: #1c0a00; border: 1px solid #7c2d12; border-radius: 6px; padding: 4px 10px; font-size: 0.68rem; color: #fb923c; margin-bottom: 10px; }
 
-/* Cards */
-.card { background: #1a1a2e; border: 1px solid #2d2d42; border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; }
-.card h4 { color: #fbbf24; font-size: 0.85rem; margin-bottom: 10px; }
+/* ── Plain English intro box ── */
+.intro16 { background: #0b1a0b; border-left: 3px solid #22c55e; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-bottom: 14px; font-size: 0.8rem; color: #86efac; }
+.intro16 .i-label { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #4ade80; margin-bottom: 4px; }
 
-/* Tags */
-.tag { display: inline-block; font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 8px; border-radius: 99px; margin-right: 6px; margin-bottom: 8px; }
-.tag.pyq { background: #7c2d12; color: #fb923c; }
-.tag.must { background: #312e81; color: #818cf8; }
-.tag.key { background: #064e3b; color: #34d399; }
-.tag.tip { background: #1c1917; color: #a8a29e; }
+/* ── Shreyans-style TREE ── */
+.stree { margin: 12px 0 18px; }
+.stree-root { display: inline-block; border: 2px solid #818cf8; border-radius: 8px; padding: 6px 14px; color: #818cf8; font-weight: 700; font-size: 0.88rem; background: #13132a; margin-bottom: 2px; }
+.stree-root.amber { border-color: #f59e0b; color: #f59e0b; }
+.stree-root.green { border-color: #34d399; color: #34d399; }
+.stree-root.pink  { border-color: #f472b6; color: #f472b6; }
+.stree-root.red   { border-color: #f87171; color: #f87171; }
+.stree-root.blue  { border-color: #60a5fa; color: #60a5fa; }
+.stree-root.teal  { border-color: #2dd4bf; color: #2dd4bf; }
+.stree-root.yellow { border-color: #fbbf24; color: #fbbf24; }
 
-/* PYQ Alert box */
-.pyq-box { background: #1c0a00; border: 1px solid #7c2d12; border-radius: 10px; padding: 12px 16px; margin-bottom: 16px; }
-.pyq-box .pyq-title { color: #fb923c; font-size: 0.75rem; font-weight: 700; margin-bottom: 6px; }
-.pyq-box p { color: #fcd34d; font-size: 0.8rem; }
+.branches { border-left: 2px solid #2d2d42; margin-left: 14px; padding-left: 0; margin-top: 4px; }
+.br { display: flex; align-items: flex-start; margin-bottom: 3px; }
+.br-line { width: 16px; height: 1px; background: #2d2d42; margin-top: 12px; flex-shrink: 0; }
+.bn { background: #13131f; border: 1px solid #2d2d42; border-radius: 7px; padding: 6px 11px; flex: 1; margin-left: 0; }
+.bn .t { font-weight: 700; font-size: 0.81rem; margin-bottom: 2px; }
+.bn .d { font-size: 0.76rem; color: #64748b; line-height: 1.5; }
+.bn .d b { color: #cbd5e1; }
 
-/* Tip box */
-.tip-box { background: #1e1b4b; border: 1px solid #4338ca; border-radius: 10px; padding: 10px 14px; font-size: 0.78rem; color: #a5b4fc; margin: 10px 0; }
-.tip-box b { color: #818cf8; }
+.sub-br { border-left: 2px solid #1e1e35; margin-left: 12px; padding-left: 0; margin-top: 3px; }
+.sub-br .br { margin-bottom: 2px; }
+.sub-br .br-line { width: 10px; background: #1e1e35; }
+.sub-br .bn { background: #0f0f1a; border-color: #1e1e35; }
+.sub-br .bn .t { font-size: 0.75rem; color: #94a3b8; }
+.sub-br .bn .d { font-size: 0.72rem; }
 
-/* Tables */
-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.8rem; }
-th { background: #1e1e35; color: #818cf8; padding: 8px 12px; text-align: left; font-weight: 700; }
-td { padding: 7px 12px; border-bottom: 1px solid #1e1e35; color: #cbd5e1; }
+.bn.amber .t { color: #fbbf24; }
+.bn.green .t { color: #34d399; }
+.bn.pink  .t { color: #f472b6; }
+.bn.blue  .t { color: #60a5fa; }
+.bn.purple .t { color: #a78bfa; }
+.bn.red   .t { color: #f87171; }
+.bn.teal  .t { color: #2dd4bf; }
+
+/* ── Highlights ── */
+.hl  { background: #fef08a; color: #1a1400; padding: 0 3px; border-radius: 3px; font-weight: 700; }
+.hl-r { background: #fecaca; color: #450a0a; padding: 0 3px; border-radius: 3px; font-weight: 700; }
+.hl-g { background: #bbf7d0; color: #052e16; padding: 0 3px; border-radius: 3px; font-weight: 700; }
+.hl-p { background: #ddd6fe; color: #2e1065; padding: 0 3px; border-radius: 3px; font-weight: 700; }
+
+/* ── Tags ── */
+.tag { display: inline-block; font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 8px; border-radius: 99px; margin-right: 5px; }
+.tag.must  { background: #312e81; color: #818cf8; }
+.tag.pyq   { background: #7c2d12; color: #fb923c; }
+.tag.upsc  { background: #4a1d96; color: #c4b5fd; }
+.tag.crit  { background: #450a0a; color: #fca5a5; }
+.tag.tip   { background: #1c1917; color: #a8a29e; }
+
+/* ── Formula / key box ── */
+.fbox { background: #0d1117; border: 2px solid #818cf8; border-radius: 10px; padding: 14px 18px; margin: 12px 0; text-align: center; }
+.fbox .f  { font-size: 1.1rem; font-weight: 700; color: #818cf8; letter-spacing: 0.05em; }
+.fbox .fs { font-size: 0.72rem; color: #475569; margin-top: 4px; }
+
+/* ── Mnemonic box ── */
+.mnem { background: #13131f; border: 1px solid #312e81; border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+.mnem .mt { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; color: #6366f1; margin-bottom: 4px; }
+.mnem .mw { font-size: 1.05rem; font-weight: 700; color: #818cf8; letter-spacing: 0.05em; }
+.mnem .me { font-size: 0.74rem; color: #94a3b8; margin-top: 3px; }
+
+/* ── Tip box ── */
+.tip { background: #0f1117; border: 1px solid #374151; border-radius: 8px; padding: 10px 14px; margin: 10px 0; font-size: 0.76rem; color: #94a3b8; }
+.tip b { color: #fbbf24; }
+
+/* ── Criticism box ── */
+.crit { background: #1a0909; border: 1px solid #7f1d1d; border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+.crit .ct { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; color: #f87171; margin-bottom: 6px; }
+.crit ul { list-style: none; }
+.crit ul li { font-size: 0.76rem; color: #fca5a5; padding: 2px 0; }
+.crit ul li::before { content: '✗ '; color: #ef4444; }
+
+/* ── Two-col / Three-col grids ── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 10px 0; }
+@media(max-width:580px) { .g2,.g3 { grid-template-columns: 1fr; } }
+.gc { background: #13131f; border: 1px solid #2d2d42; border-radius: 9px; padding: 11px 13px; }
+.gc .gt { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 7px; }
+.gc .gb { font-size: 0.77rem; color: #94a3b8; line-height: 1.6; }
+.gc .gb b { color: #e2e8f0; }
+.gc ul { list-style: none; }
+.gc ul li { font-size: 0.76rem; color: #94a3b8; padding: 2px 0; border-bottom: 1px solid #1e1e35; }
+.gc ul li:last-child { border-bottom: none; }
+.gc ul li::before { content: '→ '; color: #475569; }
+
+/* ── Table ── */
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.76rem; }
+th { background: #1e1e35; color: #94a3b8; font-weight: 700; padding: 7px 10px; text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
+td { padding: 7px 10px; border-bottom: 1px solid #1e1e35; color: #94a3b8; vertical-align: top; }
 tr:last-child td { border-bottom: none; }
-tr:hover td { background: #1a1a2e; }
 td b { color: #e2e8f0; }
-td .hi { color: #fbbf24; font-weight: 700; }
-td .grn { color: #34d399; font-weight: 700; }
-td .pur { color: #a78bfa; }
 
-/* Compare grid */
-.cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
-.cmp-col { background: #13131f; border: 1px solid #2d2d42; border-radius: 10px; padding: 12px 14px; }
-.cmp-col .cmp-head { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 8px; }
-.cmp-col ul { list-style: none; }
-.cmp-col ul li { font-size: 0.78rem; color: #94a3b8; padding: 3px 0; border-bottom: 1px solid #1e1e35; }
-.cmp-col ul li:last-child { border-bottom: none; }
+/* ── Principle cards (Fayol) ── */
+.prin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+@media(max-width:560px) { .prin-grid { grid-template-columns: 1fr; } }
+.prin-card { background: #13131f; border: 1px solid #1e1e35; border-radius: 9px; padding: 11px 13px; }
+.prin-card .pnum { font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #475569; margin-bottom: 2px; }
+.prin-card .pname { font-size: 0.84rem; font-weight: 700; color: #818cf8; margin-bottom: 4px; }
+.prin-card .pdesc { font-size: 0.75rem; color: #64748b; line-height: 1.5; }
+.prin-card .pex { font-size: 0.7rem; color: #475569; font-style: italic; margin-top: 4px; }
 
-/* Number list */
-ol.steps { padding-left: 20px; }
-ol.steps li { color: #94a3b8; padding: 3px 0; font-size: 0.82rem; }
-ol.steps li b { color: #e2e8f0; }
+/* ── Role cards (Mintzberg) ── */
+.role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+@media(max-width:560px) { .role-grid { grid-template-columns: 1fr; } }
+.role-card { background: #13131f; border: 1px solid #1e1e35; border-radius: 9px; padding: 11px 13px; }
+.role-card .rcat { font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+.role-card .rname { font-size: 0.84rem; font-weight: 700; margin-bottom: 4px; }
+.role-card .rdesc { font-size: 0.75rem; color: #64748b; line-height: 1.5; }
 
-ul.bullets { list-style: disc; padding-left: 20px; }
-ul.bullets li { color: #94a3b8; padding: 2px 0; font-size: 0.82rem; }
-ul.bullets li b { color: #e2e8f0; }
+/* ── OCEAN cards ── */
+.ocean-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+@media(max-width:560px) { .ocean-grid { grid-template-columns: 1fr; } }
+.ocean-card { background: #13131f; border: 1px solid #1e1e35; border-radius: 9px; padding: 12px 14px; }
+.ocean-card .oletter { font-size: 2rem; font-weight: 900; line-height: 1; }
+.ocean-card .otrait { font-size: 0.82rem; font-weight: 700; margin-bottom: 6px; }
+.ocean-card .orow { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 3px; }
+.ocean-card .obadge { font-size: 0.62rem; font-weight: 700; padding: 2px 7px; border-radius: 99px; flex-shrink: 0; margin-top: 1px; }
+.ocean-card .odesc { font-size: 0.73rem; color: #94a3b8; line-height: 1.5; }
+.ocean-card .ofit { font-size: 0.69rem; color: #475569; margin-top: 5px; font-style: italic; }
 
-/* Principles grid */
-.prin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin: 12px 0; }
-.prin-card { background: #13131f; border: 1px solid #2d2d42; border-radius: 10px; padding: 12px 14px; }
-.prin-card .num { font-size: 0.65rem; color: #475569; font-weight: 700; }
-.prin-card .name { color: #818cf8; font-size: 0.85rem; font-weight: 700; margin: 2px 0 6px; }
-.prin-card .desc { color: #94a3b8; font-size: 0.76rem; line-height: 1.6; }
-.prin-card .ex { color: #fbbf24; font-size: 0.72rem; margin-top: 4px; }
+/* ── X/Y split ── */
+.xy { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #2d2d42; border-radius: 10px; overflow: hidden; margin: 12px 0; }
+.xy-col { padding: 14px; }
+.xy-col.x { background:#1c0d0d; } .xy-col.y { background:#0d1c0d; }
+.xy-col .xh { font-size: 1.1rem; font-weight: 900; margin-bottom: 3px; }
+.xy-col.x .xh { color:#f87171; } .xy-col.y .xh { color:#4ade80; }
+.xy-col .xs { font-size: 0.67rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; opacity: 0.5; }
+.xy-col ul { list-style: none; }
+.xy-col ul li { font-size: 0.77rem; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.xy-col.x ul li { color: #fca5a5; } .xy-col.y ul li { color: #86efac; }
 
-/* Role cards */
-.role-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; margin: 12px 0; }
-.role-card { background: #13131f; border: 1px solid #2d2d42; border-radius: 10px; padding: 10px 14px; }
-.role-card .cat { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
-.role-card .rname { font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; }
-.role-card .rdesc { font-size: 0.74rem; color: #94a3b8; }
-
-/* OCEAN grid */
-.ocean-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; margin: 12px 0; }
-.ocean-card { background: #13131f; border: 1px solid #2d2d42; border-radius: 10px; padding: 12px 14px; }
-.ocean-card .letter { font-size: 2rem; font-weight: 900; line-height: 1; margin-bottom: 4px; }
-.ocean-card .trait { font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; }
-.ocean-card .row { display: flex; gap: 6px; margin-bottom: 4px; }
-.ocean-card .badge { font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
-.ocean-card .desc-row { font-size: 0.75rem; color: #94a3b8; padding: 2px 0; }
-
-/* Practice Q */
-.pq-wrap { margin-bottom: 12px; }
-.pq-wrap details summary { background: #1a1a2e; border: 1px solid #2d2d42; border-radius: 10px; padding: 10px 14px; cursor: pointer; font-size: 0.82rem; color: #cbd5e1; list-style: none; display: flex; align-items: flex-start; gap: 8px; }
+/* ── MCQ section ── */
+.pq-wrap { background: #13131f; border: 1px solid #1e1e35; border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+.pq-wrap details summary { padding: 11px 14px; cursor: pointer; font-size: 0.8rem; color: #94a3b8; list-style: none; }
 .pq-wrap details summary::-webkit-details-marker { display: none; }
-.pq-wrap details summary::before { content: '▶'; color: #475569; font-size: 0.65rem; margin-top: 3px; flex-shrink: 0; }
-.pq-wrap details[open] summary::before { content: '▼'; }
-.pq-wrap details[open] summary { border-radius: 10px 10px 0 0; border-bottom: 1px solid #0f0f1a; }
-.pq-ans { background: #13131f; border: 1px solid #2d2d42; border-top: none; border-radius: 0 0 10px 10px; padding: 12px 16px; font-size: 0.8rem; color: #94a3b8; }
-.pq-ans .correct { color: #34d399; font-weight: 700; font-size: 0.85rem; margin-bottom: 6px; }
-.pq-ans .why { color: #94a3b8; }
-.pq-ans b { color: #e2e8f0; }
+.pq-wrap details summary b { color: #818cf8; }
+.pq-wrap details[open] summary { background: #1a1a2e; color: #e2e8f0; border-bottom: 1px solid #1e1e35; }
+.pq-ans { padding: 10px 14px; }
+.correct { color: #34d399; font-weight: 700; font-size: 0.8rem; margin-bottom: 5px; }
+.why { font-size: 0.75rem; color: #64748b; line-height: 1.55; }
 
-/* Answer template */
-.ans-template { background: #0d1f12; border: 1px solid #166534; border-radius: 12px; padding: 16px 20px; margin: 14px 0; }
-.ans-template .tmpl-head { color: #4ade80; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 12px; }
-.ans-template .tmpl-sec { margin-bottom: 10px; }
-.ans-template .tmpl-sec .sec-label { color: #86efac; font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; }
-.ans-template .tmpl-sec p { color: #94a3b8; font-size: 0.78rem; line-height: 1.7; }
-.ans-template .word-count { color: #4ade80; font-size: 0.7rem; margin-top: 10px; padding-top: 8px; border-top: 1px solid #166534; }
+/* ── Answer templates ── */
+.ans-template { background: #0d1117; border: 1px solid #312e81; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.tmpl-head { color: #818cf8; font-weight: 700; font-size: 0.88rem; margin-bottom: 12px; }
+.tmpl-sec { margin-bottom: 12px; }
+.tmpl-sec .sec-label { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; color: #6366f1; margin-bottom: 5px; }
+.tmpl-sec p { font-size: 0.76rem; color: #64748b; line-height: 1.6; }
+.word-count { font-size: 0.7rem; color: #475569; border-top: 1px solid #1e1e35; padding-top: 8px; margin-top: 8px; }
 
-/* Mnemonic box */
-.mnem { background: #1a0533; border: 1px solid #7c3aed; border-radius: 10px; padding: 10px 14px; margin: 10px 0; font-size: 0.8rem; color: #c4b5fd; }
-.mnem b { color: #a78bfa; }
-
-/* Inline highlight */
-.hi-y { color: #fbbf24; font-weight: 700; }
-.hi-g { color: #34d399; font-weight: 700; }
-.hi-p { color: #a78bfa; font-weight: 700; }
-.hi-r { color: #f87171; font-weight: 700; }
-
-/* Divider */
-hr { border: none; border-top: 1px solid #1e1e35; margin: 28px 0; }
+/* ── Section label ── */
+.sec-head { margin: 22px 0 10px; padding: 7px 12px; background: #1a1a2e; border-left: 3px solid #334155; border-radius: 0 6px 6px 0; }
+.sec-head h3 { color: #94a3b8; font-size: 0.85rem; }
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="#p1">Intro to Mgmt</a>
-  <a href="#p2">Fayol 14</a>
-  <a href="#p3">Taylor</a>
-  <a href="#p4">Evolution</a>
-  <a href="#p5">Mintzberg</a>
-  <a href="#p6">Functions</a>
-  <a href="#p7">Planning</a>
-  <a href="#p8">Decision Making</a>
-  <a href="#p9">Personality</a>
-  <a href="#p10">OCEAN</a>
-  <a href="#p11">Perception</a>
-  <a href="#p12">MCQs</a>
-  <a href="#p13">Answer Writing</a>
+  <a href="#p1">1·Intro</a>
+  <a href="#p2">2·Fayol</a>
+  <a href="#p3">3·Taylor</a>
+  <a href="#p4">4·Schools</a>
+  <a href="#p5">5·Mintzberg</a>
+  <a href="#p6">6·Functions</a>
+  <a href="#p7">7·Planning</a>
+  <a href="#p8">8·Decisions</a>
+  <a href="#p9">9·Personality</a>
+  <a href="#p10">10·OCEAN</a>
+  <a href="#p11">11·Perception</a>
+  <a href="#p12">12·MCQs</a>
+  <a href="#p13">13·Templates</a>
 </nav>
 
 <div class="page">
+<h1>Management — Day 1</h1>
+<div class="sub">Foundations · Fayol · Taylor · Schools of Thought · Mintzberg · Functions · Planning · Decisions · Personality · Perception</div>
+<div class="pyq-top"><b>PYQ Alert 2023:</b> Fayol's 14 Principles (15 marks) + Big Five Personality (15 marks) both appeared in Phase 2, 2023. These two topics alone can fetch 30 marks.</div>
 
-<h1>Management — Day 1 Complete Notes</h1>
-<div class="sub">RBI Grade B Phase 2 · CGB Mentor aligned · PYQ-first · Topper-level · 2026</div>
+<!-- ══════════ PART 1 ══════════ -->
+<div class="part" id="p1"><h2>Part 1 — Introduction to Management</h2><div class="ps">Definitions · Levels · Admin vs Management · Nature</div></div>
 
-<!-- ===== PART 1: INTRO TO MANAGEMENT ===== -->
-<div class="part-head" id="p1">
-  <h2>Part 1 — Introduction to Management</h2>
-  <div class="part-sub">Definitions · Levels · Admin vs Management · Nature & Scope</div>
+<span class="tag must">Must Know</span>
+<div class="pyq-badge">PYQ: RBI Phase 2 2022 — 'Is management a science or an art?'</div>
+
+<div class="intro16">
+  <div class="i-label">Plain English</div>
+  A school needs someone to decide WHAT subjects to teach (administration) and someone to make teachers actually teach them well (management).
+  Fayol said management means getting your team to plan, organise, command, coordinate and control.
+  Koontz said it's simpler: <b>get things done through other people.</b>
 </div>
 
-<div class="section-head"><h3>1.1 Definition of Management</h3></div>
-<div class="card">
-  <h4>Key Definitions to Quote in Answers</h4>
-  <table>
-    <tr><th>Scholar</th><th>Definition</th></tr>
-    <tr><td><b>Koontz & O'Donnell</b></td><td>"Management is the art of getting things done through and with people in formally organised groups." <span class="hi-y">← Most cited in RBI answers</span></td></tr>
-    <tr><td><b>F.W. Taylor</b></td><td>"Management is the art of knowing what you want to do and then seeing that they do it in the best and cheapest way."</td></tr>
-    <tr><td><b>Peter Drucker</b></td><td>"Management is a multi-purpose organ that manages a business and manages managers and manages workers and work." Also: "Management is doing things right; leadership is doing the right things."</td></tr>
-    <tr><td><b>Mary Parker Follett</b></td><td>"Management is the art of getting things done through people." (earliest definition)</td></tr>
-    <tr><td><b>Henri Fayol</b></td><td>"To manage is to forecast and plan, to organise, to command, to coordinate and to control."</td></tr>
-  </table>
-</div>
-
-<div class="card">
-  <h4>Nature of Management — Is it Science or Art?</h4>
-  <div class="cmp-grid">
-    <div class="cmp-col">
-      <div class="cmp-head" style="color:#818cf8">Management as Science</div>
-      <ul>
-        <li>Systematised body of knowledge</li>
-        <li>Universal principles (Fayol's principles)</li>
-        <li>Cause-and-effect relationships</li>
-        <li>Tested through observation</li>
-      </ul>
-    </div>
-    <div class="cmp-col">
-      <div class="cmp-head" style="color:#34d399">Management as Art</div>
-      <ul>
-        <li>Personalised application of knowledge</li>
-        <li>Requires creativity & judgment</li>
-        <li>Improves with practice</li>
-        <li>Goal-oriented</li>
-      </ul>
-    </div>
+<div class="stree">
+  <div class="stree-root">KEY DEFINITIONS — Quote these in answers</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">Koontz &amp; O'Donnell <span class="hl">← Most cited in RBI</span></div>
+      <div class="d">"Getting things done through and with people in formally organised groups"</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn blue">
+      <div class="t">Henri Fayol</div>
+      <div class="d">"To manage is to forecast and plan, to organise, to command, to coordinate and to control"</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green">
+      <div class="t">Mary Parker Follett (earliest)</div>
+      <div class="d">"Art of getting things done through people"</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn purple">
+      <div class="t">Peter Drucker (two quotes)</div>
+      <div class="d">"Management is doing things right; <b>Leadership is doing the right things</b>" · Also: "Multi-purpose organ managing business, managers and work"</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn teal">
+      <div class="t">F.W. Taylor</div>
+      <div class="d">"Art of knowing what you want to do and then seeing that they do it in the best and cheapest way"</div>
+    </div></div>
   </div>
-  <div class="tip-box"><b>Examiner note:</b> Management is both science AND art — mention this nuance. It is an "inexact science" — principles are guidelines, not rigid laws.</div>
 </div>
 
-<div class="section-head"><h3>1.2 Levels of Management</h3></div>
-<div class="card">
-  <table>
-    <tr><th>Level</th><th>Who</th><th>Key Functions</th><th>Focus</th></tr>
-    <tr><td><b class="hi-y">Top Management</b></td><td>CEO, MD, Board of Directors, VP</td><td>Strategic planning, Policy formulation, Long-term goals, External relations</td><td>Whole organisation · Long-term</td></tr>
-    <tr><td><b class="hi-g">Middle Management</b></td><td>Dept Heads, Regional Managers, Branch Managers</td><td>Implementing top-level plans, Coordinating departments, Training lower managers</td><td>Department · Medium-term</td></tr>
-    <tr><td><b class="pur">Lower / Supervisory Management</b></td><td>Foreman, Supervisor, Section Officer</td><td>Day-to-day operations, Direct supervision of workers, Operational decisions</td><td>Tasks/Workers · Short-term</td></tr>
-  </table>
-  <div class="tip-box"><b>Mintzberg note:</b> His 10 roles apply primarily to <b>Top & Middle Management</b>. Lower management focuses on operational control.</div>
+<div class="g2" style="margin-top:14px">
+  <div class="gc">
+    <div class="gt" style="color:#818cf8">Management as Science</div>
+    <ul>
+      <li>Systematised body of knowledge</li>
+      <li>Universal principles (Fayol's principles)</li>
+      <li>Cause-and-effect relationships</li>
+      <li>Tested through observation</li>
+    </ul>
+  </div>
+  <div class="gc">
+    <div class="gt" style="color:#34d399">Management as Art</div>
+    <ul>
+      <li>Personalised application of knowledge</li>
+      <li>Requires creativity &amp; judgment</li>
+      <li>Improves with practice</li>
+      <li>Goal-oriented, result-focused</li>
+    </ul>
+  </div>
+</div>
+<div class="tip"><b>Exam answer:</b> Management is BOTH science AND art — an "inexact science." Principles are guidelines not rigid laws. Always mention both sides.</div>
+
+<div class="sec-head"><h3>1.2 Levels of Management</h3></div>
+
+<div class="stree">
+  <div class="stree-root blue">3 LEVELS OF MANAGEMENT</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">Top Management — Long-term, Whole Org</div>
+      <div class="d"><b>Who:</b> CEO, MD, Board of Directors, VP<br><b>Does:</b> Strategic planning · Policy formulation · External relations · Set vision &amp; goals</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green">
+      <div class="t">Middle Management — Medium-term, Department</div>
+      <div class="d"><b>Who:</b> Dept heads, Regional/Branch managers<br><b>Does:</b> Implement top-level plans · Coordinate depts · Train lower managers</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn blue">
+      <div class="t">Lower / Supervisory Management — Short-term, Tasks</div>
+      <div class="d"><b>Who:</b> Foreman, Supervisor, Section Officer<br><b>Does:</b> Day-to-day operations · Direct supervision of workers · Operational decisions</div>
+    </div></div>
+  </div>
 </div>
 
-<div class="section-head"><h3>1.3 Administration vs Management</h3></div>
-<div class="card">
-  <div class="tag must">8 Key Differences</div>
-  <table>
-    <tr><th>Basis</th><th>Administration</th><th>Management</th></tr>
-    <tr><td><b>Nature</b></td><td>Thinking / Decision-making</td><td>Doing / Executing decisions</td></tr>
-    <tr><td><b>Level</b></td><td>Top level (owners, shareholders)</td><td>Middle & Lower levels</td></tr>
-    <tr><td><b>Decisions</b></td><td>Major policy decisions</td><td>Operational decisions within policy</td></tr>
-    <tr><td><b>Concern</b></td><td>Determination of objectives</td><td>Achievement of objectives</td></tr>
-    <tr><td><b>Influence</b></td><td>External factors (govt, economy)</td><td>Internal factors (employees, processes)</td></tr>
-    <tr><td><b>Applicable to</b></td><td>Govt bodies, military, educational institutions</td><td>Business organisations</td></tr>
-    <tr><td><b>Who</b></td><td>Administrators / Owners</td><td>Managers (salaried professionals)</td></tr>
-    <tr><td><b>Skills needed</b></td><td>Administrative / conceptual skills</td><td>Technical + Human + Conceptual skills</td></tr>
-  </table>
-  <div class="tip-box"><b>Exam trick:</b> Administration = <b>WHAT</b> to do. Management = <b>HOW</b> to do it.</div>
+<div class="sec-head"><h3>1.3 Administration vs Management</h3></div>
+
+<div class="fbox">
+  <div class="f">Administration = WHAT to do &nbsp;·&nbsp; Management = HOW to do it</div>
+  <div class="fs">Administration = policy making (owners, top level) · Management = policy execution (salaried managers, operative level)</div>
 </div>
 
-<!-- ===== PART 2: FAYOL 14 PRINCIPLES ===== -->
-<div class="part-head" id="p2">
-  <h2>Part 2 — Fayol's 14 Principles of Management</h2>
-  <div class="part-sub">Classical Theory · Most Frequently Tested · 15-marker 2023</div>
+<table>
+  <tr><th>Basis</th><th>Administration</th><th>Management</th></tr>
+  <tr><td><b>Nature</b></td><td>Thinking / Deciding</td><td>Doing / Executing</td></tr>
+  <tr><td><b>Level</b></td><td>Top (owners, shareholders)</td><td>Middle &amp; Lower</td></tr>
+  <tr><td><b>Decisions</b></td><td>Major policy decisions</td><td>Operational decisions within policy</td></tr>
+  <tr><td><b>Applicable to</b></td><td>Govt, military, education</td><td>Business organisations</td></tr>
+  <tr><td><b>Influence</b></td><td>External factors (govt, economy)</td><td>Internal factors (employees, processes)</td></tr>
+  <tr><td><b>Who</b></td><td>Administrators / Owners</td><td>Managers (salaried professionals)</td></tr>
+</table>
+
+<!-- ══════════ PART 2 ══════════ -->
+<div class="part" id="p2"><h2>Part 2 — Fayol's 14 Principles of Management</h2><div class="ps">Classical Theory · Father of Modern Management · Most tested section</div></div>
+
+<span class="tag must">Must Know</span><span class="tag pyq">15-Marker 2023</span>
+<div class="pyq-badge">PYQ: RBI Phase 2 2023 (15 marks) — Know ALL 14 cold with examples</div>
+
+<div class="intro16">
+  <div class="i-label">Plain English</div>
+  Fayol ran a massive mining company in France. He wrote down the rules he used to manage it, so ANY manager could use them.
+  Think of his 14 principles as <b>the original management rulebook</b> — written in 1916, still taught everywhere.
+  The two most confused: <span class="hl-g">Unity of Command</span> (one boss per person) vs <span class="hl-p">Unity of Direction</span> (one plan per project).
 </div>
 
-<div class="pyq-box">
-  <div class="pyq-title">🔥 PYQ ALERT — 15 Marks (2023)</div>
-  <p>"Discuss the 14 Principles of Management given by Henri Fayol. How are these principles relevant to modern management?" — This was a full 15-marker. Know ALL 14 cold with examples.</p>
-</div>
-
-<div class="card">
-  <h4>Henri Fayol — Background</h4>
-  <ul class="bullets">
-    <li>French industrialist — worked at Comambault Mining Company (rose to Director General)</li>
-    <li>Published <b>"Administration Industrielle et Générale"</b> (1916) — English: "General and Industrial Management"</li>
-    <li>Father of <b>Modern Management Theory</b> / Classical Administrative Theory</li>
-    <li>Focus: <b>Entire organisation</b> (top-down) vs Taylor's shop floor focus</li>
-    <li>Identified <b>6 activities</b> of industrial firms: Technical, Commercial, Financial, Security, Accounting, Managerial</li>
-  </ul>
+<div class="stree">
+  <div class="stree-root amber">FAYOL — Background</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn blue">
+      <div class="t">French industrialist · Comambault Mining Company · Rose to Director General</div>
+      <div class="d">Published <b>"Administration Industrielle et Générale"</b> [1916] · Father of <span class="hl">Modern Management Theory</span></div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green">
+      <div class="t">Focus: ENTIRE organisation (top-down)</div>
+      <div class="d">vs Taylor's shop floor focus · Universal — applies to ALL types of organisations</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">6 activities of industrial firms</div>
+      <div class="d"><b>T</b>echnical · <b>C</b>ommercial · <b>F</b>inancial · <b>S</b>ecurity · <b>A</b>ccounting · <b>M</b>anagerial</div>
+    </div></div>
+  </div>
 </div>
 
 <div class="mnem">
-  <b>Mnemonic for 14 principles:</b> <b>D</b>ivision <b>A</b>uthority <b>D</b>iscipline <b>U</b>nity <b>U</b>nity <b>S</b>ubordination <b>R</b>emuneration <b>C</b>entralisation <b>S</b>calar <b>O</b>rder <b>E</b>quity <b>S</b>tability <b>I</b>nitiative <b>E</b>sprit<br>
-  → <b>DADUUS R CSS OESIE</b> — or group them: 1-4 (structure), 5-7 (authority/pay), 8-10 (organisation), 11-14 (people)
+  <div class="mt">Mnemonic for 14 Principles</div>
+  <div class="mw">DAD · UUS · R · CSO · E · SIE</div>
+  <div class="me"><b>D</b>ivision · <b>A</b>uthority · <b>D</b>iscipline · <b>U</b>nity of Command · <b>U</b>nity of Direction · <b>S</b>ubordination · <b>R</b>emuneration · <b>C</b>entralisation · <b>S</b>calar Chain · <b>O</b>rder · <b>E</b>quity · <b>S</b>tability · <b>I</b>nitiative · <b>E</b>sprit de Corps</div>
 </div>
 
 <div class="prin-grid">
   <div class="prin-card">
-    <div class="num">Principle 1</div>
-    <div class="name">Division of Work</div>
-    <div class="desc">Specialisation increases efficiency. Each person focuses on a specific task. Applies to technical AND managerial work.</div>
-    <div class="ex">Ex: Assembly line — each worker does one task</div>
+    <div class="pnum">Principle 1</div>
+    <div class="pname">Division of Work</div>
+    <div class="pdesc">Specialisation → efficiency. Each person focuses on one task. Applies to technical AND managerial work.</div>
+    <div class="pex">Ex: Assembly line — each worker does one task only</div>
   </div>
   <div class="prin-card">
-    <div class="num">Principle 2</div>
-    <div class="name">Authority & Responsibility</div>
-    <div class="desc">Authority = right to give orders. Responsibility = obligation to perform. <span style="color:#f87171">Authority and responsibility must be equal and commensurate.</span></div>
-    <div class="ex">Ex: A manager given power to hire must be accountable for team output</div>
+    <div class="pnum">Principle 2</div>
+    <div class="pname">Authority &amp; Responsibility</div>
+    <div class="pdesc"><span class="hl">Authority = right to give orders. Responsibility = obligation to perform. Must be EQUAL.</span> Imbalance causes problems.</div>
+    <div class="pex">Ex: If manager can hire, must be accountable for team output</div>
   </div>
   <div class="prin-card">
-    <div class="num">Principle 3</div>
-    <div class="name">Discipline</div>
-    <div class="desc">Obedience, application, energy, behaviour. Requires good supervision, fair agreements, and judicious penalties.</div>
-    <div class="ex">Ex: Attendance rules, code of conduct</div>
+    <div class="pnum">Principle 3</div>
+    <div class="pname">Discipline</div>
+    <div class="pdesc">Obedience, application, energy, behaviour. Requires good supervision, fair agreements, judicious penalties.</div>
+    <div class="pex">Ex: Attendance rules, code of conduct</div>
   </div>
   <div class="prin-card">
-    <div class="num">Principle 4</div>
-    <div class="name">Unity of Command</div>
-    <div class="desc">An employee should receive orders from ONE superior only. Multiple bosses = confusion, conflict, undermined authority.</div>
-    <div class="ex">Ex: No employee reports to two managers simultaneously</div>
+    <div class="pnum">Principle 4</div>
+    <div class="pname">Unity of Command</div>
+    <div class="pdesc"><span class="hl">Each employee receives orders from ONE superior only.</span> Multiple bosses = confusion, conflict, undermined authority. Individual level.</div>
+    <div class="pex">Ex: No employee reports to two managers simultaneously</div>
   </div>
   <div class="prin-card">
-    <div class="num">Principle 5</div>
-    <div class="name">Unity of Direction</div>
-    <div class="desc">One head, one plan for a group of activities with the same objective. Related to organisation, not individual employees.</div>
-    <div class="ex">Ex: All marketing activities under one Marketing Manager with one plan</div>
+    <div class="pnum">Principle 5</div>
+    <div class="pname">Unity of Direction</div>
+    <div class="pdesc">ONE head, ONE plan for a group of activities with the SAME objective. About the organisation, not the individual.</div>
+    <div class="pex">Ex: All marketing activities under one plan and one head</div>
   </div>
   <div class="prin-card">
-    <div class="num">Principle 6</div>
-    <div class="name">Subordination of Individual Interest</div>
-    <div class="desc">Individual/group interests must be subordinated to organisational interest. Organisation's interest is supreme.</div>
-    <div class="ex">Ex: Employee skipping personal plans for critical project deadline</div>
+    <div class="pnum">Principle 6</div>
+    <div class="pname">Subordination of Individual Interest</div>
+    <div class="pdesc">Individual/group interests subordinated to organisational interest. Org's interest is SUPREME.</div>
+    <div class="pex">Ex: Employee skips personal plans for critical project deadline</div>
   </div>
   <div class="prin-card">
-    <div class="num">Principle 7</div>
-    <div class="name">Remuneration of Personnel</div>
-    <div class="desc">Compensation must be fair and satisfactory to both employees and employers. Avoid over/under payment. Methods: time rate, job rate, profit sharing.</div>
-    <div class="ex">Ex: Performance-linked pay ensuring motivation</div>
+    <div class="pnum">Principle 7</div>
+    <div class="pname">Remuneration</div>
+    <div class="pdesc">Fair compensation satisfying BOTH employee and employer. Avoid over/underpayment. Methods: time rate, job rate, profit sharing.</div>
+    <div class="pex">Ex: Performance-linked pay ensuring motivation</div>
   </div>
   <div class="prin-card">
-    <div class="num">Principle 8</div>
-    <div class="name">Centralisation</div>
-    <div class="desc">Degree to which authority is concentrated at top. Not absolute — optimal balance of centralisation vs decentralisation depends on organisation size.</div>
-    <div class="ex">Ex: Startup → high centralisation; Large MNC → decentralised</div>
+    <div class="pnum">Principle 8</div>
+    <div class="pname">Centralisation</div>
+    <div class="pdesc">No absolute rule — optimal balance depends on org size. Startup = high centralisation; Large MNC = decentralised.</div>
+    <div class="pex">Ex: Startup founder decides everything; MNC has region heads</div>
   </div>
   <div class="prin-card">
-    <div class="num">Principle 9</div>
-    <div class="name">Scalar Chain</div>
-    <div class="desc">Chain of superiors from highest to lowest authority. Communication flows along this chain. <b>Gang Plank</b>: horizontal communication between same-level managers (Fayol allowed this for emergencies).</div>
-    <div class="ex">Ex: Org chart hierarchy; direct communication between peers for urgency</div>
+    <div class="pnum">Principle 9</div>
+    <div class="pname">Scalar Chain + Gang Plank</div>
+    <div class="pdesc">Chain of authority from highest to lowest. Communication flows along this. <span class="hl-g">Gang Plank</span> = horizontal communication between SAME-LEVEL managers in emergencies (Fayol allowed this exception).</div>
+    <div class="pex">Ex: Org chart hierarchy; direct peer contact in urgency</div>
   </div>
   <div class="prin-card">
-    <div class="num">Principle 10</div>
-    <div class="name">Order</div>
-    <div class="desc"><b>Material Order:</b> a place for everything and everything in its place. <b>Social Order:</b> right person in the right place.</div>
-    <div class="ex">Ex: Filing system, job descriptions matching skills</div>
+    <div class="pnum">Principle 10</div>
+    <div class="pname">Order</div>
+    <div class="pdesc"><b>Material Order:</b> a place for everything, everything in its place. <b>Social Order:</b> right person in the right place.</div>
+    <div class="pex">Ex: Filing system; job descriptions matching skills</div>
   </div>
   <div class="prin-card">
-    <div class="num">Principle 11</div>
-    <div class="name">Equity</div>
-    <div class="desc">Combination of kindness and justice. Equal and fair treatment of all employees. Promotes loyalty and devotion.</div>
-    <div class="ex">Ex: No discrimination by gender/caste in promotions</div>
+    <div class="pnum">Principle 11</div>
+    <div class="pname">Equity</div>
+    <div class="pdesc">Combination of kindness and justice. Equal and fair treatment for all employees. Promotes loyalty and devotion.</div>
+    <div class="pex">Ex: No discrimination by gender/caste in promotions</div>
   </div>
   <div class="prin-card">
-    <div class="num">Principle 12</div>
-    <div class="name">Stability of Tenure</div>
-    <div class="desc">Employee turnover is harmful. Time needed to settle into job. Avoid frequent transfers/dismissals. Mediocre stable manager > brilliant unstable one.</div>
-    <div class="ex">Ex: Job security policies, low attrition culture</div>
+    <div class="pnum">Principle 12</div>
+    <div class="pname">Stability of Tenure</div>
+    <div class="pdesc">High turnover is harmful. Time needed to settle into job. Avoid frequent transfers. <span class="hl">Mediocre stable manager &gt; brilliant unstable one.</span></div>
+    <div class="pex">Ex: Job security policies, low attrition culture</div>
   </div>
   <div class="prin-card">
-    <div class="num">Principle 13</div>
-    <div class="name">Initiative</div>
-    <div class="desc">Freedom to conceive and execute plans. Must be encouraged within limits of authority and discipline. Enhances zeal and energy.</div>
-    <div class="ex">Ex: Google's 20% time policy for personal projects</div>
+    <div class="pnum">Principle 13</div>
+    <div class="pname">Initiative</div>
+    <div class="pdesc">Freedom to conceive and execute plans within limits of authority. Must be encouraged — enhances zeal and energy.</div>
+    <div class="pex">Ex: Google's 20% personal project time policy</div>
   </div>
   <div class="prin-card">
-    <div class="num">Principle 14</div>
-    <div class="name">Esprit de Corps</div>
-    <div class="desc">Team spirit — harmony and union among personnel. "Union is strength." Avoid divide-and-rule, excessive written communication.</div>
-    <div class="ex">Ex: Team celebrations, collaborative culture</div>
+    <div class="pnum">Principle 14</div>
+    <div class="pname">Esprit de Corps</div>
+    <div class="pdesc">Team spirit. Union is strength. Avoid divide-and-rule and excessive written communication over verbal.</div>
+    <div class="pex">Ex: Team celebrations, collaborative culture</div>
   </div>
 </div>
 
-<div class="tip-box">
-  <b>Unity of Command vs Unity of Direction — Most Confused Pair:</b><br>
-  Unity of Command = one boss per employee (individual level)<br>
-  Unity of Direction = one plan per activity group (organisational level)<br>
-  <b>Exam trap:</b> "Marketing team under one marketing plan" = Unity of Direction (NOT Command)
+<div class="tip">
+  <b>Most Confused Pair — Unity of Command vs Unity of Direction:</b><br>
+  Unity of <b>Command</b> = one boss per EMPLOYEE → individual level<br>
+  Unity of <b>Direction</b> = one plan per ACTIVITY GROUP → organisational level<br>
+  <b>Exam trap:</b> "Marketing team under one marketing plan" = Unity of <span class="hl-p">Direction</span> (NOT Command)
 </div>
 
-<!-- ===== PART 3: TAYLOR ===== -->
-<div class="part-head" id="p3">
-  <h2>Part 3 — Taylor's Scientific Management</h2>
-  <div class="part-sub">Classical Theory · Father of Scientific Management</div>
+<!-- ══════════ PART 3 ══════════ -->
+<div class="part" id="p3"><h2>Part 3 — Taylor's Scientific Management</h2><div class="ps">Classical Theory · Father of Scientific Management · Shop-floor focus</div></div>
+
+<span class="tag must">Must Know</span>
+<div class="pyq-badge">PYQ: Regularly tested — compare with Fayol · Functional Foremanship MCQs</div>
+
+<div class="intro16">
+  <div class="i-label">Plain English</div>
+  Taylor was an engineer at a steel factory who was frustrated watching workers go slow deliberately.
+  He said: <b>replace guesswork with science.</b> Time every task with a stopwatch. Find the single best way to do it. Train workers for that exact method. Pay more for meeting the target, less for missing it.
+  His approach was great for factories, but felt dehumanising — workers were treated like machines.
 </div>
 
-<div class="card">
-  <h4>F.W. Taylor — Background</h4>
-  <ul class="bullets">
-    <li>American mechanical engineer at Midvale Steel Company (1878) → Bethlehem Steel</li>
-    <li>Published <b>"Principles of Scientific Management"</b> (1911)</li>
-    <li>Father of <b>Scientific Management</b> / Shop-floor management</li>
-    <li>Focus: Eliminating <b>"soldiering"</b> (deliberate slow work by workers)</li>
-    <li>Developed <b>Time and Motion Study</b></li>
-  </ul>
-</div>
-
-<div class="card">
-  <h4>Taylor's 5 Principles of Scientific Management</h4>
-  <div class="mnem"><b>Mnemonic: S-S-C-S-H</b> — "Scientists Scientifically Create Scientific Humans"</div>
-  <table>
-    <tr><th>#</th><th>Principle</th><th>Meaning</th></tr>
-    <tr><td>1</td><td><b>Science, not Rule of Thumb</b></td><td>Replace guesswork with scientifically determined methods. Each task analysed scientifically.</td></tr>
-    <tr><td>2</td><td><b>Scientific Selection & Training</b></td><td>Select workers based on skills needed. Train them scientifically for specific tasks.</td></tr>
-    <tr><td>3</td><td><b>Cooperation, not Discord</b></td><td>Mental revolution — both management and workers must understand each other's roles. Harmony over conflict.</td></tr>
-    <tr><td>4</td><td><b>Scientific Division of Work</b></td><td>Equal division of work between management and workers. Management plans; workers execute.</td></tr>
-    <tr><td>5</td><td><b>Maximum Output</b></td><td>Replace restricted output with maximum output. More production = more prosperity for both.</td></tr>
-  </table>
-</div>
-
-<div class="card">
-  <h4>Taylor's 5 Techniques</h4>
-  <table>
-    <tr><th>Technique</th><th>Description</th></tr>
-    <tr><td><b>Time Study</b></td><td>Determine standard time for a task using stopwatch. Basis for wage payment.</td></tr>
-    <tr><td><b>Motion Study</b></td><td>Eliminate unnecessary movements. Identify best method via Therbligs (17 basic motions by Gilbreth).</td></tr>
-    <tr><td><b>Fatigue Study</b></td><td>Determine rest intervals to reduce fatigue and maintain productivity.</td></tr>
-    <tr><td><b>Differential Piece-Rate System</b></td><td>High rate for workers meeting standard, low rate for those below. Incentivises performance.</td></tr>
-    <tr><td><b>Functional Foremanship</b></td><td>8 specialists (4 planning + 4 production) instead of one foreman. Specialisation in supervision.</td></tr>
-  </table>
-  <div class="tip-box">
-    <b>Functional Foremanship — 8 specialists:</b><br>
-    Planning (4): Route Clerk, Instruction Card Clerk, Time & Cost Clerk, Disciplinarian<br>
-    Production (4): Gang Boss, Speed Boss, Repair Boss, Inspector
+<div class="stree">
+  <div class="stree-root amber">TAYLOR — Background</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn blue">
+      <div class="t">American mechanical engineer · Midvale Steel → Bethlehem Steel</div>
+      <div class="d">Published <b>"Principles of Scientific Management"</b> [1911] · Father of <span class="hl">Scientific Management</span></div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn red">
+      <div class="t">Problem he was solving: "Soldiering"</div>
+      <div class="d">Workers deliberately slowed down output · Taylor called this "natural soldiering" (laziness) + "systematic soldiering" (group norms to restrict output)</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">Focus: Shop floor / Workers (bottom-up) vs Fayol's top-down</div>
+      <div class="d">Developed Time and Motion Study to find the 'one best way'</div>
+    </div></div>
   </div>
 </div>
 
-<div class="card">
-  <h4>Fayol vs Taylor — Key Comparison</h4>
-  <table>
-    <tr><th>Basis</th><th>Fayol</th><th>Taylor</th></tr>
-    <tr><td>Focus</td><td>Whole organisation (top-down)</td><td>Shop floor / workers (bottom-up)</td></tr>
-    <tr><td>Background</td><td>Manager/Administrator</td><td>Engineer/Technician</td></tr>
-    <tr><td>Title</td><td>Father of Modern Management</td><td>Father of Scientific Management</td></tr>
-    <tr><td>Approach</td><td>General theory of administration</td><td>Scientific methods at operational level</td></tr>
-    <tr><td>Applicability</td><td>Universal — all organisations</td><td>Manufacturing/production settings</td></tr>
-    <tr><td>Unity of Command</td><td>One boss per employee</td><td>Violated by functional foremanship (8 bosses)</td></tr>
-    <tr><td>Publication</td><td>1916 (French)</td><td>1911 (English)</td></tr>
-  </table>
+<div class="mnem">
+  <div class="mt">Taylor's 5 Principles</div>
+  <div class="mw">S · S · C · S · M</div>
+  <div class="me"><b>S</b>cience not Rule of Thumb · <b>S</b>cientific Selection &amp; Training · <b>C</b>ooperation not Discord · <b>S</b>cientific Division of Work · <b>M</b>aximum Output</div>
 </div>
 
-<!-- ===== PART 4: EVOLUTION OF MANAGEMENT ===== -->
-<div class="part-head" id="p4">
-  <h2>Part 4 — Evolution of Management Thought</h2>
-  <div class="part-sub">Classical → Neo-Classical → Modern → Contemporary</div>
-</div>
-
-<div class="card">
-  <h4>Classical School</h4>
-  <table>
-    <tr><th>Theorist</th><th>Theory</th><th>Key Contribution</th></tr>
-    <tr><td><b>Henri Fayol</b> (1916)</td><td>Administrative/Classical Theory</td><td>14 Principles, 5 Functions (POCCC)</td></tr>
-    <tr><td><b>F.W. Taylor</b> (1911)</td><td>Scientific Management</td><td>Time-motion study, Functional foremanship, Diff. piece rate</td></tr>
-    <tr><td><b>Max Weber</b> (1920s)</td><td>Bureaucracy Theory</td><td>Rational-legal authority, Formal rules, Hierarchy, Impersonality</td></tr>
-  </table>
-</div>
-
-<div class="card">
-  <h4>Weber's Bureaucracy — 6 Features</h4>
-  <ol class="steps">
-    <li><b>Division of Labour:</b> Clearly defined roles and specialisation</li>
-    <li><b>Hierarchy:</b> Clear chain of command — each position supervised by higher one</li>
-    <li><b>Formal Rules & Regulations:</b> Written rules govern actions — consistency</li>
-    <li><b>Impersonality:</b> Rules apply equally to all — no personal favouritism</li>
-    <li><b>Career Orientation:</b> Employment based on technical qualifications, promotion by merit</li>
-    <li><b>Official Records:</b> All decisions in writing — administrative memory</li>
-  </ol>
-  <div class="tip-box"><b>Weber's 3 types of authority:</b> Traditional (custom/tradition), Charismatic (personality), <span class="hi-y">Rational-Legal (rules/laws)</span> ← Bureaucracy uses this</div>
-</div>
-
-<div class="section-head"><h3>4.2 Neo-Classical School — Hawthorne Studies</h3></div>
-<div class="card">
-  <h4>Elton Mayo & Hawthorne Studies (1924–1932)</h4>
-  <ul class="bullets">
-    <li>Conducted at <b>Hawthorne Works</b>, Western Electric Company, Chicago</li>
-    <li>Led by <b>Elton Mayo</b> (Australian psychologist) with Roethlisberger & Dickson</li>
-    <li>Funded by National Research Council of USA</li>
-  </ul>
-  <table style="margin-top:12px">
-    <tr><th>Study</th><th>What Changed</th><th>Finding</th></tr>
-    <tr><td><b>Illumination Experiments</b></td><td>Light intensity (brighter/dimmer)</td><td>Productivity rose regardless of light — attention itself motivated workers</td></tr>
-    <tr><td><b>Relay Assembly Test Room</b></td><td>Rest periods, working hours, refreshments</td><td>Productivity rose consistently — workers responded to being observed (Hawthorne Effect)</td></tr>
-    <tr><td><b>Mass Interviewing Programme</b></td><td>Interviews with 21,000 workers over 3 yrs</td><td>Complaints revealed social/emotional factors more important than physical</td></tr>
-    <tr><td><b>Bank Wiring Observation Room</b></td><td>Observation of natural work group</td><td>Informal groups set own norms (restricting output); social control = powerful</td></tr>
-  </table>
-  <div class="card" style="background:#0d1f12;border-color:#166534;margin-top:12px">
-    <h4 style="color:#4ade80">Key Conclusions of Hawthorne Studies</h4>
-    <ol class="steps">
-      <li>Workers are social beings — <b>social needs</b> matter, not just economic</li>
-      <li><b>Informal groups</b> are powerful and influence behaviour</li>
-      <li>Being watched/special → increased productivity = <b>Hawthorne Effect</b></li>
-      <li>Job satisfaction depends on <b>recognition and participation</b></li>
-      <li>Communication and <b>non-economic rewards</b> are motivators</li>
-    </ol>
+<div class="stree">
+  <div class="stree-root green">TAYLOR'S 5 TECHNIQUES</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn blue">
+      <div class="t">Time Study</div>
+      <div class="d">Determine <span class="hl">standard time</span> for a task using stopwatch · Basis for wage payment</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn purple">
+      <div class="t">Motion Study — Therbligs</div>
+      <div class="d">Eliminate unnecessary movements · <b>Therbligs</b> = 17 basic motions identified by Gilbreth · Find ONE best method</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn teal">
+      <div class="t">Fatigue Study</div>
+      <div class="d">Determine rest intervals to reduce fatigue and maintain sustained productivity</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">Differential Piece-Rate System</div>
+      <div class="d"><span class="hl-g">High rate</span> for workers meeting/exceeding standard · <span class="hl-r">Low rate</span> for those below · Incentivises performance</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn red">
+      <div class="t">Functional Foremanship — 8 specialists instead of 1 foreman</div>
+      <div class="d">
+        <div class="sub-br">
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Planning (4):</div><div class="d">Route Clerk · Instruction Card Clerk · Time &amp; Cost Clerk · Disciplinarian</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Production (4):</div><div class="d">Gang Boss · Speed Boss · Repair Boss · Inspector</div></div></div>
+        </div>
+        <div class="d" style="margin-top:4px"><span class="hl-r">Violates Fayol's Unity of Command</span> — 8 bosses per worker</div>
+      </div>
+    </div></div>
   </div>
 </div>
 
-<div class="section-head"><h3>4.3 Modern School</h3></div>
-<div class="card">
-  <h4>Systems Approach — 4 Components</h4>
-  <table>
-    <tr><th>Component</th><th>Description</th></tr>
-    <tr><td><b>Input</b></td><td>Resources — men, material, money, machines, information</td></tr>
-    <tr><td><b>Process / Transformation</b></td><td>Conversion of inputs → outputs through management functions</td></tr>
-    <tr><td><b>Output</b></td><td>Products, services, profits, employee satisfaction</td></tr>
-    <tr><td><b>Feedback</b></td><td>Information about output fed back to improve inputs/process</td></tr>
-  </table>
-  <ul class="bullets" style="margin-top:10px">
-    <li><b>Open System:</b> Interacts with environment (all business organisations)</li>
-    <li><b>Closed System:</b> No interaction with environment (theoretical)</li>
-    <li><b>Subsystems:</b> Departments within organisation — interdependent</li>
-    <li><b>Synergy:</b> Whole > sum of parts (2+2=5 in management)</li>
-  </ul>
-</div>
-
-<div class="card">
-  <h4>Contingency Approach (Situational Approach)</h4>
-  <ul class="bullets">
-    <li>No single best way to manage — it depends on the situation</li>
-    <li>Key theorists: <b>Lawrence & Lorsch</b>, <b>Joan Woodward</b>, <b>Fiedler</b></li>
-    <li>Contingency variables: Environment, Technology, Organisational size, Individual differences</li>
-    <li>Managers must analyse the situation and adapt their approach accordingly</li>
-  </ul>
-  <div class="tip-box"><b>Exam shortcut:</b> Systems approach = <b>organisation as interconnected whole</b>. Contingency = <b>"it depends" on situation</b>. Both reject one-size-fits-all.</div>
-</div>
-
-<div class="section-head"><h3>4.4 Contemporary Theories</h3></div>
-<div class="card">
-  <h4>Theory Z — William Ouchi (1981)</h4>
-  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:12px">Combines best of American (Theory A) and Japanese (Theory J) management → Type Z organisation</p>
-  <table>
-    <tr><th>Feature</th><th>Theory A (American)</th><th>Theory J (Japanese)</th><th>Theory Z (Ouchi)</th></tr>
-    <tr><td>Employment</td><td>Short-term</td><td>Lifetime</td><td>Long-term</td></tr>
-    <tr><td>Decision-making</td><td>Individual</td><td>Consensus (Ringi)</td><td>Consensus</td></tr>
-    <tr><td>Responsibility</td><td>Individual</td><td>Collective</td><td>Individual</td></tr>
-    <tr><td>Career path</td><td>Specialised</td><td>Non-specialised</td><td>Moderately specialised</td></tr>
-    <tr><td>Control</td><td>Explicit/formal</td><td>Implicit/informal</td><td>Implicit + explicit both</td></tr>
-    <tr><td>Evaluation/promotion</td><td>Rapid</td><td>Slow</td><td>Slow</td></tr>
-    <tr><td>Concern for employee</td><td>Segmented</td><td>Holistic</td><td>Holistic</td></tr>
-  </table>
-</div>
-
-<div class="card">
-  <h4>McKinsey 7S Framework (Peters & Waterman, 1982)</h4>
-  <div class="cmp-grid">
-    <div class="cmp-col">
-      <div class="cmp-head" style="color:#fbbf24">Hard Elements (3)</div>
-      <ul>
-        <li><b>Strategy</b> — Plan to achieve competitive advantage</li>
-        <li><b>Structure</b> — Organisational chart, hierarchy</li>
-        <li><b>Systems</b> — Processes, IT systems, workflows</li>
-      </ul>
-    </div>
-    <div class="cmp-col">
-      <div class="cmp-head" style="color:#34d399">Soft Elements (4)</div>
-      <ul>
-        <li><b>Shared Values</b> — Core values/culture (centre of model)</li>
-        <li><b>Skills</b> — Competencies of the organisation</li>
-        <li><b>Style</b> — Leadership style</li>
-        <li><b>Staff</b> — Human resources, employee capabilities</li>
-      </ul>
-    </div>
+<div class="sec-head"><h3>Fayol vs Taylor — Key Comparison</h3></div>
+<div class="g2">
+  <div class="gc">
+    <div class="gt" style="color:#818cf8">Henri Fayol</div>
+    <ul>
+      <li>Whole organisation (top-down)</li>
+      <li>Manager / Administrator background</li>
+      <li>Father of Modern Management</li>
+      <li>General theory — universal applicability</li>
+      <li>Published 1916 (French)</li>
+      <li>Respected Unity of Command</li>
+    </ul>
   </div>
-  <div class="tip-box"><b>Shared Values</b> is at the centre — it connects all other 6 elements. All elements must be aligned for organisational effectiveness.</div>
-</div>
-
-<div class="card">
-  <h4>Nudge Theory — Thaler & Sunstein (2008)</h4>
-  <ul class="bullets">
-    <li>Book: <b>"Nudge: Improving Decisions about Health, Wealth and Happiness"</b> (2008)</li>
-    <li><b>Richard Thaler</b> — Nobel Prize Economics <b>2017</b></li>
-    <li>A <b>nudge</b> = any aspect of choice architecture that alters behaviour without forbidding options or changing economic incentives</li>
-    <li>Based on <b>behavioural economics</b> — people are irrational but predictably so</li>
-    <li>Concept: <b>Libertarian Paternalism</b> — preserve freedom of choice while nudging toward better outcomes</li>
-    <li><b>Choice Architecture:</b> Designing environments to influence decisions</li>
-  </ul>
-  <div class="tip-box">
-    <b>Nudge examples:</b><br>
-    • Cafeteria: placing healthy food at eye level (without banning junk food)<br>
-    • Pension: auto-enroll employees (opt-out vs opt-in)<br>
-    • Tax compliance: "9 out of 10 people pay tax on time" (social proof nudge)<br>
-    • Organ donation: default opt-in country policies
+  <div class="gc">
+    <div class="gt" style="color:#fbbf24">F.W. Taylor</div>
+    <ul>
+      <li>Shop floor / workers (bottom-up)</li>
+      <li>Engineer / Technician background</li>
+      <li>Father of Scientific Management</li>
+      <li>Manufacturing / production settings</li>
+      <li>Published 1911 (English)</li>
+      <li>VIOLATED Unity of Command (8 bosses)</li>
+    </ul>
   </div>
 </div>
 
-<!-- ===== PART 5: MINTZBERG ROLES ===== -->
-<div class="part-head" id="p5">
-  <h2>Part 5 — Mintzberg's 10 Managerial Roles</h2>
-  <div class="part-sub">Henry Mintzberg · 1973 · "The Nature of Managerial Work"</div>
+<!-- ══════════ PART 4 ══════════ -->
+<div class="part" id="p4"><h2>Part 4 — Evolution of Management Thought</h2><div class="ps">Classical → Neo-Classical → Modern → Contemporary</div></div>
+
+<span class="tag must">Must Know</span>
+<div class="pyq-badge">PYQ: Hawthorne Effect MCQs appear every year · Theory Z distinguish from McGregor</div>
+
+<div class="intro16">
+  <div class="i-label">Plain English</div>
+  Management thinking went through 4 stages:
+  First people cared only about <b>rules and structure</b> (Classical — Fayol/Taylor/Weber).
+  Then they discovered workers have <b>feelings and social needs</b> (Neo-Classical — Mayo).
+  Then they saw the org as an <b>interconnected system</b> (Modern — Systems).
+  Then they said <b>"it depends"</b> on the situation (Contingency).
+  Today we use <b>nudges</b> to change behaviour without commands (Contemporary).
 </div>
 
-<div class="pyq-box">
-  <div class="pyq-title">🔥 HIGH PROBABILITY — Frequently tested in Phase 1 MCQs and Phase 2</div>
-  <p>Mintzberg's roles appear in MCQs testing "which role does X action represent?" — learn all 10 with specific examples.</p>
+<div class="sec-head"><h3>4.1 Classical School</h3></div>
+<div class="g3">
+  <div class="gc">
+    <div class="gt" style="color:#818cf8">Fayol [1916]</div>
+    <div class="gb"><b>Administrative Theory</b><br>14 Principles · 5 Functions (POCCC) · Top-down</div>
+  </div>
+  <div class="gc">
+    <div class="gt" style="color:#fbbf24">Taylor [1911]</div>
+    <div class="gb"><b>Scientific Management</b><br>Time-motion study · Diff. piece rate · Functional foremanship</div>
+  </div>
+  <div class="gc">
+    <div class="gt" style="color:#f472b6">Weber [1920s]</div>
+    <div class="gb"><b>Bureaucracy Theory</b><br>Rational-legal authority · Formal rules · Hierarchy · Impersonality</div>
+  </div>
 </div>
 
-<div class="card">
-  <h4>Background</h4>
-  <ul class="bullets">
-    <li>Henry Mintzberg — Canadian academic, McGill University</li>
-    <li>Study: Observed <b>5 CEOs</b> for 1 week each — identified actual activities</li>
-    <li>Challenged Fayol's POCC view — argued management is fragmented, action-oriented, not systematic planning</li>
-    <li>Published in <b>"The Nature of Managerial Work"</b> (1973)</li>
-  </ul>
+<div class="stree">
+  <div class="stree-root pink">WEBER'S BUREAUCRACY — 6 Features</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn blue"><div class="t">① Division of Labour</div><div class="d">Clearly defined roles and specialisation — everyone knows their job</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn purple"><div class="t">② Hierarchy</div><div class="d">Clear chain of command — each position supervised by higher one</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber"><div class="t">③ Formal Rules &amp; Regulations</div><div class="d">Written rules govern all actions — consistency and predictability</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn teal"><div class="t">④ Impersonality</div><div class="d">Rules apply equally to ALL — no personal favouritism</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green"><div class="t">⑤ Career Orientation</div><div class="d">Employment based on technical qualifications · Promotion by merit (not connections)</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn red"><div class="t">⑥ Official Records</div><div class="d">All decisions in writing — administrative memory maintained</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">Weber's 3 Authority Types</div>
+      <div class="d"><b>Traditional</b> (custom/tradition) · <b>Charismatic</b> (personality) · <span class="hl">Rational-Legal (rules/laws)</span> ← Bureaucracy uses this</div>
+    </div></div>
+  </div>
+</div>
+
+<div class="sec-head"><h3>4.2 Neo-Classical School — Hawthorne Studies</h3></div>
+
+<div class="stree">
+  <div class="stree-root green">HAWTHORNE STUDIES [1924–1932] — Elton Mayo</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn blue">
+      <div class="t">Where: Hawthorne Works, Western Electric Company, Chicago</div>
+      <div class="d">Led by <b>Elton Mayo</b> (Australian psychologist) + Roethlisberger &amp; Dickson · Funded by National Research Council, USA</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">① Illumination Experiments</div>
+      <div class="d">Changed light intensity (brighter/dimmer) → Productivity rose <span class="hl">regardless of light level</span> · Finding: attention itself motivated workers</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green">
+      <div class="t">② Relay Assembly Test Room</div>
+      <div class="d">Changed rest periods, working hours, refreshments → Productivity kept rising · Workers responded to being observed = <span class="hl">Hawthorne Effect</span></div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn purple">
+      <div class="t">③ Mass Interviewing Programme (21,000 workers, 3 yrs)</div>
+      <div class="d">Complaints revealed <span class="hl">social/emotional factors</span> more important than physical conditions</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn red">
+      <div class="t">④ Bank Wiring Observation Room</div>
+      <div class="d">Observed natural work group → <span class="hl">Informal groups set own output norms</span> (restricting production) · Social control = very powerful</div>
+    </div></div>
+  </div>
+</div>
+
+<div class="stree">
+  <div class="stree-root amber">5 KEY CONCLUSIONS — Hawthorne</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn green"><div class="t">Workers are social beings — social needs matter</div><div class="d">Not just economic/money-driven · Relationships, belonging, recognition count</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn red"><div class="t">Informal groups are powerful</div><div class="d">Can override management directives · Set their own norms of output</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber"><div class="t">Hawthorne Effect: being watched → increased productivity</div><div class="d">Workers perform better when they know they're being observed or feel they're special</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn blue"><div class="t">Job satisfaction = recognition + participation</div><div class="d">Being listened to matters more than physical improvements</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn purple"><div class="t">Non-economic rewards motivate</div><div class="d">Communication, praise, group belonging = powerful motivators beyond money</div></div></div>
+  </div>
+</div>
+
+<div class="sec-head"><h3>4.3 Modern School</h3></div>
+
+<div class="stree">
+  <div class="stree-root blue">SYSTEMS APPROACH — Organisation as Open System</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn amber"><div class="t">Input</div><div class="d">Resources: men, material, money, machines, information</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn purple"><div class="t">Process / Transformation</div><div class="d">Conversion of inputs to outputs through management functions</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green"><div class="t">Output</div><div class="d">Products, services, profits, employee satisfaction</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn teal"><div class="t">Feedback loop</div><div class="d">Information about output fed back to improve inputs/process</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn blue"><div class="t">Open vs Closed System</div><div class="d">Open = interacts with environment (all real orgs) · Closed = no interaction (theoretical only)</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber"><div class="t">Synergy</div><div class="d"><span class="hl">Whole &gt; sum of parts.</span> 2+2=5 in management. Interdependent subsystems create more value together.</div></div></div>
+  </div>
+</div>
+
+<div class="stree">
+  <div class="stree-root teal">CONTINGENCY APPROACH — "It Depends"</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn amber"><div class="t">Core idea: No single best way to manage</div><div class="d">Depends on: environment · technology · org size · individual differences</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn blue"><div class="t">Key theorists</div><div class="d">Lawrence &amp; Lorsch · Joan Woodward · Fiedler</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green"><div class="t">Managers must analyse situation → adapt approach accordingly</div><div class="d">Rejects one-size-fits-all. Also called Situational Approach.</div></div></div>
+  </div>
+</div>
+
+<div class="sec-head"><h3>4.4 Contemporary Theories</h3></div>
+
+<div class="stree">
+  <div class="stree-root amber">McKINSEY 7S FRAMEWORK — Peters &amp; Waterman [1982]</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">Hard Elements (3) — tangible, easy to identify</div>
+      <div class="d"><b>Strategy</b> (plan for competitive advantage) · <b>Structure</b> (org chart, hierarchy) · <b>Systems</b> (processes, IT, workflows)</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green">
+      <div class="t">Soft Elements (4) — culture, people</div>
+      <div class="d"><b>Shared Values</b> · <b>Skills</b> · <b>Style</b> · <b>Staff</b></div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn purple">
+      <div class="t"><span class="hl">Shared Values at the CENTRE</span></div>
+      <div class="d">Connects all other 6 elements. All 7 must be aligned for organisational effectiveness.</div>
+    </div></div>
+  </div>
+</div>
+
+<div class="stree">
+  <div class="stree-root purple">NUDGE THEORY — Thaler &amp; Sunstein [2008]</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn blue">
+      <div class="t">Book: "Nudge" (2008) · Thaler = <span class="hl">Nobel Prize Economics 2017</span></div>
+      <div class="d">Based on behavioural economics — people are irrational but predictably so</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">Nudge = alter behaviour WITHOUT banning options or changing incentives</div>
+      <div class="d"><b>Libertarian Paternalism</b>: preserve freedom while nudging toward better outcomes · <b>Choice Architecture</b>: design environment to influence decisions</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green">
+      <div class="t">Examples</div>
+      <div class="d">Cafeteria: healthy food at eye level · Pension: auto-enrol (opt-out) · Tax: "9/10 people pay on time" · Organ donation: default opt-in countries</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- ══════════ PART 5 ══════════ -->
+<div class="part" id="p5"><h2>Part 5 — Mintzberg's 10 Managerial Roles</h2><div class="ps">Henry Mintzberg · 1973 · "The Nature of Managerial Work"</div></div>
+
+<span class="tag must">Must Know</span><span class="tag pyq">High MCQ Frequency</span>
+<div class="pyq-badge">PYQ: Phase 1 MCQs every year — 'Which role does CEO do X?' — Learn all 10 with specific examples</div>
+
+<div class="intro16">
+  <div class="i-label">Plain English</div>
+  Fayol said managers plan, organise, command, coordinate and control.
+  Mintzberg watched ACTUAL CEOs for a week each and said: "that's not what they really do."
+  Real managers jump between 10 different roles all day — sometimes a <b>symbolic figurehead</b> (cutting ribbons), sometimes a <b>firefighter</b> (handling crises), sometimes a <b>budget setter</b>, sometimes a <b>spokesperson</b> to the press.
+</div>
+
+<div class="stree">
+  <div class="stree-root blue">Mintzberg — Background</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn blue"><div class="t">Canadian academic, McGill University</div><div class="d">Observed <b>5 CEOs for 1 week each</b> · Published "The Nature of Managerial Work" [1973]</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn red"><div class="t">Challenged Fayol's POCCC view</div><div class="d">Argued management is fragmented, action-oriented, reactive — NOT systematic planning</div></div></div>
+  </div>
 </div>
 
 <div class="role-grid">
-  <!-- INTERPERSONAL -->
   <div class="role-card">
-    <div class="cat" style="color:#818cf8">Interpersonal (3)</div>
+    <div class="rcat" style="color:#818cf8">Interpersonal (1/3)</div>
     <div class="rname" style="color:#818cf8">1. Figurehead</div>
-    <div class="rdesc">Symbolic head — performs ceremonial/social duties. Signing documents, greeting visitors, attending functions.</div>
+    <div class="rdesc">Symbolic/ceremonial head. Signs documents, greets visitors, attends official functions. No real decision power.</div>
   </div>
   <div class="role-card">
-    <div class="cat" style="color:#818cf8">Interpersonal (3)</div>
+    <div class="rcat" style="color:#818cf8">Interpersonal (2/3)</div>
     <div class="rname" style="color:#818cf8">2. Leader</div>
-    <div class="rdesc">Motivating, training, and directing subordinates. Hiring, firing, praising. Defines work atmosphere.</div>
+    <div class="rdesc">Motivates, trains, directs subordinates. Hiring, firing, praising. Defines work atmosphere and culture.</div>
   </div>
   <div class="role-card">
-    <div class="cat" style="color:#818cf8">Interpersonal (3)</div>
+    <div class="rcat" style="color:#818cf8">Interpersonal (3/3)</div>
     <div class="rname" style="color:#818cf8">3. Liaison</div>
-    <div class="rdesc">Maintains network of external contacts. Industry associations, peers outside chain of command. Information exchange.</div>
+    <div class="rdesc">Maintains network of EXTERNAL contacts outside chain of command — industry bodies, peers. Information exchange.</div>
   </div>
-  <!-- INFORMATIONAL -->
   <div class="role-card">
-    <div class="cat" style="color:#34d399">Informational (3)</div>
+    <div class="rcat" style="color:#34d399">Informational (1/3)</div>
     <div class="rname" style="color:#34d399">4. Monitor</div>
     <div class="rdesc">Seeks and receives information. Scans environment. Reads reports, attends briefings. Nerve centre of organisation.</div>
   </div>
   <div class="role-card">
-    <div class="cat" style="color:#34d399">Informational (3)</div>
+    <div class="rcat" style="color:#34d399">Informational (2/3)</div>
     <div class="rname" style="color:#34d399">5. Disseminator</div>
-    <div class="rdesc">Transmits information to subordinates. Forwards memos, makes calls. Distributes what Monitor received.</div>
+    <div class="rdesc">Transmits information INTERNALLY to subordinates. Forwards memos, makes internal calls. Distributes what Monitor received.</div>
   </div>
   <div class="role-card">
-    <div class="cat" style="color:#34d399">Informational (3)</div>
+    <div class="rcat" style="color:#34d399">Informational (3/3)</div>
     <div class="rname" style="color:#34d399">6. Spokesperson</div>
-    <div class="rdesc">Transmits information to external parties. Press releases, board presentations, lobbying. Official voice of organisation.</div>
+    <div class="rdesc">Transmits information to EXTERNAL parties. Press releases, board presentations, lobbying. Official voice of org.</div>
   </div>
-  <!-- DECISIONAL -->
   <div class="role-card">
-    <div class="cat" style="color:#fbbf24">Decisional (4)</div>
+    <div class="rcat" style="color:#fbbf24">Decisional (1/4)</div>
     <div class="rname" style="color:#fbbf24">7. Entrepreneur</div>
-    <div class="rdesc">Initiates and designs change. New product development, process improvement. Seeks opportunities, takes initiative.</div>
+    <div class="rdesc">Initiates and designs VOLUNTARY change. New products, process improvements. Seeks opportunities proactively.</div>
   </div>
   <div class="role-card">
-    <div class="cat" style="color:#fbbf24">Decisional (4)</div>
+    <div class="rcat" style="color:#fbbf24">Decisional (2/4)</div>
     <div class="rname" style="color:#fbbf24">8. Disturbance Handler</div>
-    <div class="rdesc">Responds to involuntary crises. Strikes, supplier failure, competitor action. Reactive — forced into action.</div>
+    <div class="rdesc">Responds to INVOLUNTARY crises. Strikes, supplier failure, competitor action. Reactive — forced into action.</div>
   </div>
   <div class="role-card">
-    <div class="cat" style="color:#fbbf24">Decisional (4)</div>
+    <div class="rcat" style="color:#fbbf24">Decisional (3/4)</div>
     <div class="rname" style="color:#fbbf24">9. Resource Allocator</div>
-    <div class="rdesc">Decides who gets what resources — money, time, equipment, people. Budgeting, scheduling, authorising decisions.</div>
+    <div class="rdesc">Decides who gets what — money, time, equipment, people. Budgeting, scheduling, authorising decisions.</div>
   </div>
   <div class="role-card">
-    <div class="cat" style="color:#fbbf24">Decisional (4)</div>
+    <div class="rcat" style="color:#fbbf24">Decisional (4/4)</div>
     <div class="rname" style="color:#fbbf24">10. Negotiator</div>
-    <div class="rdesc">Represents organisation in major negotiations — labour contracts, client deals, acquisitions. Commits organisational resources.</div>
+    <div class="rdesc">Represents org in major negotiations — labour contracts, client deals, acquisitions. Commits organisational resources.</div>
   </div>
 </div>
 
-<div class="tip-box">
-  <b>MCQ traps:</b><br>
-  • CEO giving a press conference = <b>Spokesperson</b> (not Figurehead — Figurehead is ceremonial, Spokesperson is informational)<br>
-  • CEO handling a factory strike = <b>Disturbance Handler</b><br>
-  • CEO approving next year's budget = <b>Resource Allocator</b><br>
-  • CEO networking at an industry event = <b>Liaison</b> (not Figurehead)
+<div class="tip">
+  <b>MCQ Traps — These are tested every year:</b><br>
+  CEO giving press conference on results = <span class="hl-g">Spokesperson</span> (NOT Figurehead — Figurehead is ceremonial only)<br>
+  CEO networking at industry event = <span class="hl-g">Liaison</span> (NOT Figurehead — Liaison = external information network)<br>
+  CEO handling factory strike = <span class="hl-g">Disturbance Handler</span> (involuntary, NOT Negotiator which is planned)<br>
+  CEO approving next year's budget = <span class="hl-g">Resource Allocator</span> (NOT Entrepreneur)<br>
+  CEO launching new product initiative = <span class="hl-g">Entrepreneur</span> (voluntary/proactive change)
 </div>
 
-<!-- ===== PART 6: MANAGEMENT FUNCTIONS ===== -->
-<div class="part-head" id="p6">
-  <h2>Part 6 — Functions of Management</h2>
-  <div class="part-sub">POSDC (Koontz) · POSDCORB (Gulick) · POCCC (Fayol)</div>
-</div>
+<!-- ══════════ PART 6 ══════════ -->
+<div class="part" id="p6"><h2>Part 6 — Functions of Management</h2><div class="ps">POCCC · POSDCORB · POSDC · Controlling</div></div>
 
-<div class="card">
-  <h4>Different Classifications — Know All Three</h4>
-  <table>
-    <tr><th>Scholar</th><th>Functions</th><th>Mnemonic</th></tr>
-    <tr><td><b>Henri Fayol</b></td><td>Planning, Organising, Commanding, Coordinating, Controlling</td><td>POCCC</td></tr>
-    <tr><td><b>Luther Gulick</b></td><td>Planning, Organising, Staffing, Directing, Coordinating, Reporting, Budgeting</td><td><span class="hi-y">POSDCORB</span></td></tr>
-    <tr><td><b>Koontz & O'Donnell</b></td><td>Planning, Organising, Staffing, Directing, Controlling</td><td><span class="hi-g">POSDC</span></td></tr>
-    <tr><td><b>Most Accepted Modern</b></td><td>Planning, Organising, Staffing, Directing, Controlling</td><td>POSDC</td></tr>
-  </table>
-</div>
+<span class="tag must">Must Know</span>
+<div class="pyq-badge">PYQ: 'Who gave POSDCORB?' is a classic MCQ</div>
 
-<div class="card">
-  <h4>Controlling — Process & Techniques</h4>
-  <ol class="steps">
-    <li><b>Establish standards</b> — set benchmarks (output, quality, time)</li>
-    <li><b>Measure actual performance</b> — quantitative/qualitative measurement</li>
-    <li><b>Compare performance with standards</b> — identify deviations</li>
-    <li><b>Analyse deviations</b> — find causes</li>
-    <li><b>Take corrective action</b> — remedial measures</li>
-  </ol>
-  <div class="tip-box"><b>Management by Exception (MBE):</b> Managers focus only on significant deviations — not minor ones. Related to controlling.</div>
-</div>
-
-<!-- ===== PART 7: PLANNING ===== -->
-<div class="part-head" id="p7">
-  <h2>Part 7 — Planning</h2>
-  <div class="part-sub">Types · Process · MBO · Features</div>
-</div>
-
-<div class="card">
-  <h4>Types of Plans</h4>
-  <table>
-    <tr><th>Basis</th><th>Type</th><th>Description</th></tr>
-    <tr><td rowspan="3">Time Horizon</td><td><b>Strategic Plans</b></td><td>Long-term (3-5+ years) — set by top management. Organisation-wide direction.</td></tr>
-    <tr><td><b>Tactical Plans</b></td><td>Medium-term (1-3 years) — middle management. Implement strategic plans.</td></tr>
-    <tr><td><b>Operational Plans</b></td><td>Short-term (< 1 year) — lower management. Day-to-day work.</td></tr>
-    <tr><td rowspan="2">Use</td><td><b>Standing Plans</b></td><td>Repeated use — Policies, Procedures, Rules, Methods</td></tr>
-    <tr><td><b>Single-use Plans</b></td><td>One-time — Budgets, Programs, Projects</td></tr>
-    <tr><td rowspan="2">Scope</td><td><b>Directional Plans</b></td><td>Flexible — general guidelines, not specific</td></tr>
-    <tr><td><b>Specific Plans</b></td><td>Clearly defined objectives, no ambiguity</td></tr>
-  </table>
-</div>
-
-<div class="card">
-  <h4>Management by Objectives (MBO) — Peter Drucker (1954)</h4>
-  <p style="color:#94a3b8;font-size:0.82rem;margin-bottom:10px">Book: <b>"The Practice of Management"</b> (1954)</p>
-  <ol class="steps">
-    <li><b>Set organisational goals</b> — top management defines objectives</li>
-    <li><b>Cascade to departments/individuals</b> — align individual with organisational goals</li>
-    <li><b>Employee participates</b> in setting own goals — increases commitment</li>
-    <li><b>Monitor and review</b> progress periodically</li>
-    <li><b>Evaluate performance</b> against agreed objectives</li>
-    <li><b>Reward/feedback</b> — recognition and corrective action</li>
-  </ol>
-  <div class="cmp-grid" style="margin-top:12px">
-    <div class="cmp-col"><div class="cmp-head" style="color:#34d399">Advantages of MBO</div><ul><li>Clear goals → less ambiguity</li><li>Employee participation → motivation</li><li>Objective performance appraisal</li><li>Better communication</li><li>Aligns individual + org goals</li></ul></div>
-    <div class="cmp-col"><div class="cmp-head" style="color:#f87171">Limitations of MBO</div><ul><li>Time-consuming process</li><li>May create rigid goal orientation</li><li>Difficult to set quantifiable goals for all roles</li><li>Top management may not participate fully</li></ul></div>
+<div class="stree">
+  <div class="stree-root blue">3 CLASSIFICATION SYSTEMS — Know all three</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn blue">
+      <div class="t">Henri Fayol → POCCC (5 functions)</div>
+      <div class="d"><b>P</b>lanning · <b>O</b>rganising · <b>C</b>ommanding · <b>C</b>oordinating · <b>C</b>ontrolling</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">Luther Gulick → <span class="hl">POSDCORB</span> (7 functions) — most tested</div>
+      <div class="d"><b>P</b>lanning · <b>O</b>rganising · <b>S</b>taffing · <b>D</b>irecting · <b>C</b>oordinating · <b>R</b>eporting · <b>B</b>udgeting</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green">
+      <div class="t">Koontz &amp; O'Donnell → POSDC (5 functions) — most accepted modern</div>
+      <div class="d"><b>P</b>lanning · <b>O</b>rganising · <b>S</b>taffing · <b>D</b>irecting · <b>C</b>ontrolling</div>
+    </div></div>
   </div>
 </div>
 
-<div class="card">
-  <h4>Simon's Bounded Rationality (1947)</h4>
-  <ul class="bullets">
-    <li>Herbert Simon — Nobel Prize Economics 1978</li>
-    <li>Decision-makers have <b>bounded (limited) rationality</b> — cannot process all information</li>
-    <li><b>Satisficing</b> (not optimising) — choose first "good enough" option, not the best</li>
-    <li>Reasons for bounded rationality: cognitive limitations, time constraints, incomplete information</li>
-    <li>Contrasts with classical economic "rational man" assumption</li>
-  </ul>
-</div>
-
-<!-- ===== PART 8: DECISION MAKING ===== -->
-<div class="part-head" id="p8">
-  <h2>Part 8 — Decision Making Techniques</h2>
-  <div class="part-sub">Group Techniques · Individual Quantitative Techniques</div>
-</div>
-
-<div class="card">
-  <h4>Group Decision-Making Techniques</h4>
-  <table>
-    <tr><th>Technique</th><th>How it works</th><th>Key Feature</th></tr>
-    <tr><td><b>Brainstorming</b></td><td>Free flow of ideas, no criticism during session. Quantity over quality. Then filter.</td><td>No evaluation during idea generation</td></tr>
-    <tr><td><b>Delphi Technique</b></td><td>Experts respond to questionnaires (rounds), responses shared anonymously. Consensus reached remotely.</td><td>No face-to-face; anonymous; iterative</td></tr>
-    <tr><td><b>Nominal Group Technique (NGT)</b></td><td>Members write ideas independently → share → discuss → vote. Structured process.</td><td>Individual writing first, then group discussion</td></tr>
-    <tr><td><b>Quality Circles</b></td><td>Small groups of workers (8-10) meet voluntarily to discuss quality problems and suggest solutions.</td><td>Voluntary; worker-level; quality focus</td></tr>
-    <tr><td><b>Fish Bowl</b></td><td>Inner group discusses while outer group observes. Roles rotate. Encourages active listening.</td><td>Observers and participants — role rotation</td></tr>
-    <tr><td><b>Didactic Interaction</b></td><td>Two groups: one proposes, one opposes. Then roles reversed. Structured debate.</td><td>Devil's advocate approach — pros and cons</td></tr>
-    <tr><td><b>Heuristic Method</b></td><td>Trial and error / rules of thumb based on experience. Good enough solution fast.</td><td>Experience-based, not systematic</td></tr>
-  </table>
-</div>
-
-<div class="card">
-  <h4>Individual/Quantitative Decision-Making Techniques</h4>
-  <table>
-    <tr><th>Technique</th><th>Use case</th></tr>
-    <tr><td><b>Linear Programming (LP)</b></td><td>Optimise allocation of limited resources. Maximise profit / minimise cost with constraints.</td></tr>
-    <tr><td><b>Decision Tree</b></td><td>Visual tree showing decisions, chance events, outcomes. Good for sequential decisions under uncertainty.</td></tr>
-    <tr><td><b>Game Theory</b></td><td>Strategic interaction between competitors. Minimax, Nash equilibrium.</td></tr>
-    <tr><td><b>Simulation</b></td><td>Build model of real system, run experiments. Monte Carlo simulation.</td></tr>
-    <tr><td><b>Queueing Theory</b></td><td>Optimise waiting lines. Bank tellers, call centres.</td></tr>
-    <tr><td><b>PERT</b></td><td>Programme Evaluation Review Technique — project scheduling with uncertain time estimates. Uses 3 time estimates (O/M/P).</td></tr>
-    <tr><td><b>CPM</b></td><td>Critical Path Method — deterministic time estimates. Identifies longest path = critical path.</td></tr>
-    <tr><td><b>GERT</b></td><td>Graphical Evaluation and Review Technique — extends PERT with probabilistic branching.</td></tr>
-  </table>
-  <div class="tip-box"><b>PERT vs CPM:</b> PERT = uncertain time (3 estimates), used in R&D. CPM = certain time (1 estimate), used in construction. Both identify critical path.</div>
-</div>
-
-<!-- ===== PART 9: PERSONALITY ===== -->
-<div class="part-head" id="p9">
-  <h2>Part 9 — Personality</h2>
-  <div class="part-sub">From CGB Personality & Perception PDF</div>
-</div>
-
-<div class="pyq-box">
-  <div class="pyq-title">🔥 PYQ ALERT — 15 Marks (2023)</div>
-  <p>"Explain the Big Five Personality Model with examples. How can organisations use personality assessment in HR decisions?" — Full 15-marker in 2023.</p>
-</div>
-
-<div class="card">
-  <h4>Definition of Personality</h4>
-  <ul class="bullets">
-    <li><b>Gordon Allport (1937):</b> "Personality is the dynamic organisation within the individual of those psychophysical systems that determine his unique adjustments to his environment."</li>
-    <li>Personality = sum total of how an individual reacts and interacts with others</li>
-    <li>It is <b>unique, consistent, and relatively stable</b> over time</li>
-  </ul>
-</div>
-
-<div class="card">
-  <h4>Allport's Trait Theory — 3 Types of Traits</h4>
-  <table>
-    <tr><th>Trait Type</th><th>Description</th><th>Example</th></tr>
-    <tr><td><b class="hi-y">Cardinal Traits</b></td><td>Dominant, pervasive — define the person entirely. Very few people have a cardinal trait.</td><td>Gandhi's non-violence; Hitler's authoritarianism</td></tr>
-    <tr><td><b class="hi-g">Central Traits</b></td><td>General characteristics — describe personality. Most people have 5-10 central traits.</td><td>Honest, aggressive, kind, intelligent</td></tr>
-    <tr><td><b class="pur">Secondary Traits</b></td><td>Peripheral, situational — appear in specific contexts only.</td><td>Gets nervous during presentations; dislikes specific foods</td></tr>
-  </table>
-</div>
-
-<div class="card">
-  <h4>Key Personality Attributes (Robbins)</h4>
-  <table>
-    <tr><th>Attribute</th><th>Description</th></tr>
-    <tr><td><b>Core Self-Evaluation</b></td><td>Self-assessment of capabilities, worth. Includes self-esteem, locus of control, neuroticism, self-efficacy. High = positive self-view = better job performance.</td></tr>
-    <tr><td><b>Machiavellianism</b></td><td>High Mach = pragmatic, manipulative, emotionally detached. "End justifies means." Named after Niccolò Machiavelli.</td></tr>
-    <tr><td><b>Narcissism</b></td><td>Grandiosity, entitlement, need for admiration. High narcissists are arrogant, self-promoting, poor team players.</td></tr>
-    <tr><td><b>Self-Monitoring</b></td><td>Adjusting behaviour based on external cues. High SM = adaptable, good actors. Low SM = consistent regardless of situation.</td></tr>
-    <tr><td><b>Risk-Taking</b></td><td>Propensity to take risks. High risk-takers: faster decisions, less information needed. Important for entrepreneurs.</td></tr>
-  </table>
-</div>
-
-<div class="card">
-  <h4>Type A & Type B Personality — Friedman & Rosenman (1950s)</h4>
-  <table>
-    <tr><th>Feature</th><th>Type A</th><th>Type B</th></tr>
-    <tr><td>Pace</td><td>Always in a hurry, time-pressured</td><td>Relaxed, unhurried</td></tr>
-    <tr><td>Competition</td><td>Highly competitive</td><td>Less competitive</td></tr>
-    <tr><td>Multitasking</td><td>Does multiple things simultaneously</td><td>One thing at a time</td></tr>
-    <tr><td>Work style</td><td>Workaholic, aggressive, impatient</td><td>Does not need recognition, easy-going</td></tr>
-    <tr><td>Health risk</td><td>Higher risk of heart disease</td><td>Lower risk</td></tr>
-    <tr><td>Job performance</td><td>Works fast; quantity over quality</td><td>Slower, higher quality</td></tr>
-    <tr><td>Stress</td><td>High stress, self-imposed</td><td>Lower stress</td></tr>
-  </table>
-  <div class="tip-box"><b>Remember:</b> Type A personalities make good managers in crisis but risk burnout. Type B are better for creative, long-term projects.</div>
-</div>
-
-<div class="card">
-  <h4>Factors Affecting Personality</h4>
-  <div class="cmp-grid">
-    <div class="cmp-col">
-      <div class="cmp-head" style="color:#818cf8">Heredity / Genetics</div>
-      <ul>
-        <li>Biological, physical, physiological makeup</li>
-        <li>Determined at conception</li>
-        <li>Eye colour, temperament, energy level</li>
-        <li>Twin studies support genetic influence</li>
-      </ul>
-    </div>
-    <div class="cmp-col">
-      <div class="cmp-head" style="color:#34d399">Environment</div>
-      <ul>
-        <li>Family, culture, peer groups</li>
-        <li>Social norms and values</li>
-        <li>Socioeconomic class</li>
-        <li>Education and experiences</li>
-      </ul>
-    </div>
+<div class="stree">
+  <div class="stree-root teal">CONTROLLING — 5-Step Process</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn blue"><div class="t">① Establish standards</div><div class="d">Set benchmarks — output, quality, time</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn purple"><div class="t">② Measure actual performance</div><div class="d">Quantitative or qualitative measurement</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber"><div class="t">③ Compare performance with standards</div><div class="d">Identify deviations — favourable and unfavourable</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn red"><div class="t">④ Analyse deviations</div><div class="d">Find root causes of variance</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green"><div class="t">⑤ Take corrective action</div><div class="d">Remedial measures to get back on track</div></div></div>
   </div>
-  <div class="cmp-grid" style="margin-top:10px">
-    <div class="cmp-col">
-      <div class="cmp-head" style="color:#fbbf24">Life Experiences / Situation</div>
-      <ul>
-        <li>Critical incidents shape personality</li>
-        <li>Trauma, success, failure</li>
-        <li>Different situations bring out different traits</li>
-      </ul>
-    </div>
-    <div class="cmp-col">
-      <div class="cmp-head" style="color:#f472b6">Psychological Factors</div>
-      <ul>
-        <li>Self-concept and self-awareness</li>
-        <li>Emotional intelligence</li>
-        <li>Cognitive patterns and beliefs</li>
-      </ul>
-    </div>
+</div>
+<div class="tip"><b>Management by Exception (MBE):</b> Managers focus ONLY on significant deviations — not minor ones. Save time by ignoring the noise.</div>
+
+<!-- ══════════ PART 7 ══════════ -->
+<div class="part" id="p7"><h2>Part 7 — Planning &amp; MBO</h2><div class="ps">Types of Plans · MBO · Simon's Bounded Rationality</div></div>
+
+<div class="stree">
+  <div class="stree-root blue">TYPES OF PLANS</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">By Time Horizon</div>
+      <div class="d">
+        <div class="sub-br">
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Strategic Plans (3-5+ yrs)</div><div class="d">Top management · Org-wide direction</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Tactical Plans (1-3 yrs)</div><div class="d">Middle management · Implement strategic plans</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">Operational Plans (&lt;1 yr)</div><div class="d">Lower management · Day-to-day work</div></div></div>
+        </div>
+      </div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green">
+      <div class="t">By Use</div>
+      <div class="d"><b>Standing Plans</b> (repeated use): Policies, Procedures, Rules, Methods<br><b>Single-use Plans</b> (one-time): Budgets, Programmes, Projects</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn purple">
+      <div class="t">By Scope</div>
+      <div class="d"><b>Directional</b> = flexible guidelines | <b>Specific</b> = clearly defined objectives, no ambiguity</div>
+    </div></div>
   </div>
-  <div class="tip-box"><b>Nature vs Nurture debate:</b> Both genetics and environment contribute. Modern view: genes set the range, environment determines where in that range we fall.</div>
 </div>
 
-<!-- ===== PART 10: OCEAN ===== -->
-<div class="part-head" id="p10">
-  <h2>Part 10 — Big Five Personality Model (OCEAN)</h2>
-  <div class="part-sub">McCrae & Costa · Most validated personality framework · 15-marker 2023</div>
+<div class="stree">
+  <div class="stree-root green">MBO — Management by Objectives · Peter Drucker [1954]</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn blue"><div class="t">Book: "The Practice of Management" (1954)</div><div class="d">Joint goal-setting between managers and employees · Aligns individual objectives with org objectives</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">6-Step Process</div>
+      <div class="d">
+        <div class="sub-br">
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">① Set organisational goals (top mgmt)</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">② Cascade to depts/individuals</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">③ Employee participates in setting own goals</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">④ Monitor &amp; review progress periodically</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">⑤ Evaluate performance vs agreed objectives</div></div></div>
+          <div class="br"><div class="br-line"></div><div class="bn"><div class="t">⑥ Reward / feedback</div></div></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
 </div>
 
-<div class="card">
-  <h4>Background</h4>
-  <ul class="bullets">
-    <li>Developed by <b>McCrae & Costa</b> (1990s), building on earlier work by Goldberg</li>
-    <li>Also called <b>Five Factor Model (FFM)</b></li>
-    <li>Most empirically validated personality framework — used in hiring, leadership development, counselling</li>
-    <li>Trait-based — traits are continuous dimensions, not categories</li>
-  </ul>
+<div class="g2">
+  <div class="gc"><div class="gt" style="color:#34d399">MBO Advantages</div>
+    <ul><li>Clear goals → less ambiguity</li><li>Employee participation → motivation</li><li>Objective performance appraisal</li><li>Better communication</li><li>Aligns individual + org goals</li></ul>
+  </div>
+  <div class="gc"><div class="gt" style="color:#f87171">MBO Limitations</div>
+    <ul><li>Time-consuming process</li><li>Rigid goal orientation</li><li>Hard to quantify all roles</li><li>Top management may not participate</li></ul>
+  </div>
 </div>
 
-<div class="mnem"><b>Mnemonic: OCEAN</b> — Open Conscientious Extraverted Agreeable Neurotic</div>
+<div class="stree">
+  <div class="stree-root red">SIMON'S BOUNDED RATIONALITY [1947]</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn blue"><div class="t">Herbert Simon — <span class="hl">Nobel Prize Economics 1978</span></div><div class="d">Decision-makers have LIMITED (bounded) rationality — cannot process all information</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber"><div class="t">"Satisficing" not Optimising</div><div class="d">Choose the <span class="hl">first good-enough option</span> rather than the single best option · Contrasts with classical "rational man" assumption</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn red"><div class="t">3 reasons for bounded rationality</div><div class="d">Cognitive limitations · Time constraints · Incomplete information</div></div></div>
+  </div>
+</div>
+
+<!-- ══════════ PART 8 ══════════ -->
+<div class="part" id="p8"><h2>Part 8 — Decision Making Techniques</h2><div class="ps">Group Techniques · Quantitative Techniques · PERT vs CPM</div></div>
+
+<div class="intro16">
+  <div class="i-label">Plain English</div>
+  When groups need to make decisions there are different techniques — some need everyone together (brainstorming), some work remotely without face-to-face (Delphi), some are structured (NGT). For project planning, PERT handles uncertain time estimates; CPM handles certain ones.
+</div>
+
+<div class="stree">
+  <div class="stree-root blue">GROUP DECISION-MAKING TECHNIQUES</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn green">
+      <div class="t">Brainstorming</div>
+      <div class="d">Free flow of ideas · <span class="hl">No criticism during idea generation</span> · Quantity over quality first · Then filter · Face-to-face</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">Delphi Technique</div>
+      <div class="d"><span class="hl">Anonymous questionnaires</span> in rounds · No face-to-face · Experts geographically spread · Iterate until consensus</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn purple">
+      <div class="t">Nominal Group Technique (NGT)</div>
+      <div class="d">Silent individual writing FIRST → round-robin sharing → group discussion → voting · <span class="hl">Face-to-face but structured</span></div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn teal">
+      <div class="t">Quality Circles</div>
+      <div class="d">Voluntary groups of <span class="hl">8-10 workers</span> meeting to solve quality problems · Worker-level, bottom-up · Japanese origin</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn blue">
+      <div class="t">Fish Bowl</div>
+      <div class="d">Inner group discusses while outer observes · Roles rotate · Encourages active listening</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn red">
+      <div class="t">Didactic Interaction</div>
+      <div class="d">Two groups: one proposes, one opposes · Roles reversed · Structured devil's advocate — forces pros AND cons</div>
+    </div></div>
+  </div>
+</div>
+
+<div class="g2">
+  <div class="gc">
+    <div class="gt" style="color:#818cf8">PERT — Uncertain Projects</div>
+    <div class="gb"><b>Programme Evaluation Review Technique</b><br>3 time estimates: <b>Optimistic (O) · Most Likely (M) · Pessimistic (P)</b><br>Used in: R&amp;D, new product development<br>Identifies critical path</div>
+  </div>
+  <div class="gc">
+    <div class="gt" style="color:#34d399">CPM — Certain Projects</div>
+    <div class="gb"><b>Critical Path Method</b><br>1 deterministic time estimate<br>Used in: Construction, repetitive projects<br>Also identifies critical path</div>
+  </div>
+</div>
+<div class="tip"><b>PERT vs CPM trap:</b> Both identify the critical path. Difference = PERT uses 3 estimates (uncertain) · CPM uses 1 estimate (certain) · PERT=R&amp;D · CPM=construction</div>
+
+<!-- ══════════ PART 9 ══════════ -->
+<div class="part" id="p9"><h2>Part 9 — Personality</h2><div class="ps">Allport · Trait Types · Type A/B · Robbins Attributes</div></div>
+
+<span class="tag must">Must Know</span><span class="tag pyq">15-Marker 2023</span>
+<div class="pyq-badge">PYQ: Big Five Personality (15 marks, 2023) · Type A/B and Locus of Control MCQs</div>
+
+<div class="intro16">
+  <div class="i-label">Plain English</div>
+  Your personality is the pattern of how you think, feel and behave — your consistent, unique way of engaging with the world.
+  Allport said most of us have 5-10 <b>central traits</b> that define us.
+  A handful of rare people (Gandhi, Hitler) have one <b>cardinal trait</b> so powerful it defines EVERYTHING about them.
+  Your boss who never stops working and has heart problems? Probably <b>Type A</b>.
+</div>
+
+<div class="stree">
+  <div class="stree-root blue">ALLPORT'S TRAIT THEORY [1937]</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">Cardinal Traits — <span class="hl">very rare</span></div>
+      <div class="d">Dominant, pervasive trait that defines the ENTIRE person · Very few people have one<br>Ex: <b>Gandhi's non-violence · Hitler's authoritarianism</b></div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green">
+      <div class="t">Central Traits — <span class="hl">most people have 5-10</span></div>
+      <div class="d">General characteristics that describe personality · How people describe each other<br>Ex: honest, aggressive, kind, intelligent</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn blue">
+      <div class="t">Secondary Traits — peripheral, situational</div>
+      <div class="d">Appear only in specific contexts · Not central to who you are<br>Ex: Gets nervous during presentations · Dislikes specific foods</div>
+    </div></div>
+  </div>
+</div>
+
+<div class="sec-head"><h3>Robbins' Key Personality Attributes</h3></div>
+<div class="stree">
+  <div class="stree-root purple">5 PERSONALITY ATTRIBUTES (Robbins)</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">Locus of Control</div>
+      <div class="d"><span class="hl-g">Internal LOC</span>: believe they control own outcomes → higher satisfaction, better at complex tasks<br><span class="hl-r">External LOC</span>: believe luck/others control outcomes → less initiative</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn red">
+      <div class="t">Machiavellianism</div>
+      <div class="d">High Mach = pragmatic, manipulative, emotionally detached · "End justifies means" · Good in negotiation, persuasion roles</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn blue">
+      <div class="t">Self-Efficacy (Bandura)</div>
+      <div class="d">Belief in own ability to succeed at a specific task · <span class="hl">Higher self-efficacy → better performance</span></div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn teal">
+      <div class="t">Self-Monitoring</div>
+      <div class="d">High SM = adjusts behaviour to social cues, adaptable · Low SM = consistent regardless of situation</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green">
+      <div class="t">Risk-Taking</div>
+      <div class="d">High risk-takers = faster decisions with less information · Important for entrepreneurship</div>
+    </div></div>
+  </div>
+</div>
+
+<div class="sec-head"><h3>Type A vs Type B Personality</h3></div>
+<div class="xy">
+  <div class="xy-col x">
+    <div class="xh">Type A</div>
+    <div class="xs">Friedman &amp; Rosenman · 1950s</div>
+    <ul>
+      <li>Always in a hurry, time-pressured</li>
+      <li>Highly competitive</li>
+      <li>Multitasks constantly</li>
+      <li>Workaholic, aggressive, impatient</li>
+      <li>Higher heart disease risk</li>
+      <li>Works fast: quantity over quality</li>
+    </ul>
+  </div>
+  <div class="xy-col y">
+    <div class="xh">Type B</div>
+    <div class="xs">Relaxed · Creative · Low stress</div>
+    <ul>
+      <li>Relaxed, unhurried</li>
+      <li>Less competitive</li>
+      <li>One thing at a time</li>
+      <li>Easy-going, not aggressive</li>
+      <li>Lower health risk</li>
+      <li>Higher quality, longer-term work</li>
+    </ul>
+  </div>
+</div>
+<div class="tip"><b>Exam note:</b> Type A = good in crisis, poor at sustainable long-term work · Type B = better for creative projects · Type A = higher risk of burnout</div>
+
+<!-- ══════════ PART 10 ══════════ -->
+<div class="part" id="p10"><h2>Part 10 — Big Five Personality Model (OCEAN)</h2><div class="ps">McCrae &amp; Costa · Most validated framework · 15-marker 2023</div></div>
+
+<div class="mnem">
+  <div class="mt">Mnemonic</div>
+  <div class="mw">O · C · E · A · N</div>
+  <div class="me"><b>O</b>penness · <b>C</b>onscientiousness · <b>E</b>xtraversion · <b>A</b>greeableness · <b>N</b>euroticism | Developed by McCrae &amp; Costa (1990s) · Also called Five Factor Model (FFM)</div>
+</div>
 
 <div class="ocean-grid">
   <div class="ocean-card">
-    <div class="letter" style="color:#818cf8">O</div>
-    <div class="trait" style="color:#818cf8">Openness to Experience</div>
-    <div class="row">
-      <span class="badge" style="background:#1e1b4b;color:#818cf8">High O</span>
-      <span style="color:#94a3b8;font-size:0.75rem">Curious, creative, artistic, imaginative, open to new ideas</span>
-    </div>
-    <div class="row">
-      <span class="badge" style="background:#1c1917;color:#a8a29e">Low O</span>
-      <span style="color:#94a3b8;font-size:0.75rem">Conventional, routine-oriented, resistant to change, practical</span>
-    </div>
-    <div class="desc-row" style="margin-top:6px">Job fit: Research, design, art, entrepreneurship</div>
+    <div class="oletter" style="color:#818cf8">O</div>
+    <div class="otrait" style="color:#818cf8">Openness to Experience</div>
+    <div class="orow"><span class="obadge" style="background:#1e1b4b;color:#818cf8">High O</span><span class="odesc">Curious, creative, artistic, imaginative, open to new ideas</span></div>
+    <div class="orow"><span class="obadge" style="background:#1c1917;color:#a8a29e">Low O</span><span class="odesc">Conventional, routine-oriented, resistant to change, practical</span></div>
+    <div class="ofit">Job fit: Research, design, art, entrepreneurship</div>
   </div>
   <div class="ocean-card">
-    <div class="letter" style="color:#34d399">C</div>
-    <div class="trait" style="color:#34d399">Conscientiousness</div>
-    <div class="row">
-      <span class="badge" style="background:#064e3b;color:#34d399">High C</span>
-      <span style="color:#94a3b8;font-size:0.75rem">Organised, reliable, disciplined, hardworking, goal-oriented</span>
-    </div>
-    <div class="row">
-      <span class="badge" style="background:#1c1917;color:#a8a29e">Low C</span>
-      <span style="color:#94a3b8;font-size:0.75rem">Disorganised, impulsive, unreliable, flexible, spontaneous</span>
-    </div>
-    <div class="desc-row" style="margin-top:6px"><b style="color:#34d399">Best predictor of job performance</b> across occupations</div>
+    <div class="oletter" style="color:#34d399">C</div>
+    <div class="otrait" style="color:#34d399">Conscientiousness</div>
+    <div class="orow"><span class="obadge" style="background:#064e3b;color:#34d399">High C</span><span class="odesc">Organised, reliable, disciplined, hardworking, goal-oriented</span></div>
+    <div class="orow"><span class="obadge" style="background:#1c1917;color:#a8a29e">Low C</span><span class="odesc">Disorganised, impulsive, unreliable, flexible, spontaneous</span></div>
+    <div class="ofit"><b style="color:#34d399">★ Best predictor of job performance</b> across ALL occupations</div>
   </div>
   <div class="ocean-card">
-    <div class="letter" style="color:#fbbf24">E</div>
-    <div class="trait" style="color:#fbbf24">Extraversion</div>
-    <div class="row">
-      <span class="badge" style="background:#78350f;color:#fbbf24">High E</span>
-      <span style="color:#94a3b8;font-size:0.75rem">Sociable, talkative, assertive, energetic, seeks stimulation</span>
-    </div>
-    <div class="row">
-      <span class="badge" style="background:#1c1917;color:#a8a29e">Low E (Introverted)</span>
-      <span style="color:#94a3b8;font-size:0.75rem">Reserved, quiet, prefers solitude, reflective, independent</span>
-    </div>
-    <div class="desc-row" style="margin-top:6px">Job fit: Sales, management, leadership positions</div>
+    <div class="oletter" style="color:#fbbf24">E</div>
+    <div class="otrait" style="color:#fbbf24">Extraversion</div>
+    <div class="orow"><span class="obadge" style="background:#78350f;color:#fbbf24">High E</span><span class="odesc">Sociable, talkative, assertive, energetic, seeks stimulation</span></div>
+    <div class="orow"><span class="obadge" style="background:#1c1917;color:#a8a29e">Low E</span><span class="odesc">Reserved, quiet, prefers solitude, reflective, independent</span></div>
+    <div class="ofit">Job fit: Sales, management, leadership positions</div>
   </div>
   <div class="ocean-card">
-    <div class="letter" style="color:#f472b6">A</div>
-    <div class="trait" style="color:#f472b6">Agreeableness</div>
-    <div class="row">
-      <span class="badge" style="background:#500724;color:#f472b6">High A</span>
-      <span style="color:#94a3b8;font-size:0.75rem">Cooperative, trusting, helpful, empathetic, likeable</span>
-    </div>
-    <div class="row">
-      <span class="badge" style="background:#1c1917;color:#a8a29e">Low A</span>
-      <span style="color:#94a3b8;font-size:0.75rem">Competitive, challenging, suspicious, difficult to work with</span>
-    </div>
-    <div class="desc-row" style="margin-top:6px">Job fit: Customer service, HR, teaching, nursing</div>
+    <div class="oletter" style="color:#f472b6">A</div>
+    <div class="otrait" style="color:#f472b6">Agreeableness</div>
+    <div class="orow"><span class="obadge" style="background:#500724;color:#f472b6">High A</span><span class="odesc">Cooperative, trusting, helpful, empathetic, likeable</span></div>
+    <div class="orow"><span class="obadge" style="background:#1c1917;color:#a8a29e">Low A</span><span class="odesc">Competitive, challenging, suspicious, difficult to work with</span></div>
+    <div class="ofit">Job fit: Customer service, HR, teaching, nursing</div>
   </div>
-  <div class="ocean-card">
-    <div class="letter" style="color:#f87171">N</div>
-    <div class="trait" style="color:#f87171">Neuroticism (Emotional Stability)</div>
-    <div class="row">
-      <span class="badge" style="background:#7f1d1d;color:#f87171">High N</span>
-      <span style="color:#94a3b8;font-size:0.75rem">Anxious, moody, insecure, emotionally reactive, unstable</span>
-    </div>
-    <div class="row">
-      <span class="badge" style="background:#064e3b;color:#34d399">Low N (Stable)</span>
-      <span style="color:#94a3b8;font-size:0.75rem">Calm, secure, emotionally stable, resilient under stress</span>
-    </div>
-    <div class="desc-row" style="margin-top:6px"><b style="color:#f87171">High N = lower job performance.</b> Low N desirable in high-stress roles.</div>
+  <div class="ocean-card" style="grid-column:1/-1;max-width:50%">
+    <div class="oletter" style="color:#f87171">N</div>
+    <div class="otrait" style="color:#f87171">Neuroticism (Emotional Stability)</div>
+    <div class="orow"><span class="obadge" style="background:#7f1d1d;color:#f87171">High N</span><span class="odesc">Anxious, moody, insecure, emotionally reactive, unstable → <b style="color:#f87171">LOWER job performance</b></span></div>
+    <div class="orow"><span class="obadge" style="background:#064e3b;color:#34d399">Low N</span><span class="odesc">Calm, secure, emotionally stable, resilient under stress → desirable in high-stress roles</span></div>
+    <div class="ofit">Low N (emotional stability) crucial for leadership, high-pressure roles</div>
   </div>
 </div>
 
-<div class="tip-box">
-  <b>RBI Grade B answer priority for Big Five:</b><br>
-  1. Define each trait + give high/low characteristics<br>
-  2. Mention Conscientiousness = best predictor of job performance<br>
-  3. Neuroticism = emotional instability (inversely related to performance)<br>
-  4. Link to HR decisions: hiring (C), team building (A+E), leadership (low N, high C, moderate O)
+<div class="tip"><b>RBI Grade B answer priority for Big Five:</b><br>
+① Define each trait + high/low characteristics<br>
+② Mention <span class="hl">Conscientiousness = best predictor of job performance</span><br>
+③ Neuroticism = emotional instability (inversely related to performance)<br>
+④ HR applications: hiring (C), team building (A+E), leadership (low N, high C, moderate O)
 </div>
 
-<!-- ===== PART 11: PERCEPTION ===== -->
-<div class="part-head" id="p11">
-  <h2>Part 11 — Perception</h2>
-  <div class="part-sub">Definition · 7 Errors + Selective Perception</div>
+<!-- ══════════ PART 11 ══════════ -->
+<div class="part" id="p11"><h2>Part 11 — Perception</h2><div class="ps">Definition · 7 Errors + Selective Perception · Attribution Theory</div></div>
+
+<div class="intro16">
+  <div class="i-label">Plain English</div>
+  Two people see the same thing and interpret it differently. That's perception.
+  Your brain doesn't show you reality — it shows you a filtered, interpreted version of it.
+  <b>Halo</b> = one good thing makes everything look good. <b>Horn</b> = one bad thing taints everything.
+  <b>Contrast</b> = you look amazing because the person before you was terrible.
 </div>
 
-<div class="card">
-  <h4>Definition of Perception</h4>
-  <ul class="bullets">
-    <li>Perception = process by which individuals select, organise, and interpret sensory information to give meaning to their environment</li>
-    <li>Same stimulus → different perceptions → different behaviours</li>
-    <li>Influenced by: perceiver's characteristics, target's characteristics, situational context</li>
-  </ul>
-</div>
-
-<div class="card">
-  <h4>Perception Errors — 7 Types + Selective Perception</h4>
-  <table>
-    <tr><th>#</th><th>Error</th><th>Definition</th><th>Example</th></tr>
-    <tr><td>1</td><td><b class="hi-y">Halo Effect</b></td><td>General impression from one positive trait applied to all qualities. "If good at X, must be good at everything."</td><td>Hiring a candidate because they went to IIT, assuming excellence in all areas</td></tr>
-    <tr><td>2</td><td><b class="hi-r">Horn Effect</b></td><td>Opposite of Halo. One negative trait colours all judgments negatively.</td><td>Candidate with poor grammar assumed to be incompetent overall</td></tr>
-    <tr><td>3</td><td><b style="color:#a78bfa">Stereotyping</b></td><td>Judging someone based on group membership (gender, race, caste, region).</td><td>"Women are not good at technical roles"</td></tr>
-    <tr><td>4</td><td><b style="color:#34d399">Similarity (Like Me) Effect</b></td><td>Favour people who are similar to ourselves in background, interests, or values.</td><td>Manager promotes employee from same college</td></tr>
-    <tr><td>5</td><td><b style="color:#fb923c">Contrast Effect</b></td><td>Evaluation affected by comparison with others encountered recently.</td><td>Average candidate seems excellent after interviewing weak candidates</td></tr>
-    <tr><td>6</td><td><b style="color:#60a5fa">Illusion</b></td><td>False perception of real stimulus. Brain misinterprets actual external stimulus.</td><td>Mirage in desert; straight stick appears bent in water</td></tr>
-    <tr><td>7</td><td><b style="color:#f472b6">Hallucination</b></td><td>Perception without any real external stimulus. Internal experience mistaken as external.</td><td>Seeing/hearing things that aren't there</td></tr>
-    <tr><td>+</td><td><b class="hi-y">Selective Perception</b></td><td>People selectively interpret based on interests, background, experience. Filter out information that conflicts with existing beliefs.</td><td>Manager hears only positive feedback, ignores criticism</td></tr>
-  </table>
-  <div class="tip-box">
-    <b>MCQ trap — Halo vs Horn:</b><br>
-    Halo = one POSITIVE trait → positive overall impression<br>
-    Horn = one NEGATIVE trait → negative overall impression<br>
-    <b>Contrast vs Selective:</b> Contrast = comparison with others. Selective = filtering information based on own beliefs.
+<div class="stree">
+  <div class="stree-root blue">PERCEPTION — 3 Steps</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn amber"><div class="t">① Selection</div><div class="d">Brain selects what to pay attention to from overwhelming stimuli</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn purple"><div class="t">② Organisation</div><div class="d">Brain groups and organises selected stimuli into patterns</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green"><div class="t">③ Interpretation</div><div class="d">Brain gives meaning to organised patterns based on past experience, beliefs, values</div></div></div>
   </div>
 </div>
 
-<!-- ===== PART 12: MCQ PRACTICE ===== -->
-<div class="part-head" id="p12">
-  <h2>Part 12 — Practice MCQs (30 Questions)</h2>
-  <div class="part-sub">Click to reveal answers · Cover options and answer first</div>
+<div class="stree">
+  <div class="stree-root red">7 PERCEPTUAL ERRORS + Selective Perception</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">① Halo Effect</div>
+      <div class="d"><span class="hl">One POSITIVE trait → positive overall impression.</span> "If good at X, must be good at everything." Ex: IIT grad assumed excellent overall</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn red">
+      <div class="t">② Horn Effect (opposite of Halo)</div>
+      <div class="d">One NEGATIVE trait → negative overall impression. Ex: Poor grammar = assumed incompetent overall</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn purple">
+      <div class="t">③ Stereotyping</div>
+      <div class="d">Judging a person based on GROUP membership (gender, race, caste, region, religion)</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn green">
+      <div class="t">④ Similarity / Like Me Effect</div>
+      <div class="d">Favour people similar to ourselves in background, interests, values. Ex: Promote someone from same college</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn blue">
+      <div class="t">⑤ Contrast Effect</div>
+      <div class="d">Evaluation affected by <span class="hl">comparison with others encountered recently.</span> Ex: Average candidate seems excellent after interviewing weak candidates</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn teal">
+      <div class="t">⑥ Illusion vs ⑦ Hallucination</div>
+      <div class="d"><b>Illusion</b> = false perception of REAL stimulus (mirage, bent stick in water)<br><b>Hallucination</b> = perception with NO external stimulus (seeing/hearing things that don't exist)</div>
+    </div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber">
+      <div class="t">+ Selective Perception</div>
+      <div class="d">Filter out information conflicting with existing beliefs/interests. Ex: Manager hears only positive feedback, ignores criticism</div>
+    </div></div>
+  </div>
 </div>
 
-<div class="section-head"><h3>Management Fundamentals (Q1–Q10)</h3></div>
-
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q1.</b> According to Fayol, which principle states that an employee should receive orders from only one superior? (a) Unity of Direction (b) Unity of Command (c) Scalar Chain (d) Esprit de Corps</summary>
-    <div class="pq-ans"><div class="correct">Answer: (b) Unity of Command</div><div class="why">Unity of Command = one boss per employee. Unity of Direction = one plan per group of activities. Common trap: students confuse these two.</div></div>
-  </details>
+<div class="stree">
+  <div class="stree-root purple">ATTRIBUTION THEORY</div>
+  <div class="branches">
+    <div class="br"><div class="br-line"></div><div class="bn blue"><div class="t">We explain behaviour by attributing causes</div><div class="d">Internal attribution = personal factors (ability, effort) · External attribution = situational factors (luck, difficulty)</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn red"><div class="t">Fundamental Attribution Error</div><div class="d"><span class="hl">Overestimate INTERNAL factors for others' failures</span> · Underestimate situational factors · Apply OPPOSITE for own failures</div></div></div>
+    <div class="br"><div class="br-line"></div><div class="bn amber"><div class="t">Projection</div><div class="d">Attributing YOUR OWN feelings/traits/emotions onto others</div></div></div>
+  </div>
 </div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q2.</b> "Gang Plank" is associated with which of Fayol's principles? (a) Unity of Command (b) Scalar Chain (c) Discipline (d) Division of Work</summary>
-    <div class="pq-ans"><div class="correct">Answer: (b) Scalar Chain</div><div class="why">Gang Plank = horizontal communication between same-level managers when urgency requires bypassing the scalar chain. It's an exception Fayol allowed within the Scalar Chain principle.</div></div>
-  </details>
+<div class="tip">
+  <b>MCQ traps:</b><br>
+  Halo vs Horn: Halo = ONE POSITIVE → positive overall | Horn = ONE NEGATIVE → negative overall<br>
+  Contrast vs Selective: Contrast = comparison with OTHER people | Selective = filtering based on OWN beliefs<br>
+  Illusion vs Hallucination: Illusion has a REAL (but misinterpreted) stimulus | Hallucination has NO real stimulus
 </div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q3.</b> Which management theory is associated with "Hawthorne Effect"? (a) Classical Theory (b) Scientific Management (c) Human Relations Theory (d) Systems Theory</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Human Relations Theory</div><div class="why">Elton Mayo's Hawthorne Studies at Western Electric led to Neo-Classical / Human Relations Theory. Finding: being observed increases productivity (Hawthorne Effect).</div></div>
-  </details>
-</div>
+<!-- ══════════ PART 12 ══════════ -->
+<div class="part" id="p12"><h2>Part 12 — Practice MCQs (30 Questions)</h2><div class="ps">Cover options · Answer first · Click to reveal</div></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q4.</b> POSDCORB was given by: (a) Henry Fayol (b) F.W. Taylor (c) Luther Gulick (d) Koontz & O'Donnell</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Luther Gulick</div><div class="why">Gulick = POSDCORB (Planning, Organising, Staffing, Directing, Coordinating, Reporting, Budgeting). Fayol = POCCC. Koontz = POSDC.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q1.</b> According to Fayol, which principle states that an employee should receive orders from only one superior? (a) Unity of Direction (b) Unity of Command (c) Scalar Chain (d) Esprit de Corps</summary>
+  <div class="pq-ans"><div class="correct">Answer: (b) Unity of Command</div><div class="why">Unity of Command = one boss per employee (individual level). Unity of Direction = one plan per group of activities (org level). Common exam trap: students confuse these two.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q5.</b> Theory Z was developed by: (a) Douglas McGregor (b) William Ouchi (c) Abraham Maslow (d) Frederick Herzberg</summary>
-    <div class="pq-ans"><div class="correct">Answer: (b) William Ouchi</div><div class="why">Ouchi (1981) combined American (Theory A) + Japanese (Theory J) management to create Theory Z organisation. McGregor = Theory X and Theory Y.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q2.</b> "Gang Plank" is associated with which of Fayol's principles? (a) Unity of Command (b) Scalar Chain (c) Discipline (d) Division of Work</summary>
+  <div class="pq-ans"><div class="correct">Answer: (b) Scalar Chain</div><div class="why">Gang Plank = horizontal communication between same-level managers when urgency requires bypassing the scalar chain. It's an exception Fayol allowed within Scalar Chain.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q6.</b> Nudge Theory was proposed by: (a) Peter Drucker (b) Herbert Simon (c) Richard Thaler & Cass Sunstein (d) William Ouchi</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Richard Thaler & Cass Sunstein</div><div class="why">Thaler & Sunstein published "Nudge" in 2008. Thaler won Nobel Prize in Economics 2017 for contributions to behavioural economics including nudge theory.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q3.</b> Which management theory is associated with the "Hawthorne Effect"? (a) Classical Theory (b) Scientific Management (c) Human Relations Theory (d) Systems Theory</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Human Relations Theory</div><div class="why">Elton Mayo's Hawthorne Studies at Western Electric led to Neo-Classical / Human Relations Theory. Finding: being observed increases productivity = Hawthorne Effect.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q7.</b> Which of the following is a HARD element in McKinsey 7S framework? (a) Skills (b) Style (c) Strategy (d) Shared Values</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Strategy</div><div class="why">Hard elements (3S): Strategy, Structure, Systems. Soft elements (4S): Shared Values, Skills, Style, Staff. Skills, Style, and Shared Values are all SOFT elements.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q4.</b> POSDCORB was given by: (a) Henri Fayol (b) F.W. Taylor (c) Luther Gulick (d) Koontz &amp; O'Donnell</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Luther Gulick</div><div class="why">Gulick = POSDCORB (7 functions). Fayol = POCCC (5 functions). Koontz = POSDC (5 functions). Always remember who gave which acronym.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q8.</b> Which principle of Fayol states that "a place for everything and everything in its place"? (a) Equity (b) Initiative (c) Order (d) Unity of Direction</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Order</div><div class="why">Order has two parts: Material Order (physical things in right place) and Social Order (right person in right job). The quote refers to Material Order.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q5.</b> Which principle of Fayol states "a place for everything and everything in its place"? (a) Equity (b) Initiative (c) Order (d) Unity of Direction</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Order</div><div class="why">Order has two parts: Material Order (physical things in right place) and Social Order (right person in right job). The quote = Material Order.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q9.</b> Taylor's technique involving 8 specialists instead of one foreman is called: (a) Time Study (b) Differential Piece Rate (c) Functional Foremanship (d) Motion Study</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Functional Foremanship</div><div class="why">Taylor replaced one all-knowing foreman with 8 specialists (4 planning + 4 production). This violated Fayol's Unity of Command but increased specialisation.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q6.</b> Taylor's technique involving 8 specialists instead of one foreman is called: (a) Time Study (b) Differential Piece Rate (c) Functional Foremanship (d) Motion Study</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Functional Foremanship</div><div class="why">Taylor replaced one all-knowing foreman with 8 specialists (4 planning + 4 production). This violated Fayol's Unity of Command but increased specialisation.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q10.</b> Which approach to management says "there is no single best way to manage"? (a) Classical approach (b) Systems approach (c) Contingency approach (d) Behavioural approach</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Contingency approach</div><div class="why">Contingency = "it depends on the situation." Lawrence & Lorsch, Joan Woodward are key contributors. No universal principles — management style must adapt to environment, technology, and people.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q7.</b> Nudge Theory was proposed by: (a) Peter Drucker (b) Herbert Simon (c) Richard Thaler &amp; Cass Sunstein (d) William Ouchi</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Richard Thaler &amp; Cass Sunstein</div><div class="why">Thaler &amp; Sunstein published "Nudge" in 2008. Thaler won Nobel Prize in Economics 2017 for contributions to behavioural economics including nudge theory.</div></div>
+</details></div>
 
-<div class="section-head"><h3>Mintzberg & Decision Making (Q11–Q18)</h3></div>
+<div class="pq-wrap"><details>
+  <summary><b>Q8.</b> Which is a HARD element in McKinsey 7S framework? (a) Skills (b) Style (c) Strategy (d) Shared Values</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Strategy</div><div class="why">Hard elements (3S): Strategy, Structure, Systems. Soft elements (4S): Shared Values, Skills, Style, Staff. Trick: "hard" ≠ more important — Shared Values is at the centre.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q11.</b> A CEO handling a major labour strike falls under which Mintzberg role? (a) Entrepreneur (b) Negotiator (c) Disturbance Handler (d) Resource Allocator</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Disturbance Handler</div><div class="why">Disturbance Handler = reactive role dealing with involuntary crises (strikes, supplier failures, competitor actions). Negotiator = planned negotiations. Entrepreneur = proactive change-making.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q9.</b> Which approach to management says "there is no single best way to manage"? (a) Classical (b) Systems (c) Contingency (d) Behavioural</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Contingency</div><div class="why">Contingency = "it depends on the situation." Lawrence &amp; Lorsch, Joan Woodward are key contributors. No universal principles — adapt to environment, technology, people.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q12.</b> A CEO giving a press conference to announce quarterly results is performing which role? (a) Figurehead (b) Liaison (c) Spokesperson (d) Disseminator</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Spokesperson</div><div class="why">Spokesperson = transmits information to EXTERNAL parties. Figurehead = ceremonial/symbolic. Disseminator = transmits info to INTERNAL subordinates. Liaison = external networking (not formal communication).</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q10.</b> MBO (Management by Objectives) was introduced by: (a) Elton Mayo (b) Henri Fayol (c) Peter Drucker (d) Douglas McGregor</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Peter Drucker</div><div class="why">Drucker introduced MBO in "The Practice of Management" (1954). Key: individual and organisational objectives must be aligned; employees participate in setting their own goals.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q13.</b> In the Delphi technique, which of the following is TRUE? (a) Members meet face-to-face (b) Ideas are generated without criticism in rounds (c) Experts respond to questionnaires anonymously (d) Inner group discusses while outer group observes</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Experts respond to questionnaires anonymously</div><div class="why">Delphi = remote, anonymous, iterative questionnaires until consensus. (a) = wrong — no face-to-face. (b) = Brainstorming. (d) = Fish Bowl technique.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q11.</b> A CEO handling a major labour strike falls under which Mintzberg role? (a) Entrepreneur (b) Negotiator (c) Disturbance Handler (d) Resource Allocator</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Disturbance Handler</div><div class="why">Disturbance Handler = reactive, involuntary crises (strikes, supplier failures, competitor actions). Negotiator = planned negotiation. Entrepreneur = proactive change-making.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q14.</b> In Nominal Group Technique (NGT), what happens FIRST? (a) Group votes on ideas (b) Facilitator presents problem and members write ideas independently (c) Open group discussion (d) Ideas are criticised and evaluated</summary>
-    <div class="pq-ans"><div class="correct">Answer: (b) Facilitator presents problem and members write ideas independently</div><div class="why">NGT sequence: problem presented → individual silent writing → round-robin sharing → group discussion → voting/ranking. The silent individual writing phase is what distinguishes NGT from brainstorming.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q12.</b> A CEO giving a press conference to announce quarterly results is performing which role? (a) Figurehead (b) Liaison (c) Spokesperson (d) Disseminator</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Spokesperson</div><div class="why">Spokesperson = transmits info to EXTERNAL parties. Figurehead = ceremonial/symbolic (no information). Disseminator = transmits info INTERNALLY to subordinates. Liaison = external networking, not formal communication.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q15.</b> Herbert Simon's concept of "satisficing" is associated with: (a) Classical economic rationality (b) Bounded rationality (c) Scientific management (d) Contingency theory</summary>
-    <div class="pq-ans"><div class="correct">Answer: (b) Bounded rationality</div><div class="why">Simon (Nobel 1978) argued decision-makers have bounded (limited) rationality due to cognitive limits and incomplete information. Therefore they "satisfice" (choose first good-enough option) rather than optimise.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q13.</b> In the Delphi technique, which is TRUE? (a) Members meet face-to-face (b) Ideas generated without criticism (c) Experts respond anonymously to questionnaires (d) Inner group discusses while outer observes</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Experts respond to questionnaires anonymously</div><div class="why">Delphi = remote, anonymous, iterative questionnaires until consensus. (b) = Brainstorming. (d) = Fish Bowl technique.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q16.</b> PERT differs from CPM in that PERT: (a) Identifies the critical path (b) Uses deterministic time estimates (c) Uses three time estimates for uncertain activities (d) Is used in construction projects</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Uses three time estimates for uncertain activities</div><div class="why">PERT uses Optimistic (O), Most Likely (M), and Pessimistic (P) time estimates → weighted average. Used in R&D/uncertain projects. CPM uses one deterministic estimate, used in construction.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q14.</b> Herbert Simon's concept of "satisficing" is associated with: (a) Classical economic rationality (b) Bounded rationality (c) Scientific management (d) Contingency theory</summary>
+  <div class="pq-ans"><div class="correct">Answer: (b) Bounded rationality</div><div class="why">Simon (Nobel 1978) argued decision-makers have bounded (limited) rationality. Therefore they "satisfice" (choose first good-enough option) rather than optimise.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q17.</b> Quality Circles involve: (a) Top management only (b) External consultants solving quality problems (c) Small groups of workers who voluntarily meet to discuss quality (d) Structured debate between two groups</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Small groups of workers who voluntarily meet to discuss quality</div><div class="why">Quality Circles = voluntary groups of 8-10 workers at operational level who identify and solve quality problems. Japanese origin. (d) = Didactic Interaction.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q15.</b> PERT differs from CPM in that PERT: (a) Identifies the critical path (b) Uses deterministic time estimates (c) Uses three time estimates for uncertain activities (d) Is used in construction projects</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Uses three time estimates for uncertain activities</div><div class="why">PERT uses O, M, P time estimates → weighted average. Used in R&amp;D. CPM uses one deterministic estimate, used in construction.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q18.</b> MBO (Management by Objectives) was introduced by: (a) Elton Mayo (b) Henry Fayol (c) Peter Drucker (d) Douglas McGregor</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Peter Drucker</div><div class="why">Drucker introduced MBO in "The Practice of Management" (1954). Key idea: individual and organisational objectives must be aligned; employees participate in setting their own goals.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q16.</b> Among the Big Five personality traits, which is the BEST predictor of job performance? (a) Extraversion (b) Openness (c) Conscientiousness (d) Agreeableness</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Conscientiousness</div><div class="why">Conscientiousness (organised, disciplined, reliable) is the strongest and most consistent predictor of job performance across ALL occupations. High-C individuals achieve more and follow through on commitments.</div></div>
+</details></div>
 
-<div class="section-head"><h3>Personality & Perception (Q19–Q30)</h3></div>
+<div class="pq-wrap"><details>
+  <summary><b>Q17.</b> Type A and Type B personality types were identified by: (a) Allport &amp; Odbert (b) McCrae &amp; Costa (c) Friedman &amp; Rosenman (d) Maslow &amp; Herzberg</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Friedman &amp; Rosenman</div><div class="why">Cardiologists Friedman and Rosenman identified Type A/B in the 1950s while studying heart disease risk factors. Type A = time-pressured, competitive, higher heart disease risk.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q19.</b> Among the Big Five personality traits, which is considered the BEST predictor of job performance? (a) Extraversion (b) Openness (c) Conscientiousness (d) Agreeableness</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Conscientiousness</div><div class="why">Conscientiousness (organised, disciplined, reliable) is the strongest and most consistent predictor of job performance across all occupations. High-C individuals achieve more, are more punctual, and follow through on commitments.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q18.</b> A manager giving high ratings simply because a candidate attended a prestigious university is exhibiting: (a) Stereotyping (b) Halo Effect (c) Contrast Effect (d) Horn Effect</summary>
+  <div class="pq-ans"><div class="correct">Answer: (b) Halo Effect</div><div class="why">Halo Effect = one positive characteristic (prestigious university) creates overall positive impression applied to ALL traits. Stereotyping = judging based on group membership, not a specific attribute of this individual.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q20.</b> Definition of personality was given by Gordon Allport in: (a) 1927 (b) 1937 (c) 1947 (d) 1957</summary>
-    <div class="pq-ans"><div class="correct">Answer: (b) 1937</div><div class="why">Gordon Allport defined personality in his 1937 work "Personality: A Psychological Interpretation." His definition: "dynamic organisation within the individual of those psychophysical systems that determine his unique adjustments to his environment."</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q19.</b> "Seeing things that don't exist in reality" is: (a) Illusion (b) Halo Effect (c) Hallucination (d) Selective Perception</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Hallucination</div><div class="why">Hallucination = perception without real external stimulus. Illusion = misinterpretation of REAL external stimulus (e.g., mirage = real heat waves but brain interprets as water). Key: hallucination has NO real stimulus.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q21.</b> Type A and Type B personality types were identified by: (a) Allport & Odbert (b) McCrae & Costa (c) Friedman & Rosenman (d) Maslow & Herzberg</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Friedman & Rosenman</div><div class="why">Cardiologists Meyer Friedman and Ray Rosenman identified Type A/B personality in the 1950s while studying heart disease risk factors. Type A = time-pressured, competitive, higher heart disease risk.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q20.</b> An interviewer is more impressed by a mediocre candidate after interviewing several very poor candidates. This is: (a) Halo Effect (b) Stereotyping (c) Contrast Effect (d) Selective Perception</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Contrast Effect</div><div class="why">Contrast Effect = evaluation influenced by comparison with recently encountered others. The mediocre candidate seems better only in CONTRAST to weak candidates.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q22.</b> A manager who gives high performance ratings to a candidate simply because they attended a prestigious university is exhibiting: (a) Stereotyping (b) Halo Effect (c) Contrast Effect (d) Horn Effect</summary>
-    <div class="pq-ans"><div class="correct">Answer: (b) Halo Effect</div><div class="why">Halo Effect = one positive characteristic (prestigious university) creates an overall positive impression applied to unrelated traits. Stereotyping would be judging based on group membership (e.g., IITians are always good at maths).</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q21.</b> Which Big Five trait is associated with being anxious, moody and emotionally unstable? (a) Low Extraversion (b) Low Agreeableness (c) High Neuroticism (d) Low Openness</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) High Neuroticism</div><div class="why">High Neuroticism = emotional instability, anxiety, moodiness. High N = lower job performance. Low N (emotional stability) is desirable in leadership and high-stress roles.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q23.</b> "Seeing things that don't exist in reality" is: (a) Illusion (b) Halo Effect (c) Hallucination (d) Selective Perception</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Hallucination</div><div class="why">Hallucination = perception without real external stimulus (internal). Illusion = misinterpretation of real external stimulus (e.g., mirage = real heat waves but brain interprets as water). Key difference: hallucination has NO real stimulus; illusion has a real but misinterpreted stimulus.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q22.</b> Hawthorne Studies were conducted at: (a) Ford Motor Company (b) Midvale Steel Company (c) Western Electric Company (d) Bethlehem Steel</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Western Electric Company</div><div class="why">Hawthorne Works, Western Electric Company, Chicago (1924-1932). Midvale Steel = where Taylor worked. Bethlehem Steel = where Taylor did pig iron experiments.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q24.</b> Allport's Cardinal Traits are BEST described as: (a) Common traits seen in all people (b) Situational traits appearing in specific contexts (c) Dominant traits that define the entire personality (d) Traits specific to workplace behaviour</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Dominant traits that define the entire personality</div><div class="why">Cardinal traits are the most pervasive — they define the whole person. Few people have them. Examples: Gandhi's non-violence, Hitler's authoritarianism, Mother Teresa's compassion. Central traits = 5-10 characteristics most people have. Secondary = situational.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q23.</b> Which Fayol principle was VIOLATED by Taylor's Functional Foremanship? (a) Unity of Direction (b) Scalar Chain (c) Unity of Command (d) Division of Work</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Unity of Command</div><div class="why">Unity of Command = one boss per employee. Taylor's Functional Foremanship gave each worker 8 bosses (specialists). This is one of the key criticisms of Taylor's approach from a Fayolian perspective.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q25.</b> Which Big Five trait is associated with being ANXIOUS, MOODY, and EMOTIONALLY UNSTABLE? (a) Low Extraversion (b) Low Agreeableness (c) High Neuroticism (d) Low Openness</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) High Neuroticism</div><div class="why">High Neuroticism = emotional instability, anxiety, moodiness. Also called "emotional instability" — some models score it reversed as "Emotional Stability." High N is associated with lower job performance and higher stress.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q24.</b> A high Machiavellian person is BEST described as: (a) Insecure and emotionally volatile (b) Pragmatic, manipulative, ends justify means (c) Overly cooperative and trusting (d) Resistant to change and conventional</summary>
+  <div class="pq-ans"><div class="correct">Answer: (b) Pragmatic, manipulative, and believing ends justify means</div><div class="why">Named after Niccolò Machiavelli's "The Prince." High Mach = manipulative, detached, does whatever it takes to achieve goals. (a) = High Neuroticism. (c) = High Agreeableness. (d) = Low Openness.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q26.</b> The Big Five model is also called: (a) DISC model (b) Five Factor Model (FFM) (c) Myers-Briggs Type Indicator (d) HEXACO model</summary>
-    <div class="pq-ans"><div class="correct">Answer: (b) Five Factor Model (FFM)</div><div class="why">Big Five = Five Factor Model (FFM). Developed by McCrae & Costa. MBTI = Myers-Briggs (different framework, 16 types). DISC = different assessment. HEXACO = extended version with 6 factors.</div></div>
-  </details>
-</div>
+<div class="pq-wrap"><details>
+  <summary><b>Q25.</b> Allport's Cardinal Traits are BEST described as: (a) Common traits in all people (b) Situational traits in specific contexts (c) Dominant traits that define the entire personality (d) Workplace-specific traits</summary>
+  <div class="pq-ans"><div class="correct">Answer: (c) Dominant traits that define the entire personality</div><div class="why">Cardinal traits are the most pervasive — define the whole person. Very few people have one. Central traits = 5-10 general characteristics. Secondary = situational, peripheral.</div></div>
+</details></div>
 
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q27.</b> An interviewer is more impressed by a mediocre candidate after interviewing several very poor candidates. This is: (a) Halo Effect (b) Stereotyping (c) Contrast Effect (d) Selective Perception</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Contrast Effect</div><div class="why">Contrast Effect = evaluation influenced by comparison with recently encountered others. The mediocre candidate isn't objectively good — they only seem better in CONTRAST to worse candidates. Classic interview bias.</div></div>
-  </details>
-</div>
-
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q28.</b> A high Machiavellian person is BEST described as: (a) Insecure and emotionally volatile (b) Pragmatic, manipulative, and believing ends justify means (c) Overly cooperative and trusting (d) Resistant to change and conventional</summary>
-    <div class="pq-ans"><div class="correct">Answer: (b) Pragmatic, manipulative, and believing ends justify means</div><div class="why">Named after Niccolò Machiavelli's "The Prince." High Mach = manipulative, detached, believes in doing whatever it takes to achieve goals. Succeed in jobs requiring bargaining/persuasion. (a) = High Neuroticism. (c) = High Agreeableness. (d) = Low Openness.</div></div>
-  </details>
-</div>
-
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q29.</b> Hawthorne Studies were conducted at: (a) Ford Motor Company (b) Midvale Steel Company (c) Western Electric Company (d) Bethlehem Steel</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Western Electric Company</div><div class="why">Hawthorne Works, Western Electric Company, Chicago (1924-1932). Led by Elton Mayo. Midvale Steel = where Taylor worked. Bethlehem Steel = where Taylor conducted his pig iron experiments.</div></div>
-  </details>
-</div>
-
-<div class="pq-wrap">
-  <details>
-    <summary><b>Q30.</b> Which Fayol principle was VIOLATED by Taylor's Functional Foremanship? (a) Unity of Direction (b) Scalar Chain (c) Unity of Command (d) Division of Work</summary>
-    <div class="pq-ans"><div class="correct">Answer: (c) Unity of Command</div><div class="why">Unity of Command = one boss per employee. Taylor's Functional Foremanship gave each worker 8 bosses (specialists). This directly violates Unity of Command. This is one of the key criticisms of Taylor's approach from a Fayolian perspective.</div></div>
-  </details>
-</div>
-
-<!-- ===== PART 13: ANSWER WRITING TEMPLATES ===== -->
-<div class="part-head" id="p13">
-  <h2>Part 13 — Answer Writing Templates</h2>
-  <div class="part-sub">15-marker templates for 2023 PYQ topics · Use these structures</div>
-</div>
+<!-- ══════════ PART 13 ══════════ -->
+<div class="part" id="p13"><h2>Part 13 — Answer Writing Templates</h2><div class="ps">15-marker structures for 2023 PYQ topics</div></div>
 
 <div class="ans-template">
   <div class="tmpl-head">15-Marker Template — Fayol's 14 Principles (2023 PYQ)</div>
   <div class="tmpl-sec">
     <div class="sec-label">Introduction (30–40 words)</div>
-    <p>Henri Fayol, widely regarded as the Father of Modern Management, propounded 14 universal principles of management in his seminal work "Administration Industrielle et Générale" (1916). These principles provide a comprehensive framework for effective organisational management.</p>
+    <p>Henri Fayol, widely regarded as the Father of Modern Management, propounded 14 universal principles in his work "Administration Industrielle et Générale" (1916). These principles provide a comprehensive framework for effective organisational management applicable across all types of organisations.</p>
   </div>
   <div class="tmpl-sec">
-    <div class="sec-label">Body — 14 Principles (list format with brief explanation) (~200 words)</div>
-    <p>Fayol identified the following 14 principles:<br>
-    1. Division of Work — Specialisation improves efficiency...<br>
-    2. Authority & Responsibility — Equal and commensurate...<br>
-    [Continue through all 14 with one-line explanations each]<br>
-    [For 15 marks, elaborate on at least 5-6 key ones: Unity of Command, Scalar Chain, Equity, Esprit de Corps, Centralisation]</p>
+    <div class="sec-label">Body — 14 Principles (~200 words)</div>
+    <p>List all 14 with one-line explanation each. Elaborate on 5-6 key ones: Unity of Command (vs Unity of Direction — common trap), Scalar Chain (with Gang Plank), Equity (fairness), Esprit de Corps (team spirit), Centralisation (situational balance).</p>
   </div>
   <div class="tmpl-sec">
     <div class="sec-label">Relevance to Modern Management (80–100 words)</div>
-    <p>Despite being formulated over a century ago, Fayol's principles remain highly relevant. Unity of Command aligns with modern matrix organisation debates. Centralisation vs decentralisation remains a strategic choice in flat vs hierarchical organisations. Esprit de Corps underpins modern team culture and employee engagement. Equity and Stability of Tenure inform contemporary HR retention strategies. However, rigid adherence to scalar chain has been replaced by agile communication networks. The principles serve as guidelines, not absolute laws — reflecting Fayol's own view that management is an art as much as a science.</p>
+    <p>Despite being formulated a century ago, Fayol's principles remain highly relevant. Unity of Command aligns with matrix organisation debates. Centralisation vs decentralisation remains a strategic choice in flat vs hierarchical orgs. Esprit de Corps underpins modern employee engagement. However, rigid scalar chain has been replaced by agile communication. Principles serve as guidelines, not absolute laws — Fayol's own view: management is an art as much as a science.</p>
   </div>
   <div class="tmpl-sec">
     <div class="sec-label">Conclusion (20–30 words)</div>
-    <p>Fayol's 14 principles constitute a foundational framework that continues to guide management practice globally, offering both structure and flexibility for diverse organisational contexts.</p>
+    <p>Fayol's 14 principles constitute a foundational framework guiding management practice globally, offering both structure and flexibility for diverse organisational contexts.</p>
   </div>
-  <div class="word-count">Target: 400–450 words | Time: 20 minutes | Structure: Intro + 14 principles + Relevance + Conclusion</div>
+  <div class="word-count">Target: 400–450 words | Time: 20 min | Must quote: "Administration Industrielle et Générale" (1916)</div>
 </div>
 
 <div class="ans-template">
   <div class="tmpl-head">15-Marker Template — Big Five Personality Model (2023 PYQ)</div>
   <div class="tmpl-sec">
     <div class="sec-label">Introduction (30–40 words)</div>
-    <p>The Big Five Personality Model, also known as the Five Factor Model (FFM), developed by McCrae and Costa, is the most empirically validated framework for understanding human personality. It identifies five broad dimensions that comprehensively capture personality variation across individuals.</p>
+    <p>The Big Five Personality Model (Five Factor Model/FFM), developed by McCrae and Costa, is the most empirically validated framework for understanding human personality. It identifies five broad dimensions comprehensively capturing personality variation across individuals.</p>
   </div>
   <div class="tmpl-sec">
-    <div class="sec-label">The Five Traits — OCEAN Acronym (150 words)</div>
-    <p><b>1. Openness to Experience:</b> Curiosity, creativity, willingness to try new things. High O = innovative; Low O = conventional.<br>
-    <b>2. Conscientiousness:</b> Organisation, reliability, goal-directedness. <u>Best predictor of job performance across occupations.</u><br>
-    <b>3. Extraversion:</b> Sociability, assertiveness, positive emotions. High E = suited for leadership/sales roles.<br>
-    <b>4. Agreeableness:</b> Cooperativeness, trust, empathy. High A = team players; suited for HR, customer service.<br>
-    <b>5. Neuroticism:</b> Emotional instability, anxiety, moodiness. High N → lower performance; low N (emotional stability) desirable in high-stress roles.</p>
+    <div class="sec-label">5 Traits — OCEAN (~150 words)</div>
+    <p>Define each with high/low. Key facts: <b>Conscientiousness</b> = best predictor of job performance (say this explicitly). <b>High Neuroticism</b> = lower performance (mention inversion). Link to HR: hiring (C), leadership (low N, high C), customer service (A), sales (E).</p>
   </div>
   <div class="tmpl-sec">
     <div class="sec-label">Organisational Applications (100 words)</div>
-    <p>The Big Five has significant applications in HRM. During <b>selection</b>: High C candidates are preferred for most roles; high A for customer-facing roles; high E for leadership positions. In <b>team building</b>: balanced A+E creates collaborative teams while low N ensures stability. For <b>leadership development</b>: high C and low N with moderate O characterise effective leaders. In <b>performance management</b>: understanding personality helps tailor motivation and feedback styles. However, ethical considerations mandate that personality testing be one input among several, avoiding over-reliance or potential discrimination.</p>
+    <p>Selection, team building, leadership development, performance management. Note: personality testing must be one input among several — avoid over-reliance or discrimination.</p>
   </div>
   <div class="tmpl-sec">
-    <div class="sec-label">Critical Evaluation + Conclusion (50 words)</div>
-    <p>While the Big Five has cross-cultural validity and strong predictive power, critics note it describes rather than explains behaviour, and situational factors also significantly influence outcomes. Nevertheless, it remains the gold standard for personality assessment in organisational contexts, offering actionable insights for strategic HRM decisions.</p>
+    <div class="sec-label">Conclusion (30 words)</div>
+    <p>While the Big Five has cross-cultural validity and strong predictive power, it describes rather than explains behaviour. It remains the gold standard for personality assessment in HRM.</p>
   </div>
-  <div class="word-count">Target: 400–450 words | Time: 20 minutes | Remember: Quote McCrae & Costa + FFM + Conscientiousness = best predictor</div>
-</div>
-
-<div class="ans-template">
-  <div class="tmpl-head">15-Marker Template — Trait Theory vs Behavioural Theory of Leadership (2024 PYQ)</div>
-  <div class="tmpl-sec">
-    <div class="sec-label">Introduction (30 words)</div>
-    <p>Leadership theories have evolved from early trait-based approaches to behavioural models. Both offer valuable but contrasting perspectives on what makes an effective leader.</p>
-  </div>
-  <div class="tmpl-sec">
-    <div class="sec-label">Trait Theory (100 words)</div>
-    <p>Trait Theory (Great Man Theory) holds that leaders are BORN with innate qualities. Key traits identified: intelligence, confidence, integrity, charisma, emotional stability, dominance. <b>Stogdill (1948, 1974)</b> conducted landmark reviews of leadership traits. Limitations: no universal trait set; ignores situational factors; can be used to discriminate. Gordon Allport's trait hierarchy (Cardinal/Central/Secondary) provides the personality backdrop.</p>
-  </div>
-  <div class="tmpl-sec">
-    <div class="sec-label">Behavioural Theory (100 words)</div>
-    <p>Behavioural theories hold that leadership can be LEARNED through observed behaviours. Key studies: <b>Ohio State Studies</b> (Initiating Structure vs Consideration), <b>Michigan Studies</b> (Production-centred vs Employee-centred), <b>Blake & Mouton Managerial Grid</b> (5 leadership styles: Impoverished, Authority-Compliance, Country Club, Team, Middle-of-the-road). Advantage: trainable. Limitation: ignores situational context — same style does not work everywhere.</p>
-  </div>
-  <div class="tmpl-sec">
-    <div class="sec-label">Comparison Table + Conclusion (60 words)</div>
-    <p>Both theories have limitations leading to situational/contingency theories (Fiedler, Hersey & Blanchard). Modern leadership integrates traits, behaviour, and situational sensitivity. An effective RBI Grade B officer must demonstrate analytical traits while adapting communication style (behaviour) to team and context.</p>
-  </div>
-  <div class="word-count">Target: 400 words | Key names: Stogdill, Ohio State, Michigan Studies, Blake & Mouton</div>
-</div>
-
-<hr>
-
-<div class="card" style="border-color:#4338ca;background:#1e1b4b">
-  <h4 style="color:#a78bfa">Day 1 Completion Checklist</h4>
-  <table>
-    <tr><th>Topic</th><th>Must Know Cold</th></tr>
-    <tr><td>Fayol's 14 Principles</td><td>All 14 by name + 1-line explanation each</td></tr>
-    <tr><td>Taylor's 5 Principles + 5 Techniques</td><td>Functional foremanship = 8 specialists (4+4)</td></tr>
-    <tr><td>Mintzberg 10 Roles</td><td>3 categories + role → example mapping</td></tr>
-    <tr><td>Hawthorne Studies</td><td>4 experiments + key findings</td></tr>
-    <tr><td>Theory Z</td><td>A vs J vs Z comparison table (7 features)</td></tr>
-    <tr><td>McKinsey 7S</td><td>3 Hard + 4 Soft; Shared Values at centre</td></tr>
-    <tr><td>Big Five OCEAN</td><td>Each trait + High/Low + Conscientiousness = best predictor</td></tr>
-    <tr><td>Allport's Traits</td><td>Cardinal/Central/Secondary with examples</td></tr>
-    <tr><td>Type A/B</td><td>Friedman & Rosenman; 7 comparison points</td></tr>
-    <tr><td>Perception Errors</td><td>7 errors + Selective Perception; Halo vs Horn; Illusion vs Hallucination</td></tr>
-    <tr><td>Answer Writing</td><td>15-marker template for Fayol + Big Five memorised</td></tr>
-  </table>
+  <div class="word-count">Target: 400–450 words | Time: 20 min | Must quote: McCrae &amp; Costa + Conscientiousness = best predictor</div>
 </div>
 
 </div><!-- end .page -->
