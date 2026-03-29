@@ -3,235 +3,474 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Day 1 Flashcards — Management Fundamentals</title>
+<title>Day 1 — Management Flashcards</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0f0f1a;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;height:100vh;overflow:hidden;user-select:none}
-#app{display:flex;flex-direction:column;height:100vh;padding:12px}
-#header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-#progress-text{font-size:0.8rem;color:#94a3b8}
-#category{font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em}
-#prog-bar{width:100%;height:4px;background:#1e293b;border-radius:2px;margin-bottom:8px}
-#prog-fill{height:100%;background:#34d399;border-radius:2px;transition:width 0.3s}
-#card-area{flex:1;display:flex;align-items:center;justify-content:center;perspective:1000px}
-.card{width:100%;max-width:440px;height:320px;position:relative;transform-style:preserve-3d;transition:transform 0.4s ease;cursor:pointer}
-.card.flipped{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
-.front{background:#1e1e3a;border:1px solid #334155}
-.back{background:#0f2a1f;border:1px solid #34d399;transform:rotateY(180deg)}
-.face-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;opacity:0.5}
-.front .face-label{color:#94a3b8}
-.back .face-label{color:#34d399}
-.q-text{font-size:1.05rem;line-height:1.5;color:#e2e8f0}
-.a-text{font-size:0.95rem;line-height:1.6;color:#a7f3d0}
-.tap-hint{font-size:0.7rem;color:#475569;margin-top:12px}
-#buttons{display:flex;gap:10px;margin-top:12px}
-.btn{flex:1;padding:14px;border:none;border-radius:12px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:opacity 0.15s}
-.btn:active{opacity:0.7}
-#btn-again{background:#451a1a;color:#fca5a5}
-#btn-got{background:#14532d;color:#86efac}
-#bottom{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
-#counter{font-size:0.75rem;color:#475569}
-#weak-btn{font-size:0.7rem;color:#fbbf24;background:none;border:1px solid #78350f;border-radius:6px;padding:4px 8px;cursor:pointer}
-#weak-btn.active{background:#78350f}
-#done-screen{display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;gap:16px}
-#done-screen h2{font-size:1.4rem;color:#34d399}
-#done-screen p{color:#94a3b8;font-size:0.9rem}
-.restart-btn{padding:12px 28px;background:#1e3a2f;border:1px solid #34d399;color:#34d399;border-radius:10px;font-size:0.9rem;cursor:pointer}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#0f0f1a;color:#e2e8f0;font-family:'Segoe UI',sans-serif;overflow:hidden}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column}.screen.hidden{display:none}
+/* HOME */
+#home{overflow-y:auto;padding:28px 20px 48px}
+.home-title{color:#818cf8;font-size:1.4rem;font-weight:700;margin-bottom:4px}
+.home-sub{color:#475569;font-size:0.78rem;margin-bottom:28px}
+.sec-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#475569;margin-bottom:10px}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.cat-btn{background:#1a1a2e;border:2px solid #2d2d42;border-radius:12px;padding:14px 12px;cursor:pointer;text-align:left;transition:all .15s}
+.cat-btn.active{border-color:#818cf8;background:#1e1b4b}
+.cat-name{display:block;font-size:0.82rem;font-weight:600;color:#94a3b8;margin-bottom:3px}
+.cat-btn.active .cat-name{color:#e2e8f0}
+.cat-count{font-size:0.7rem;color:#2d2d42}
+.cat-btn.active .cat-count{color:#818cf8}
+.weak-row{background:#1a1a2e;border:1px solid #2d2d42;border-radius:12px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all .15s}
+.weak-row.on{border-color:#f59e0b;background:#1c1800}
+.wr-title{font-size:0.85rem;font-weight:600;color:#f59e0b}
+.wr-sub{font-size:0.72rem;color:#475569;margin-top:2px}
+.wr-check{width:22px;height:22px;border-radius:6px;border:2px solid #f59e0b;display:flex;align-items:center;justify-content:center;font-size:0.85rem;color:#f59e0b}
+.start-btn{width:100%;background:#818cf8;color:#fff;border:none;border-radius:14px;padding:18px;font-size:1rem;font-weight:700;cursor:pointer;margin-bottom:8px;transition:background .15s}
+.start-btn:active{background:#6366f1}
+.start-btn:disabled{background:#1e1e30;color:#374151;cursor:not-allowed}
+.start-hint{text-align:center;font-size:0.72rem;color:#374151}
+/* DRILL */
+#drill{overflow:hidden}
+.drill-top{padding:14px 16px 8px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.back-btn{background:none;border:none;color:#475569;font-size:1.3rem;cursor:pointer;padding:2px 6px;line-height:1}
+.drill-info{flex:1;font-size:0.75rem;color:#475569}
+.drill-info b{color:#e2e8f0}
+.again-c{color:#f87171}
+.pbar{height:3px;background:#1a1a2e;flex-shrink:0}
+.pfill{height:100%;background:linear-gradient(90deg,#818cf8,#6366f1);transition:width .4s}
+.card-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 20px 20px;gap:16px;overflow:hidden}
+.flashcard{width:100%;max-width:420px;flex:1;max-height:340px;background:#1a1a2e;border:2px solid #2d2d42;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;cursor:pointer;user-select:none;position:relative;transition:border-color .2s,transform .12s}
+.flashcard:active{transform:scale(.985)}
+.flashcard.flipped{border-color:#34d399}
+.flashcard.wrong{border-color:#f87171}
+.fc-cat{position:absolute;top:14px;left:16px;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.fc-pos{position:absolute;top:14px;right:16px;font-size:0.65rem;color:#2d2d42}
+.fc-q{font-size:1rem;font-weight:600;text-align:center;margin-bottom:6px;line-height:1.5;color:#e2e8f0}
+.fc-tap{font-size:0.7rem;color:#2d2d42;margin-top:10px}
+.fc-a{font-size:0.92rem;font-weight:600;color:#34d399;text-align:center;line-height:1.55}
+.fc-hint{font-size:0.74rem;color:#475569;margin-top:8px;text-align:center}
+.action-row{display:flex;gap:12px;width:100%;max-width:420px;flex-shrink:0}
+.act-btn{flex:1;padding:18px 0;border:none;border-radius:14px;font-size:1rem;font-weight:700;cursor:pointer;transition:transform .1s,opacity .15s}
+.act-btn:active{transform:scale(.95)}
+.act-btn.again{background:#450a0a;color:#fca5a5}
+.act-btn.got{background:#052e16;color:#6ee7b7}
+.act-btn:disabled{opacity:0;pointer-events:none}
+/* END */
+#end{padding:36px 20px 40px;align-items:center;justify-content:center;gap:18px;overflow-y:auto}
+.end-title{font-size:1.7rem;font-weight:700;color:#818cf8}
+.end-tag{font-size:0.75rem;color:#475569;margin-top:-10px}
+.stats-row{display:flex;gap:12px;width:100%}
+.stat-box{flex:1;background:#1a1a2e;border:1px solid #2d2d42;border-radius:14px;padding:16px 0;text-align:center}
+.sval{font-size:2.2rem;font-weight:700}
+.sval.g{color:#34d399}.sval.r{color:#f87171}
+.slbl{font-size:0.68rem;color:#475569;margin-top:3px}
+.end-btns{width:100%;display:flex;flex-direction:column;gap:10px}
+.ebtn{width:100%;padding:16px;border:none;border-radius:14px;font-size:0.95rem;font-weight:700;cursor:pointer}
+.ebtn.primary{background:#f59e0b;color:#1a1200}
+.ebtn.secondary{background:#1a1a2e;color:#818cf8;border:1px solid #2d2d42}
+.weak-list-wrap{width:100%}
+.wl{background:#1a1a2e;border:1px solid #2d2d42;border-radius:14px;padding:14px 16px;max-height:220px;overflow-y:auto}
+.wl-title{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#f59e0b;margin-bottom:10px}
+.wi{display:flex;justify-content:space-between;align-items:flex-start;padding:6px 0;border-bottom:1px solid #1e1e30;font-size:0.78rem;gap:8px}
+.wi:last-child{border-bottom:none}
+.wi-q{color:#64748b;flex:1}
+.wi-a{color:#fbbf24;font-weight:700;flex:1;text-align:right}
 </style>
 </head>
 <body>
-<div id="app">
-  <div id="header">
-    <span id="progress-text">Card 1 of 49</span>
-    <span id="category">Management Basics</span>
+
+<div class="screen" id="home">
+  <div class="home-title">Day 1 — Management</div>
+  <div class="home-sub">Intro · Fayol · Taylor · Schools · Mintzberg · Functions · Decisions · Personality · Perception</div>
+  <div class="sec-label">Pick categories</div>
+  <div class="cat-grid" id="cat-grid"></div>
+  <div id="weak-wrap"></div>
+  <button class="start-btn" id="start-btn" onclick="startDrill()">Start Drill</button>
+  <div class="start-hint" id="start-hint"></div>
+</div>
+
+<div class="screen hidden" id="drill">
+  <div class="drill-top">
+    <button class="back-btn" onclick="goHome()">←</button>
+    <div class="drill-info" id="drill-info"></div>
   </div>
-  <div id="prog-bar"><div id="prog-fill" style="width:0%"></div></div>
-  <div id="card-area">
-    <div class="card" id="card" onclick="flipCard()">
-      <div class="face front">
-        <div class="face-label">Question</div>
-        <div class="q-text" id="q-text"></div>
-        <div class="tap-hint">tap to reveal</div>
-      </div>
-      <div class="face back">
-        <div class="face-label">Answer</div>
-        <div class="a-text" id="a-text"></div>
-      </div>
+  <div class="pbar"><div class="pfill" id="pfill"></div></div>
+  <div class="card-area">
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="fc-cat" id="fc-cat"></div>
+      <div class="fc-pos" id="fc-pos"></div>
+      <div id="fc-front"><div class="fc-q" id="fc-q"></div><div class="fc-tap">tap to reveal</div></div>
+      <div id="fc-back" style="display:none;text-align:center"><div class="fc-a" id="fc-a"></div><div class="fc-hint" id="fc-hint"></div></div>
+    </div>
+    <div class="action-row">
+      <button class="act-btn again" id="btn-again" disabled onclick="markAgain()">✗  Again</button>
+      <button class="act-btn got" id="btn-got" disabled onclick="markGot()">✓  Got it</button>
     </div>
   </div>
-  <div id="buttons">
-    <button class="btn" id="btn-again" onclick="grade(false)">✗ Again</button>
-    <button class="btn" id="btn-got" onclick="grade(true)">✓ Got it</button>
-  </div>
-  <div id="bottom">
-    <span id="counter"></span>
-    <button id="weak-btn" onclick="toggleWeak()">Weak Spots Only</button>
-  </div>
 </div>
-<div id="done-screen">
-  <h2>Session Complete!</h2>
-  <p id="done-stats"></p>
-  <button class="restart-btn" onclick="restart()">Restart</button>
-  <button class="restart-btn" onclick="restartWeak()">Weak Spots Only</button>
+
+<div class="screen hidden" id="end">
+  <div class="end-title" id="end-title">Session Done!</div>
+  <div class="end-tag" id="end-tag"></div>
+  <div class="stats-row">
+    <div class="stat-box"><div class="sval g" id="sv-got">0</div><div class="slbl">Got it</div></div>
+    <div class="stat-box"><div class="sval r" id="sv-weak">0</div><div class="slbl">Weak</div></div>
+    <div class="stat-box"><div class="sval" id="sv-pct" style="color:#818cf8">0%</div><div class="slbl">Score</div></div>
+  </div>
+  <div class="end-btns" id="end-btns"></div>
+  <div class="weak-list-wrap" id="wl-wrap"></div>
 </div>
 
 <script>
-const ALL_CARDS = [
-  // Management Basics
-  {c:"Management Basics", q:"Define Management (Fayol)", a:"To forecast, plan, organise, command, coordinate and control"},
-  {c:"Management Basics", q:"Koontz's definition of Management", a:"Getting things done through and with people in formally organised groups"},
-  {c:"Management Basics", q:"Mary Parker Follett on management", a:"Art of getting things done through people"},
-  {c:"Management Basics", q:"Top management role", a:"Set vision/policy — Board of Directors, CEO, MD"},
-  {c:"Management Basics", q:"Middle management role", a:"Implement top-level plans — Dept heads, branch managers"},
-  {c:"Management Basics", q:"Lower management role", a:"Supervise workers directly — Foremen, supervisors"},
-  {c:"Management Basics", q:"Administration vs Management — key diff", a:"Administration = policy making (higher level); Management = policy execution (operative level)"},
-  // Fayol
-  {c:"Fayol's 14 Principles", q:"Fayol's 14 Principles — first 7", a:"Division of Work · Authority & Responsibility · Discipline · Unity of Command · Unity of Direction · Subordination (individual to general) · Remuneration"},
-  {c:"Fayol's 14 Principles", q:"Fayol's 14 Principles — last 7", a:"Centralisation · Scalar Chain · Order · Equity · Stability of Tenure · Initiative · Esprit de Corps"},
-  {c:"Fayol's 14 Principles", q:"Unity of Command means", a:"Each employee receives orders from ONE superior only"},
-  {c:"Fayol's 14 Principles", q:"Unity of Direction means", a:"One head, one plan for activities with the same objective"},
-  {c:"Fayol's 14 Principles", q:"Scalar Chain means", a:"Line of authority top→bottom; Gangplank = direct horizontal communication allowed in emergencies"},
-  {c:"Fayol's 14 Principles", q:"Esprit de Corps", a:"Team spirit — union is strength; avoid divide and rule"},
-  {c:"Fayol's 14 Principles", q:"Centralisation vs Decentralisation (Fayol)", a:"Balance depends on situation — no absolute rule; managers must find right mix"},
-  // Taylor
-  {c:"Taylor's Scientific Management", q:"Taylor's 4 principles", a:"① Science not rule of thumb ② Scientific selection & training ③ Cooperation not individualism ④ Equal division of work & responsibility"},
-  {c:"Taylor's Scientific Management", q:"Differential Piece Rate system", a:"Higher rate for output above standard; lower rate for below — incentivises efficiency"},
-  {c:"Taylor's Scientific Management", q:"Taylor vs Fayol — key contrast", a:"Taylor = shop floor / operative level / scientific method; Fayol = top management / administrative / universally applicable"},
-  {c:"Taylor's Scientific Management", q:"Time and Motion Study (Taylor)", a:"Analyse tasks to find the 'one best way' — eliminate wasted movements, set standard time"},
-  // Schools
-  {c:"Schools of Thought", q:"Classical School — 3 theorists", a:"Taylor (Scientific Mgmt) · Fayol (Administrative) · Weber (Bureaucracy)"},
-  {c:"Schools of Thought", q:"Weber's Bureaucracy — key features", a:"Fixed rules · Hierarchy · Impersonality · Written records · Merit-based selection"},
-  {c:"Schools of Thought", q:"Hawthorne Studies — who conducted & where", a:"Elton Mayo at Western Electric Co., Chicago (1924–1932)"},
-  {c:"Schools of Thought", q:"Hawthorne Effect", a:"Workers perform better when they know they're being observed/attention given"},
-  {c:"Schools of Thought", q:"Hawthorne Studies — key finding", a:"Social factors, group norms, and human relations matter MORE than physical working conditions"},
-  {c:"Schools of Thought", q:"Systems Approach (Modern School)", a:"Organisation = open system with inputs → process → output → feedback; all parts interrelated"},
-  {c:"Schools of Thought", q:"Contingency Approach", a:"No one best way — management depends on situation; 'it depends' approach"},
-  // Mintzberg
-  {c:"Mintzberg's Roles", q:"Mintzberg's 3 role categories", a:"Interpersonal · Informational · Decisional"},
-  {c:"Mintzberg's Roles", q:"Interpersonal roles (3)", a:"Figurehead · Leader · Liaison"},
-  {c:"Mintzberg's Roles", q:"Informational roles (3)", a:"Monitor · Disseminator · Spokesperson"},
-  {c:"Mintzberg's Roles", q:"Decisional roles (4)", a:"Entrepreneur · Disturbance Handler · Resource Allocator · Negotiator"},
-  {c:"Mintzberg's Roles", q:"Figurehead role", a:"Ceremonial duties — signing documents, attending functions, representing org"},
-  {c:"Mintzberg's Roles", q:"Disturbance Handler role", a:"Handles unexpected crises, conflicts, involuntary situations"},
-  // Functions
-  {c:"Functions of Management", q:"POSDCORB — Gulick's 7 functions", a:"Planning · Organising · Staffing · Directing · Coordinating · Reporting · Budgeting"},
-  {c:"Functions of Management", q:"Modern 4 functions of management", a:"Planning · Organising · Leading · Controlling"},
-  {c:"Functions of Management", q:"Planning types — 3 levels", a:"Strategic (long-term) · Tactical (medium-term) · Operational (short-term)"},
-  {c:"Functions of Management", q:"MBO — full form & who coined it", a:"Management by Objectives — Peter Drucker; jointly set goals, review performance against them"},
-  // Decision Making
-  {c:"Decision Making", q:"Programmed vs Non-programmed decisions", a:"Programmed = routine, structured, repetitive; Non-programmed = novel, unstructured, unique"},
-  {c:"Decision Making", q:"Bounded Rationality — Herbert Simon", a:"Decisions made with limited info and cognitive limits → 'satisficing' (good enough) not maximising"},
-  {c:"Decision Making", q:"Delphi Technique", a:"Expert opinions collected anonymously, multiple rounds until consensus — no face-to-face bias"},
-  {c:"Decision Making", q:"Brainstorming rule", a:"No criticism during idea generation; quantity over quality first; build on others' ideas"},
-  // Personality
-  {c:"Personality", q:"Big Five — OCEAN", a:"Openness · Conscientiousness · Extraversion · Agreeableness · Neuroticism"},
-  {c:"Personality", q:"Type A personality traits", a:"Competitive · time-urgent · workaholic · impatient · prone to stress/heart disease"},
-  {c:"Personality", q:"Type B personality traits", a:"Relaxed · less competitive · creative · not time-pressured"},
-  {c:"Personality", q:"Locus of Control — internal", a:"Believe they control own outcomes — higher job satisfaction, better at complex tasks"},
-  {c:"Personality", q:"Locus of Control — external", a:"Believe external forces/luck control outcomes — less initiative"},
-  {c:"Personality", q:"Self-efficacy (Bandura)", a:"Belief in one's own ability to succeed at a task — higher self-efficacy → better performance"},
-  // Perception
-  {c:"Perception", q:"Perception process — 3 steps", a:"Selection → Organisation → Interpretation"},
-  {c:"Perception", q:"Halo Effect", a:"One positive trait colours entire impression (e.g., attractive person assumed competent)"},
-  {c:"Perception", q:"Stereotyping", a:"Judging a person based on the group they belong to (age, gender, race, etc.)"},
-  {c:"Perception", q:"Projection (perceptual error)", a:"Attributing your own feelings/traits to others"},
-  {c:"Perception", q:"Fundamental Attribution Error", a:"Overestimate internal factors for others' failures; underestimate situational factors"},
-];
-
-let deck=[], weakSet=new Set(), isFlipped=false, isWeakMode=false, gotCount=0, againCount=0;
-
-function loadWeak(){try{const w=JSON.parse(localStorage.getItem('d1-weak')||'[]');weakSet=new Set(w)}catch(e){}}
-function saveWeak(){localStorage.setItem('d1-weak',JSON.stringify([...weakSet]))}
-
-function buildDeck(weakOnly){
-  const src = weakOnly ? ALL_CARDS.filter((_,i)=>weakSet.has(i)) : [...ALL_CARDS];
-  if(src.length===0&&weakOnly){deck=[...ALL_CARDS];isWeakMode=false;document.getElementById('weak-btn').classList.remove('active')}
-  else deck=src.map((c,i)=>({...c,origIdx:weakOnly?[...weakSet][i]:i}));
-  gotCount=0;againCount=0;
+const META = {
+  intro:    {label:'Management Intro',  color:'#818cf8'},
+  fayol:    {label:"Fayol's 14 Principles", color:'#34d399'},
+  taylor:   {label:"Taylor's Sci. Mgmt",  color:'#fbbf24'},
+  schools:  {label:'Schools of Thought',  color:'#f472b6'},
+  mintz:    {label:"Mintzberg's 10 Roles", color:'#60a5fa'},
+  funcs:    {label:'Functions & Planning', color:'#a78bfa'},
+  decisions:{label:'Decision Making',     color:'#fb923c'},
+  pers:     {label:'Personality',         color:'#2dd4bf'},
+  percep:   {label:'Perception',          color:'#f87171'},
 }
 
-function showCard(){
-  if(deck.length===0){showDone();return}
-  const c=deck[0];
-  document.getElementById('q-text').textContent=c.q;
-  document.getElementById('a-text').textContent=c.a;
-  document.getElementById('category').textContent=c.c;
-  const el=document.getElementById('card');
-  el.classList.remove('flipped');isFlipped=false;
-  const total=isWeakMode?weakSet.size:ALL_CARDS.length;
-  const done=total-deck.length;
-  document.getElementById('progress-text').textContent=`Card ${done+1} of ${total}`;
-  document.getElementById('prog-fill').style.width=`${(done/total)*100}%`;
-  document.getElementById('counter').textContent=`✓ ${gotCount}  ✗ ${againCount}`;
+function buildAll(){
+  const R={}
+
+  R.intro=[
+    {q:"Koontz & O'Donnell — definition of Management",a:"Getting things done through and with people in formally organised groups",hint:"Most cited in RBI answers",cat:'intro'},
+    {q:"Henri Fayol — definition of Management",a:"To forecast and plan, to organise, to command, to coordinate and to control",hint:"POCCC = his 5 functions",cat:'intro'},
+    {q:"Mary Parker Follett — definition",a:"Art of getting things done through people",hint:"Earliest definition",cat:'intro'},
+    {q:"Peter Drucker — 2 famous quotes",a:"'Management is doing things right; Leadership is doing the right things' | 'Manages business, managers & workers'",hint:"",cat:'intro'},
+    {q:"F.W. Taylor — definition of Management",a:"Art of knowing what you want to do and then seeing that they do it in the best and cheapest way",hint:"",cat:'intro'},
+    {q:"Is management a Science or Art?",a:"BOTH — inexact science. Systematic principles (science) + personalised application requiring judgment (art)",hint:"Always mention both in exam",cat:'intro'},
+    {q:"Top Management — who & focus",a:"CEO, MD, Board of Directors, VP | Strategic planning, policy formulation | Long-term, whole organisation",hint:"",cat:'intro'},
+    {q:"Middle Management — who & focus",a:"Dept heads, regional managers, branch managers | Implement top plans, coordinate depts | Medium-term",hint:"",cat:'intro'},
+    {q:"Lower/Supervisory Management — who & focus",a:"Foreman, supervisor, section officer | Day-to-day ops, direct supervision | Short-term",hint:"",cat:'intro'},
+    {q:"Administration vs Management — WHAT vs HOW",a:"Administration = WHAT to do (policy making, top level, owners) | Management = HOW to do it (execution, middle/lower, salaried managers)",hint:"",cat:'intro'},
+    {q:"Administration — applicable to? Management — applicable to?",a:"Administration = Govt bodies, military, education | Management = Business organisations",hint:"",cat:'intro'},
+    {q:"Fayol's 6 activities of an industrial firm",a:"Technical · Commercial · Financial · Security · Accounting · Managerial",hint:"",cat:'intro'},
+    {q:"Managerial Skills — 3 types (Katz)",a:"Technical skills (lower mgmt) · Human skills (all levels) · Conceptual skills (top mgmt)",hint:"",cat:'intro'},
+  ]
+
+  R.fayol=[
+    {q:"Fayol — background & book",a:"French industrialist at Comambault Mining Co. | 'Administration Industrielle et Générale' (1916) | Father of Modern Management",hint:"",cat:'fayol'},
+    {q:"Fayol's 14 Principles — list all",a:"1.Division of Work 2.Authority&Responsibility 3.Discipline 4.Unity of Command 5.Unity of Direction 6.Subordination 7.Remuneration 8.Centralisation 9.Scalar Chain 10.Order 11.Equity 12.Stability of Tenure 13.Initiative 14.Esprit de Corps",hint:"Mnemonic: DAD UUS R CSO ESI E",cat:'fayol'},
+    {q:"Principle 1: Division of Work",a:"Specialisation increases efficiency. Each person focuses on specific task. Applies to technical AND managerial work.",hint:"Ex: Assembly line",cat:'fayol'},
+    {q:"Principle 2: Authority & Responsibility",a:"Authority = right to give orders. Responsibility = obligation to perform. Must be EQUAL — commensurate.",hint:"Imbalance = problems",cat:'fayol'},
+    {q:"Principle 3: Discipline",a:"Obedience, application, energy, behaviour. Requires good supervision, fair agreements, judicious penalties.",hint:"",cat:'fayol'},
+    {q:"Principle 4: Unity of Command",a:"Each employee receives orders from ONE superior only. Multiple bosses = confusion, conflict, undermined authority.",hint:"Individual level",cat:'fayol'},
+    {q:"Principle 5: Unity of Direction",a:"ONE head, ONE plan for a group of activities with the SAME objective. About the organisation, not individual.",hint:"Group/department level",cat:'fayol'},
+    {q:"Unity of Command vs Unity of Direction — EXAM TRAP",a:"Command = one boss per EMPLOYEE (individual) | Direction = one plan per ACTIVITY GROUP (org level) | 'Marketing team under one plan' = Direction",hint:"Most confused pair",cat:'fayol'},
+    {q:"Principle 6: Subordination of Individual Interest",a:"Individual/group interests subordinated to organisational interest. Org's interest is supreme.",hint:"",cat:'fayol'},
+    {q:"Principle 7: Remuneration",a:"Fair compensation satisfying BOTH employees & employers. Avoid over/underpayment. Methods: time rate, job rate, profit sharing.",hint:"",cat:'fayol'},
+    {q:"Principle 8: Centralisation",a:"Degree of authority concentrated at top. No absolute rule — optimal balance depends on org size and situation.",hint:"Startup=centralised; MNC=decentralised",cat:'fayol'},
+    {q:"Principle 9: Scalar Chain + Gang Plank",a:"Chain of authority from top to bottom. Gang Plank = horizontal communication between SAME-LEVEL managers for emergencies (bypassing chain).",hint:"Ex: Org chart hierarchy",cat:'fayol'},
+    {q:"Principle 10: Order",a:"Material Order: a place for everything, everything in its place | Social Order: right person in the right place.",hint:"",cat:'fayol'},
+    {q:"Principle 11: Equity",a:"Combination of kindness and justice. Equal and fair treatment of all employees. Promotes loyalty and devotion.",hint:"Not discrimination",cat:'fayol'},
+    {q:"Principle 12: Stability of Tenure",a:"Turnover is harmful. Time needed to settle into role. Avoid frequent transfers/dismissals. Mediocre stable manager > brilliant unstable one.",hint:"",cat:'fayol'},
+    {q:"Principle 13: Initiative",a:"Freedom to conceive and execute plans within limits of authority. Must be encouraged — enhances zeal and energy.",hint:"Ex: Google's 20% time",cat:'fayol'},
+    {q:"Principle 14: Esprit de Corps",a:"Team spirit. Union is strength. Avoid divide-and-rule and excessive written communication.",hint:"",cat:'fayol'},
+    {q:"'Gang Plank' is associated with which Fayol principle?",a:"Scalar Chain (Principle 9) — exception allowing direct horizontal communication between peers in emergencies",hint:"",cat:'fayol'},
+    {q:"Fayol's 5 management functions (POCCC)",a:"Planning · Organising · Commanding · Coordinating · Controlling",hint:"His own classification",cat:'fayol'},
+  ]
+
+  R.taylor=[
+    {q:"Taylor — background & book",a:"American mechanical engineer at Midvale Steel / Bethlehem Steel | 'Principles of Scientific Management' (1911) | Father of Scientific Management",hint:"",cat:'taylor'},
+    {q:"Taylor's main problem he was solving",a:"Eliminating 'soldiering' — deliberate slow work by workers. Replace guesswork/rule-of-thumb with science.",hint:"",cat:'taylor'},
+    {q:"Taylor's 5 Principles (S-S-C-S-M)",a:"1.Science not Rule of Thumb | 2.Scientific Selection & Training | 3.Cooperation not Discord | 4.Scientific Division of Work | 5.Maximum Output",hint:"Mnemonic: SS-C-SM",cat:'taylor'},
+    {q:"Taylor's 5 Techniques",a:"Time Study · Motion Study · Fatigue Study · Differential Piece-Rate · Functional Foremanship",hint:"",cat:'taylor'},
+    {q:"Time Study (Taylor)",a:"Determine standard time for a task using a stopwatch. Basis for wage payment.",hint:"",cat:'taylor'},
+    {q:"Motion Study — Therbligs",a:"Eliminate unnecessary movements. Identify best method. Therbligs = 17 basic motions identified by Gilbreth.",hint:"",cat:'taylor'},
+    {q:"Differential Piece-Rate System",a:"High rate for workers meeting/exceeding standard; LOW rate for those below. Incentivises performance.",hint:"",cat:'taylor'},
+    {q:"Functional Foremanship — how many specialists?",a:"8 specialists instead of 1 foreman. 4 planning + 4 production.",hint:"Violates Fayol's Unity of Command",cat:'taylor'},
+    {q:"Functional Foremanship — 4 Planning specialists",a:"Route Clerk · Instruction Card Clerk · Time & Cost Clerk · Disciplinarian",hint:"",cat:'taylor'},
+    {q:"Functional Foremanship — 4 Production specialists",a:"Gang Boss · Speed Boss · Repair Boss · Inspector",hint:"",cat:'taylor'},
+    {q:"Fayol vs Taylor — Focus / Level",a:"Fayol = whole org, top management (top-down) | Taylor = shop floor, workers (bottom-up)",hint:"",cat:'taylor'},
+    {q:"Fayol vs Taylor — Background",a:"Fayol = Manager/Administrator | Taylor = Engineer/Technician",hint:"",cat:'taylor'},
+    {q:"Fayol vs Taylor — Title",a:"Fayol = Father of Modern Management | Taylor = Father of Scientific Management",hint:"",cat:'taylor'},
+    {q:"Fayol vs Taylor — Unity of Command",a:"Fayol respected it (one boss) | Taylor VIOLATED it (8 bosses in functional foremanship)",hint:"",cat:'taylor'},
+    {q:"Fayol vs Taylor — Publication year",a:"Fayol = 1916 (French) | Taylor = 1911 (English)",hint:"Taylor came first",cat:'taylor'},
+  ]
+
+  R.schools=[
+    {q:"Classical School — 3 theorists",a:"Henri Fayol (1916) — Administrative | F.W. Taylor (1911) — Scientific Mgmt | Max Weber (1920s) — Bureaucracy",hint:"",cat:'schools'},
+    {q:"Weber's Bureaucracy — 6 features",a:"① Division of Labour ② Hierarchy ③ Formal Rules & Regulations ④ Impersonality ⑤ Career Orientation (merit) ⑥ Official Records (written)",hint:"",cat:'schools'},
+    {q:"Weber's 3 types of authority",a:"Traditional (custom/tradition) · Charismatic (personality) · Rational-Legal (rules/laws) ← Bureaucracy uses this",hint:"",cat:'schools'},
+    {q:"Hawthorne Studies — who, where, when",a:"Elton Mayo (Australian psychologist) | Hawthorne Works, Western Electric Co., Chicago | 1924–1932",hint:"Funded by National Research Council USA",cat:'schools'},
+    {q:"Hawthorne — 4 experiments",a:"① Illumination Experiments ② Relay Assembly Test Room ③ Mass Interviewing Programme ④ Bank Wiring Observation Room",hint:"",cat:'schools'},
+    {q:"Illumination Experiment — finding",a:"Productivity rose regardless of light level — attention itself motivated workers (not physical conditions)",hint:"",cat:'schools'},
+    {q:"Bank Wiring Observation Room — finding",a:"Informal groups set own output norms (restricting production). Social control = very powerful.",hint:"",cat:'schools'},
+    {q:"Hawthorne Effect definition",a:"Workers perform better when they KNOW they're being observed / feel they're getting special attention",hint:"",cat:'schools'},
+    {q:"5 conclusions of Hawthorne Studies",a:"①Workers are social beings — social needs matter ②Informal groups powerful ③Being watched = Hawthorne Effect ④Job satisfaction = recognition + participation ⑤Non-economic rewards motivate",hint:"",cat:'schools'},
+    {q:"Systems Approach — 4 components",a:"Input (resources) → Process/Transformation → Output (products, profits) → Feedback (loop back)",hint:"",cat:'schools'},
+    {q:"Open vs Closed System",a:"Open = interacts with environment (all real orgs) | Closed = no interaction (theoretical only)",hint:"",cat:'schools'},
+    {q:"Synergy (Systems Approach)",a:"Whole > sum of parts. 2+2=5 in management. Interdependent subsystems create more value together.",hint:"",cat:'schools'},
+    {q:"Contingency Approach — core idea",a:"No single best way to manage. Depends on: environment, technology, org size, individual differences. 'It depends.'",hint:"",cat:'schools'},
+    {q:"Contingency Approach — key theorists",a:"Lawrence & Lorsch · Joan Woodward · Fiedler",hint:"",cat:'schools'},
+    {q:"McKinsey 7S — 3 Hard elements",a:"Strategy · Structure · Systems",hint:"Hard = tangible, easy to change",cat:'schools'},
+    {q:"McKinsey 7S — 4 Soft elements",a:"Shared Values · Skills · Style · Staff",hint:"Soft = culture, people",cat:'schools'},
+    {q:"McKinsey 7S — which is at the centre?",a:"Shared Values — connects all other 6 elements. All must be aligned for effectiveness.",hint:"Peters & Waterman, 1982",cat:'schools'},
+    {q:"Nudge Theory — who, year, book",a:"Richard Thaler & Cass Sunstein | 2008 | 'Nudge: Improving Decisions about Health, Wealth and Happiness'",hint:"Thaler = Nobel 2017",cat:'schools'},
+    {q:"Nudge Theory — core idea",a:"Alter behaviour without banning options or changing incentives. Choice architecture. Libertarian Paternalism.",hint:"",cat:'schools'},
+    {q:"Nudge examples (3)",a:"Healthy food at eye level in cafeteria | Auto-enroll in pension (opt-out) | 'Most people pay tax on time' (social proof)",hint:"Organ donation default = opt-in",cat:'schools'},
+    {q:"Who proposed Theory Z and when?",a:"William Ouchi (1981) — combined American (Theory A) + Japanese (Theory J) management",hint:"",cat:'schools'},
+    {q:"Theory Z — 6 core features",a:"Long-term employment · Collective decision-making · Individual responsibility · Slow evaluation/promotion · Holistic concern for employee · Moderate specialisation",hint:"",cat:'schools'},
+  ]
+
+  R.mintz=[
+    {q:"Mintzberg — background & research method",a:"Canadian academic, McGill University | Observed 5 CEOs for 1 week each | Book: 'The Nature of Managerial Work' (1973)",hint:"",cat:'mintz'},
+    {q:"Mintzberg's 3 role categories",a:"Interpersonal (3) · Informational (3) · Decisional (4)",hint:"3+3+4=10",cat:'mintz'},
+    {q:"Interpersonal roles — 3 names",a:"Figurehead · Leader · Liaison",hint:"",cat:'mintz'},
+    {q:"Informational roles — 3 names",a:"Monitor · Disseminator · Spokesperson",hint:"",cat:'mintz'},
+    {q:"Decisional roles — 4 names",a:"Entrepreneur · Disturbance Handler · Resource Allocator · Negotiator",hint:"",cat:'mintz'},
+    {q:"Figurehead role",a:"Symbolic/ceremonial head. Signs documents, greets visitors, attends functions. No real decision power.",hint:"",cat:'mintz'},
+    {q:"Leader role (Mintzberg)",a:"Motivates, trains, directs subordinates. Hiring, firing, praising. Defines work atmosphere.",hint:"",cat:'mintz'},
+    {q:"Liaison role",a:"Maintains network of external contacts outside chain of command. Industry associations, peers. Information exchange.",hint:"",cat:'mintz'},
+    {q:"Monitor role",a:"Seeks and receives information. Scans environment, reads reports, attends briefings. Nerve centre of org.",hint:"",cat:'mintz'},
+    {q:"Disseminator role",a:"Transmits information INTERNALLY to subordinates. Forwards memos, makes internal calls.",hint:"",cat:'mintz'},
+    {q:"Spokesperson role",a:"Transmits information to EXTERNAL parties. Press releases, board presentations, lobbying.",hint:"",cat:'mintz'},
+    {q:"Entrepreneur role",a:"Initiates and designs change. New product, process improvement. Seeks opportunities proactively.",hint:"Voluntary/proactive",cat:'mintz'},
+    {q:"Disturbance Handler role",a:"Responds to INVOLUNTARY crises. Strikes, supplier failure, competitor action. Reactive.",hint:"",cat:'mintz'},
+    {q:"Resource Allocator role",a:"Decides who gets what — money, time, equipment, people. Budgeting, scheduling, authorising.",hint:"",cat:'mintz'},
+    {q:"Negotiator role",a:"Represents org in major negotiations — labour contracts, client deals, acquisitions. Commits resources.",hint:"",cat:'mintz'},
+    {q:"MCQ trap: CEO giving press conference on results",a:"Spokesperson (not Figurehead) — Spokesperson = informational/external. Figurehead = ceremonial only.",hint:"",cat:'mintz'},
+    {q:"MCQ trap: CEO networking at industry event",a:"Liaison (not Figurehead) — Liaison = external relationship network. Figurehead = ceremonial duties.",hint:"",cat:'mintz'},
+    {q:"MCQ trap: CEO handling factory strike",a:"Disturbance Handler — involuntary crisis. NOT Negotiator (which is planned negotiation).",hint:"",cat:'mintz'},
+    {q:"MCQ trap: CEO approving next year's budget",a:"Resource Allocator — allocates money/resources. NOT Entrepreneur.",hint:"",cat:'mintz'},
+  ]
+
+  R.funcs=[
+    {q:"Fayol's functions mnemonic (POCCC)",a:"Planning · Organising · Commanding · Coordinating · Controlling",hint:"Fayol = 5",cat:'funcs'},
+    {q:"Gulick's POSDCORB — full form",a:"Planning · Organising · Staffing · Directing · Coordinating · Reporting · Budgeting",hint:"Gulick = 7",cat:'funcs'},
+    {q:"Koontz & O'Donnell — functions (POSDC)",a:"Planning · Organising · Staffing · Directing · Controlling",hint:"Most accepted modern = also POSDC",cat:'funcs'},
+    {q:"MBO — full form, who coined, year & book",a:"Management by Objectives | Peter Drucker | 1954 | 'The Practice of Management'",hint:"",cat:'funcs'},
+    {q:"MBO — 6 steps",a:"①Set org goals ②Cascade to depts/individuals ③Employee participates in own goals ④Monitor & review ⑤Evaluate vs agreed objectives ⑥Reward/feedback",hint:"",cat:'funcs'},
+    {q:"MBO — 3 advantages",a:"Clear goals (less ambiguity) · Employee participation = motivation · Objective performance appraisal",hint:"",cat:'funcs'},
+    {q:"MBO — 3 limitations",a:"Time-consuming · Difficult to quantify all roles · Top management may not participate fully",hint:"",cat:'funcs'},
+    {q:"Types of plans by TIME horizon",a:"Strategic (3-5+ yrs, top mgmt) · Tactical (1-3 yrs, middle mgmt) · Operational (<1 yr, lower mgmt)",hint:"",cat:'funcs'},
+    {q:"Standing plans vs Single-use plans",a:"Standing = repeated use (Policies, Procedures, Rules, Methods) | Single-use = one-time (Budgets, Programmes, Projects)",hint:"",cat:'funcs'},
+    {q:"Directional vs Specific plans",a:"Directional = flexible guidelines, not specific | Specific = clearly defined objectives, no ambiguity",hint:"",cat:'funcs'},
+    {q:"Simon's Bounded Rationality",a:"Decision-makers have LIMITED rationality — can't process all info. 'Satisficing' (good enough) not optimising. Herbert Simon, Nobel 1978.",hint:"",cat:'funcs'},
+    {q:"Controlling — 5 steps",a:"①Establish standards ②Measure actual performance ③Compare with standards ④Analyse deviations ⑤Take corrective action",hint:"",cat:'funcs'},
+    {q:"Management by Exception (MBE)",a:"Managers focus only on SIGNIFICANT deviations — ignore minor ones. Related to controlling.",hint:"",cat:'funcs'},
+  ]
+
+  R.decisions=[
+    {q:"Brainstorming — key rule",a:"No criticism/evaluation during idea generation. Quantity over quality first. Build on others' ideas. Then filter.",hint:"",cat:'decisions'},
+    {q:"Delphi Technique — how it works",a:"Experts answer questionnaires ANONYMOUSLY in rounds. Responses shared back. Iterate until consensus. No face-to-face.",hint:"Good for geographical spread",cat:'decisions'},
+    {q:"NGT vs Delphi",a:"NGT (Nominal Group Technique): members write ideas independently → share → discuss → vote. Face-to-face but structured | Delphi: no face-to-face, anonymous",hint:"",cat:'decisions'},
+    {q:"Quality Circles — definition",a:"Small voluntary groups (8-10 workers) meeting regularly to identify and solve quality problems. Worker-level, bottom-up.",hint:"Japanese origin",cat:'decisions'},
+    {q:"Fish Bowl technique",a:"Inner group discusses while outer group observes. Roles rotate. Encourages active listening.",hint:"",cat:'decisions'},
+    {q:"Didactic Interaction",a:"Two groups: one proposes, one opposes. Then roles reversed. Structured devil's advocate — forces pros AND cons.",hint:"",cat:'decisions'},
+    {q:"Heuristic Method",a:"Trial and error / rules of thumb based on experience. Good enough solution fast. Experience-based, not systematic.",hint:"",cat:'decisions'},
+    {q:"Programmed vs Non-programmed decisions",a:"Programmed = routine, structured, repetitive (well-defined rules) | Non-programmed = novel, unstructured, unique situations",hint:"",cat:'decisions'},
+    {q:"PERT — full form & key feature",a:"Programme Evaluation Review Technique | Uncertain time (3 estimates: Optimistic/Most Likely/Pessimistic) | Used in R&D, new projects",hint:"",cat:'decisions'},
+    {q:"CPM — full form & key feature",a:"Critical Path Method | Deterministic (1 time estimate) | Used in construction, repetitive projects | Identifies longest path = critical path",hint:"",cat:'decisions'},
+    {q:"PERT vs CPM — key difference",a:"PERT = uncertain time (3 estimates) | CPM = certain time (1 estimate) | Both identify critical path | PERT=R&D, CPM=construction",hint:"",cat:'decisions'},
+    {q:"GERT",a:"Graphical Evaluation and Review Technique — extends PERT with probabilistic branching (loops possible)",hint:"",cat:'decisions'},
+    {q:"Decision Tree — use case",a:"Visual tree showing decisions, chance events, outcomes. Sequential decisions under uncertainty. Shows expected values.",hint:"",cat:'decisions'},
+    {q:"Linear Programming — use case",a:"Optimise allocation of limited resources. Maximise profit / minimise cost subject to constraints.",hint:"",cat:'decisions'},
+    {q:"Game Theory — use case",a:"Strategic interaction between competitors. Minimax strategy, Nash equilibrium.",hint:"",cat:'decisions'},
+  ]
+
+  R.pers=[
+    {q:"Allport's definition of Personality (1937)",a:"'Dynamic organisation within the individual of those psychophysical systems that determine his unique adjustments to his environment'",hint:"",cat:'pers'},
+    {q:"Personality — 3 key characteristics",a:"Unique · Consistent · Relatively stable over time",hint:"",cat:'pers'},
+    {q:"Allport's 3 trait types",a:"Cardinal (dominant, defines person — very rare) · Central (general, 5-10 per person) · Secondary (situational, peripheral)",hint:"",cat:'pers'},
+    {q:"Cardinal trait example",a:"Gandhi's non-violence · Hitler's authoritarianism. Very few people have one. It defines the ENTIRE person.",hint:"",cat:'pers'},
+    {q:"Type A personality — 5 characteristics",a:"Time-pressured · Highly competitive · Multitasking · Workaholic/impatient · Higher heart disease risk",hint:"Friedman & Rosenman, 1950s",cat:'pers'},
+    {q:"Type B personality — 4 characteristics",a:"Relaxed, unhurried · Less competitive · One thing at a time · Lower stress, lower health risk",hint:"",cat:'pers'},
+    {q:"Core Self-Evaluation (Robbins)",a:"Self-assessment of capabilities and worth. Includes: self-esteem, locus of control, neuroticism, self-efficacy. High = positive self-view = better job performance.",hint:"",cat:'pers'},
+    {q:"Locus of Control — internal vs external",a:"Internal = believe they control own outcomes (higher satisfaction) | External = believe luck/others control outcomes (less initiative)",hint:"",cat:'pers'},
+    {q:"Self-Efficacy (Bandura)",a:"Belief in one's own ability to succeed at a specific task. Higher self-efficacy → better performance.",hint:"",cat:'pers'},
+    {q:"Machiavellianism",a:"Pragmatic, manipulative, emotionally detached. 'End justifies means.' High Mach = good in jobs requiring negotiation/persuasion.",hint:"Named after Niccolò Machiavelli",cat:'pers'},
+    {q:"Self-Monitoring (high vs low)",a:"High SM = adjusts behaviour to social cues, adaptable, good actor | Low SM = consistent regardless of situation",hint:"",cat:'pers'},
+    {q:"Big Five Model — who developed & year",a:"McCrae & Costa (1990s). Also called Five Factor Model (FFM). Most empirically validated framework.",hint:"",cat:'pers'},
+    {q:"OCEAN — O: Openness",a:"High O = curious, creative, imaginative, open to new ideas | Low O = conventional, routine-oriented, resistant to change | Job fit: research, design, entrepreneurship",hint:"",cat:'pers'},
+    {q:"OCEAN — C: Conscientiousness",a:"High C = organised, reliable, disciplined, goal-oriented | Low C = impulsive, disorganised | BEST predictor of job performance across ALL occupations",hint:"",cat:'pers'},
+    {q:"OCEAN — E: Extraversion",a:"High E = sociable, assertive, energetic | Low E (Introvert) = reserved, reflective, independent | Job fit: sales, management, leadership",hint:"",cat:'pers'},
+    {q:"OCEAN — A: Agreeableness",a:"High A = cooperative, trusting, empathetic | Low A = competitive, suspicious, difficult | Job fit: customer service, HR, nursing",hint:"",cat:'pers'},
+    {q:"OCEAN — N: Neuroticism",a:"High N = anxious, moody, unstable (LOWER performance) | Low N = calm, stable, resilient | Low N desirable in high-stress roles",hint:"",cat:'pers'},
+    {q:"Factors affecting Personality — 4 categories",a:"Heredity/Genetics · Environment (family, culture, peers) · Life Experiences · Psychological Factors (self-concept, EI)",hint:"Nature vs Nurture: both contribute",cat:'pers'},
+  ]
+
+  R.percep=[
+    {q:"Perception — definition",a:"Process by which individuals SELECT, ORGANISE, and INTERPRET sensory info to give meaning to their environment",hint:"",cat:'percep'},
+    {q:"Perception — 3 influencing factors",a:"Perceiver's characteristics · Target's characteristics · Situational context",hint:"",cat:'percep'},
+    {q:"Halo Effect",a:"One POSITIVE trait colours ENTIRE impression positively. 'If good at X, must be good at everything.'",hint:"Ex: IIT graduate assumed excellent overall",cat:'percep'},
+    {q:"Horn Effect",a:"One NEGATIVE trait colours ENTIRE impression negatively. Opposite of Halo.",hint:"Ex: Poor grammar = assumed incompetent",cat:'percep'},
+    {q:"Halo vs Horn — EXAM TRAP",a:"Halo = ONE POSITIVE → positive overall | Horn = ONE NEGATIVE → negative overall | Both are generalisation errors",hint:"",cat:'percep'},
+    {q:"Stereotyping",a:"Judging a person based on group membership (gender, race, caste, region, religion)",hint:"Ex: 'Women not good at technical roles'",cat:'percep'},
+    {q:"Similarity (Like Me) Effect",a:"Favour people similar to ourselves in background, interests, values. Reduces objectivity.",hint:"Ex: Promote someone from same college",cat:'percep'},
+    {q:"Contrast Effect",a:"Evaluation affected by COMPARISON with others encountered recently. Standard shifts.",hint:"Ex: Average candidate seems great after interviewing weak candidates",cat:'percep'},
+    {q:"Illusion vs Hallucination",a:"Illusion = false perception of REAL stimulus (mirage, bent stick in water) | Hallucination = perception with NO external stimulus (seeing/hearing things not there)",hint:"",cat:'percep'},
+    {q:"Selective Perception",a:"People selectively interpret based on interests, background, experience. Filter out information conflicting with existing beliefs.",hint:"",cat:'percep'},
+    {q:"Attribution Theory",a:"We explain behaviour by attributing to INTERNAL (dispositional) or EXTERNAL (situational) causes",hint:"",cat:'percep'},
+    {q:"Fundamental Attribution Error",a:"Overestimate INTERNAL (personal) factors for others' failures. Underestimate SITUATIONAL factors. Apply opposite for own failures.",hint:"",cat:'percep'},
+    {q:"Projection (perceptual error)",a:"Attributing YOUR OWN feelings, emotions, or traits onto others",hint:"",cat:'percep'},
+    {q:"Contrast Effect vs Selective Perception — TRAP",a:"Contrast = evaluation affected by comparison with OTHER people | Selective = filtering based on OWN beliefs/background",hint:"",cat:'percep'},
+  ]
+
+  return R
+}
+
+const CARDS=buildAll()
+const LS_KEY='rbi_d1mgmt_weak'
+function loadWeak(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'{}')}catch{return{}}}
+function saveWeak(obj){localStorage.setItem(LS_KEY,JSON.stringify(obj))}
+
+let selected=new Set(['intro','fayol','taylor','schools'])
+let weakOnly=false,deck=[],cur=0,isFlipped=false,gotCount=0,sessionWeak=new Set(),origTotal=0
+
+function renderHome(){
+  const cg=document.getElementById('cat-grid')
+  cg.innerHTML=''
+  for(const[id,meta] of Object.entries(META)){
+    const n=CARDS[id].length,on=!weakOnly&&selected.has(id)
+    const btn=document.createElement('button')
+    btn.className='cat-btn'+(on?' active':'')
+    btn.innerHTML=`<span class="cat-name">${meta.label}</span><span class="cat-count">${n} cards</span>`
+    btn.onclick=()=>toggleCat(id)
+    cg.appendChild(btn)
+  }
+  const weak=loadWeak(),wc=Object.keys(weak).length
+  const wrap=document.getElementById('weak-wrap')
+  if(wc>0){
+    wrap.innerHTML=`<div class="weak-row ${weakOnly?'on':''}" onclick="toggleWeak()" style="margin-bottom:20px"><div><div class="wr-title">Weak Spots Only</div><div class="wr-sub">${wc} card${wc!==1?'s':''} flagged</div></div><div class="wr-check">${weakOnly?'✓':''}</div></div>`
+  }else{wrap.innerHTML='<div style="margin-bottom:20px"></div>'}
+  updateStart()
+}
+
+function toggleCat(id){
+  if(weakOnly)return
+  selected.has(id)?selected.delete(id):selected.add(id)
+  renderHome()
+}
+function toggleWeak(){
+  weakOnly=!weakOnly
+  if(weakOnly)selected.clear()
+  else selected=new Set(['intro','fayol','taylor','schools'])
+  renderHome()
+}
+function countCards(){
+  if(weakOnly)return Object.keys(loadWeak()).length
+  let n=0;for(const id of selected)n+=CARDS[id].length;return n
+}
+function updateStart(){
+  const n=countCards(),btn=document.getElementById('start-btn'),h=document.getElementById('start-hint')
+  btn.disabled=n===0
+  btn.textContent=n>0?'Start Drill':'Select categories'
+  h.textContent=n>0?`${n} cards`:''
+}
+
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+  return a
+}
+function startDrill(){
+  const weak=loadWeak()
+  if(weakOnly){
+    deck=Object.entries(weak).map(([id,c])=>({...c,_wid:id}))
+  }else{
+    deck=[]
+    for(const id of selected)CARDS[id].forEach((c,i)=>deck.push({...c,_wid:`${id}_${i}`}))
+  }
+  shuffle(deck)
+  cur=0;isFlipped=false;gotCount=0;sessionWeak=new Set()
+  origTotal=deck.length
+  showScreen('drill');renderCard()
+}
+
+function renderCard(){
+  if(cur>=deck.length){endSession();return}
+  const card=deck[cur],remaining=deck.length-cur
+  const ai=sessionWeak.size
+  document.getElementById('drill-info').innerHTML=`<b>${remaining}</b> left · <span class="again-c">${ai>0?ai+' weak':''}</span>`
+  const pct=origTotal>0?(gotCount/origTotal)*100:0
+  document.getElementById('pfill').style.width=Math.min(pct,100)+'%'
+  const m=META[card.cat]
+  document.getElementById('fc-cat').textContent=m.label
+  document.getElementById('fc-cat').style.color=m.color
+  document.getElementById('fc-pos').textContent=`${cur+1}/${deck.length}`
+  document.getElementById('fc-q').textContent=card.q
+  document.getElementById('fc-a').textContent=card.a
+  document.getElementById('fc-hint').textContent=card.hint||''
+  isFlipped=false
+  document.getElementById('fc-front').style.display=''
+  document.getElementById('fc-back').style.display='none'
+  document.getElementById('flashcard').classList.remove('flipped','wrong')
+  document.getElementById('btn-again').disabled=true
+  document.getElementById('btn-got').disabled=true
 }
 
 function flipCard(){
-  const el=document.getElementById('card');
-  el.classList.toggle('flipped');
-  isFlipped=!isFlipped;
+  if(isFlipped)return
+  isFlipped=true
+  document.getElementById('fc-front').style.display='none'
+  document.getElementById('fc-back').style.display=''
+  document.getElementById('flashcard').classList.add('flipped')
+  document.getElementById('btn-again').disabled=false
+  document.getElementById('btn-got').disabled=false
 }
 
-function grade(got){
-  if(!isFlipped){flipCard();return}
-  const c=deck.shift();
-  if(got){gotCount++;weakSet.delete(c.origIdx)}
-  else{againCount++;weakSet.add(c.origIdx);deck.splice(Math.min(4,deck.length),0,c)}
-  saveWeak();showCard();
+function markGot(){gotCount++;cur++;renderCard()}
+function markAgain(){
+  const card=deck[cur]
+  sessionWeak.add(card._wid)
+  document.getElementById('flashcard').classList.add('wrong')
+  setTimeout(()=>{
+    const rest=deck.length-cur-1
+    if(rest>0){const ins=cur+1+Math.min(3,Math.floor(Math.random()*rest));deck.splice(ins,0,card)}
+    else deck.push(card)
+    cur++;renderCard()
+  },200)
 }
 
-function toggleWeak(){
-  loadWeak();
-  if(weakSet.size===0){alert('No weak spots saved yet!');return}
-  isWeakMode=!isWeakMode;
-  document.getElementById('weak-btn').classList.toggle('active',isWeakMode);
-  buildDeck(isWeakMode);showCard();
-  document.getElementById('app').style.display='flex';
-  document.getElementById('done-screen').style.display='none';
+function goHome(){showScreen('home');renderHome()}
+
+function endSession(){
+  const prev=loadWeak(),next={},allIds=new Set(deck.map(c=>c._wid))
+  for(const[id,card]of Object.entries(prev)){if(!allIds.has(id))next[id]=card}
+  for(const id of sessionWeak){const card=deck.find(c=>c._wid===id);if(card)next[id]={q:card.q,a:card.a,hint:card.hint,cat:card.cat}}
+  saveWeak(next)
+  const wc=sessionWeak.size,pct=origTotal>0?Math.round((gotCount/origTotal)*100):100
+  document.getElementById('end-title').textContent=pct>=90?'Nailed it!':pct>=70?'Good session!':'Keep drilling.'
+  document.getElementById('end-tag').textContent=`${origTotal} cards · ${pct}% clean`
+  document.getElementById('sv-got').textContent=gotCount
+  document.getElementById('sv-weak').textContent=wc
+  document.getElementById('sv-pct').textContent=pct+'%'
+  const btns=document.getElementById('end-btns')
+  btns.innerHTML=''
+  const nwc=Object.keys(next).length
+  if(nwc>0){const b1=document.createElement('button');b1.className='ebtn primary';b1.textContent=`Drill Weak Spots (${nwc})`;b1.onclick=()=>{weakOnly=true;startDrill()};btns.appendChild(b1)}
+  const b2=document.createElement('button');b2.className='ebtn secondary';b2.textContent='New Session';b2.onclick=()=>{weakOnly=false;goHome()};btns.appendChild(b2)
+  const wlw=document.getElementById('wl-wrap')
+  if(wc>0){
+    const items=[...sessionWeak].map(id=>{const c=deck.find(x=>x._wid===id);return c?`<div class="wi"><span class="wi-q">${c.q}</span><span class="wi-a">${c.a}</span></div>`:''}).join('')
+    wlw.innerHTML=`<div class="wl"><div class="wl-title">Review these (${wc})</div>${items}</div>`
+  }else wlw.innerHTML=''
+  showScreen('end')
 }
 
-function showDone(){
-  document.getElementById('app').style.display='none';
-  document.getElementById('done-screen').style.display='flex';
-  document.getElementById('done-stats').textContent=`Got it: ${gotCount} · Again: ${againCount} · Weak spots saved: ${weakSet.size}`;
-}
-
-function restart(){
-  buildDeck(false);isWeakMode=false;
-  document.getElementById('weak-btn').classList.remove('active');
-  document.getElementById('app').style.display='flex';
-  document.getElementById('done-screen').style.display='none';
-  showCard();
-}
-
-function restartWeak(){
-  loadWeak();
-  if(weakSet.size===0){restart();return}
-  isWeakMode=true;buildDeck(true);
-  document.getElementById('weak-btn').classList.add('active');
-  document.getElementById('app').style.display='flex';
-  document.getElementById('done-screen').style.display='none';
-  showCard();
-}
-
-// Keyboard
 document.addEventListener('keydown',e=>{
-  if(e.code==='Space'){e.preventDefault();flipCard()}
-  else if(e.code==='ArrowRight')grade(true);
-  else if(e.code==='ArrowLeft')grade(false);
-});
+  if(document.getElementById('drill').classList.contains('hidden'))return
+  if(e.key===' '||e.key==='Enter'){e.preventDefault();flipCard()}
+  if(isFlipped){if(e.key==='ArrowRight'||e.key==='1')markGot();if(e.key==='ArrowLeft'||e.key==='2')markAgain()}
+})
 
-// Swipe
-let tx=0;
-document.getElementById('card').addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
-document.getElementById('card').addEventListener('touchend',e=>{
-  const dx=e.changedTouches[0].clientX-tx;
-  if(Math.abs(dx)>60){grade(dx>0)}
-  else flipCard();
-});
+let tx0=0,ty0=0
+const fc=document.getElementById('flashcard')
+fc.addEventListener('touchstart',e=>{tx0=e.touches[0].clientX;ty0=e.touches[0].clientY},{passive:true})
+fc.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx0,dy=e.changedTouches[0].clientY-ty0
+  if(!isFlipped||Math.abs(dx)<50||Math.abs(dy)>Math.abs(dx))return
+  dx>0?markGot():markAgain()
+},{passive:true})
 
-// Init
-loadWeak();buildDeck(false);showCard();
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden')}
+
+renderHome()
 </script>
 </body>
 </html>

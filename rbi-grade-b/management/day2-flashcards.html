@@ -3,227 +3,419 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Day 2 Flashcards — Motivation & Reinforcement</title>
+<title>Day 2 — Motivation Flashcards</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0f0f1a;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;height:100vh;overflow:hidden;user-select:none}
-#app{display:flex;flex-direction:column;height:100vh;padding:12px}
-#header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-#progress-text{font-size:0.8rem;color:#94a3b8}
-#category{font-size:0.7rem;color:#64748b;text-transform:uppercase;letter-spacing:0.05em}
-#prog-bar{width:100%;height:4px;background:#1e293b;border-radius:2px;margin-bottom:8px}
-#prog-fill{height:100%;background:#a78bfa;border-radius:2px;transition:width 0.3s}
-#card-area{flex:1;display:flex;align-items:center;justify-content:center;perspective:1000px}
-.card{width:100%;max-width:440px;height:320px;position:relative;transform-style:preserve-3d;transition:transform 0.4s ease;cursor:pointer}
-.card.flipped{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
-.front{background:#1e1e3a;border:1px solid #334155}
-.back{background:#1a0f2e;border:1px solid #a78bfa;transform:rotateY(180deg)}
-.face-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;opacity:0.5}
-.front .face-label{color:#94a3b8}
-.back .face-label{color:#a78bfa}
-.q-text{font-size:1.05rem;line-height:1.5;color:#e2e8f0}
-.a-text{font-size:0.95rem;line-height:1.6;color:#ddd6fe}
-.tap-hint{font-size:0.7rem;color:#475569;margin-top:12px}
-#buttons{display:flex;gap:10px;margin-top:12px}
-.btn{flex:1;padding:14px;border:none;border-radius:12px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:opacity 0.15s}
-.btn:active{opacity:0.7}
-#btn-again{background:#451a1a;color:#fca5a5}
-#btn-got{background:#2e1065;color:#c4b5fd}
-#bottom{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
-#counter{font-size:0.75rem;color:#475569}
-#weak-btn{font-size:0.7rem;color:#fbbf24;background:none;border:1px solid #78350f;border-radius:6px;padding:4px 8px;cursor:pointer}
-#weak-btn.active{background:#78350f}
-#done-screen{display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;gap:16px}
-#done-screen h2{font-size:1.4rem;color:#a78bfa}
-#done-screen p{color:#94a3b8;font-size:0.9rem}
-.restart-btn{padding:12px 28px;background:#1e1035;border:1px solid #a78bfa;color:#a78bfa;border-radius:10px;font-size:0.9rem;cursor:pointer}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#0f0f1a;color:#e2e8f0;font-family:'Segoe UI',sans-serif;overflow:hidden}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column}.screen.hidden{display:none}
+#home{overflow-y:auto;padding:28px 20px 48px}
+.home-title{color:#a78bfa;font-size:1.4rem;font-weight:700;margin-bottom:4px}
+.home-sub{color:#475569;font-size:0.78rem;margin-bottom:28px}
+.sec-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#475569;margin-bottom:10px}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.cat-btn{background:#1a1a2e;border:2px solid #2d2d42;border-radius:12px;padding:14px 12px;cursor:pointer;text-align:left;transition:all .15s}
+.cat-btn.active{border-color:#a78bfa;background:#1e1b4b}
+.cat-name{display:block;font-size:0.82rem;font-weight:600;color:#94a3b8;margin-bottom:3px}
+.cat-btn.active .cat-name{color:#e2e8f0}
+.cat-count{font-size:0.7rem;color:#2d2d42}
+.cat-btn.active .cat-count{color:#a78bfa}
+.weak-row{background:#1a1a2e;border:1px solid #2d2d42;border-radius:12px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all .15s}
+.weak-row.on{border-color:#f59e0b;background:#1c1800}
+.wr-title{font-size:0.85rem;font-weight:600;color:#f59e0b}
+.wr-sub{font-size:0.72rem;color:#475569;margin-top:2px}
+.wr-check{width:22px;height:22px;border-radius:6px;border:2px solid #f59e0b;display:flex;align-items:center;justify-content:center;font-size:0.85rem;color:#f59e0b}
+.start-btn{width:100%;background:#a78bfa;color:#1a1040;border:none;border-radius:14px;padding:18px;font-size:1rem;font-weight:700;cursor:pointer;margin-bottom:8px;transition:background .15s}
+.start-btn:active{background:#8b5cf6}
+.start-btn:disabled{background:#1e1e30;color:#374151;cursor:not-allowed}
+.start-hint{text-align:center;font-size:0.72rem;color:#374151}
+#drill{overflow:hidden}
+.drill-top{padding:14px 16px 8px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.back-btn{background:none;border:none;color:#475569;font-size:1.3rem;cursor:pointer;padding:2px 6px;line-height:1}
+.drill-info{flex:1;font-size:0.75rem;color:#475569}
+.drill-info b{color:#e2e8f0}
+.again-c{color:#f87171}
+.pbar{height:3px;background:#1a1a2e;flex-shrink:0}
+.pfill{height:100%;background:linear-gradient(90deg,#a78bfa,#8b5cf6);transition:width .4s}
+.card-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 20px 20px;gap:16px;overflow:hidden}
+.flashcard{width:100%;max-width:420px;flex:1;max-height:340px;background:#1a1a2e;border:2px solid #2d2d42;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;cursor:pointer;user-select:none;position:relative;transition:border-color .2s,transform .12s}
+.flashcard:active{transform:scale(.985)}
+.flashcard.flipped{border-color:#a78bfa}
+.flashcard.wrong{border-color:#f87171}
+.fc-cat{position:absolute;top:14px;left:16px;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.fc-pos{position:absolute;top:14px;right:16px;font-size:0.65rem;color:#2d2d42}
+.fc-q{font-size:1rem;font-weight:600;text-align:center;margin-bottom:6px;line-height:1.5;color:#e2e8f0}
+.fc-tap{font-size:0.7rem;color:#2d2d42;margin-top:10px}
+.fc-a{font-size:0.92rem;font-weight:600;color:#c4b5fd;text-align:center;line-height:1.55}
+.fc-hint{font-size:0.74rem;color:#475569;margin-top:8px;text-align:center}
+.action-row{display:flex;gap:12px;width:100%;max-width:420px;flex-shrink:0}
+.act-btn{flex:1;padding:18px 0;border:none;border-radius:14px;font-size:1rem;font-weight:700;cursor:pointer;transition:transform .1s,opacity .15s}
+.act-btn:active{transform:scale(.95)}
+.act-btn.again{background:#450a0a;color:#fca5a5}
+.act-btn.got{background:#2e1065;color:#c4b5fd}
+.act-btn:disabled{opacity:0;pointer-events:none}
+#end{padding:36px 20px 40px;align-items:center;justify-content:center;gap:18px;overflow-y:auto}
+.end-title{font-size:1.7rem;font-weight:700;color:#a78bfa}
+.end-tag{font-size:0.75rem;color:#475569;margin-top:-10px}
+.stats-row{display:flex;gap:12px;width:100%}
+.stat-box{flex:1;background:#1a1a2e;border:1px solid #2d2d42;border-radius:14px;padding:16px 0;text-align:center}
+.sval{font-size:2.2rem;font-weight:700}
+.sval.g{color:#a78bfa}.sval.r{color:#f87171}
+.slbl{font-size:0.68rem;color:#475569;margin-top:3px}
+.end-btns{width:100%;display:flex;flex-direction:column;gap:10px}
+.ebtn{width:100%;padding:16px;border:none;border-radius:14px;font-size:0.95rem;font-weight:700;cursor:pointer}
+.ebtn.primary{background:#f59e0b;color:#1a1200}
+.ebtn.secondary{background:#1a1a2e;color:#a78bfa;border:1px solid #2d2d42}
+.weak-list-wrap{width:100%}
+.wl{background:#1a1a2e;border:1px solid #2d2d42;border-radius:14px;padding:14px 16px;max-height:220px;overflow-y:auto}
+.wl-title{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#f59e0b;margin-bottom:10px}
+.wi{display:flex;justify-content:space-between;align-items:flex-start;padding:6px 0;border-bottom:1px solid #1e1e30;font-size:0.78rem;gap:8px}
+.wi:last-child{border-bottom:none}
+.wi-q{color:#64748b;flex:1}
+.wi-a{color:#fbbf24;font-weight:700;flex:1;text-align:right}
 </style>
 </head>
 <body>
-<div id="app">
-  <div id="header">
-    <span id="progress-text">Card 1 of 42</span>
-    <span id="category">Motivation Basics</span>
+
+<div class="screen" id="home">
+  <div class="home-title">Day 2 — Motivation</div>
+  <div class="home-sub">Reinforcement · Maslow · ERG · McClelland · Herzberg · McGregor/Z · Vroom/Adams</div>
+  <div class="sec-label">Pick categories</div>
+  <div class="cat-grid" id="cat-grid"></div>
+  <div id="weak-wrap"></div>
+  <button class="start-btn" id="start-btn" onclick="startDrill()">Start Drill</button>
+  <div class="start-hint" id="start-hint"></div>
+</div>
+
+<div class="screen hidden" id="drill">
+  <div class="drill-top">
+    <button class="back-btn" onclick="goHome()">←</button>
+    <div class="drill-info" id="drill-info"></div>
   </div>
-  <div id="prog-bar"><div id="prog-fill" style="width:0%"></div></div>
-  <div id="card-area">
-    <div class="card" id="card" onclick="flipCard()">
-      <div class="face front">
-        <div class="face-label">Question</div>
-        <div class="q-text" id="q-text"></div>
-        <div class="tap-hint">tap to reveal</div>
-      </div>
-      <div class="face back">
-        <div class="face-label">Answer</div>
-        <div class="a-text" id="a-text"></div>
-      </div>
+  <div class="pbar"><div class="pfill" id="pfill"></div></div>
+  <div class="card-area">
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="fc-cat" id="fc-cat"></div>
+      <div class="fc-pos" id="fc-pos"></div>
+      <div id="fc-front"><div class="fc-q" id="fc-q"></div><div class="fc-tap">tap to reveal</div></div>
+      <div id="fc-back" style="display:none;text-align:center"><div class="fc-a" id="fc-a"></div><div class="fc-hint" id="fc-hint"></div></div>
+    </div>
+    <div class="action-row">
+      <button class="act-btn again" id="btn-again" disabled onclick="markAgain()">✗  Again</button>
+      <button class="act-btn got" id="btn-got" disabled onclick="markGot()">✓  Got it</button>
     </div>
   </div>
-  <div id="buttons">
-    <button class="btn" id="btn-again" onclick="grade(false)">✗ Again</button>
-    <button class="btn" id="btn-got" onclick="grade(true)">✓ Got it</button>
-  </div>
-  <div id="bottom">
-    <span id="counter"></span>
-    <button id="weak-btn" onclick="toggleWeak()">Weak Spots Only</button>
-  </div>
 </div>
-<div id="done-screen">
-  <h2>Session Complete!</h2>
-  <p id="done-stats"></p>
-  <button class="restart-btn" onclick="restart()">Restart</button>
-  <button class="restart-btn" onclick="restartWeak()">Weak Spots Only</button>
+
+<div class="screen hidden" id="end">
+  <div class="end-title" id="end-title">Session Done!</div>
+  <div class="end-tag" id="end-tag"></div>
+  <div class="stats-row">
+    <div class="stat-box"><div class="sval g" id="sv-got">0</div><div class="slbl">Got it</div></div>
+    <div class="stat-box"><div class="sval r" id="sv-weak">0</div><div class="slbl">Weak</div></div>
+    <div class="stat-box"><div class="sval" id="sv-pct" style="color:#a78bfa">0%</div><div class="slbl">Score</div></div>
+  </div>
+  <div class="end-btns" id="end-btns"></div>
+  <div class="weak-list-wrap" id="wl-wrap"></div>
 </div>
 
 <script>
-const ALL_CARDS = [
-  // Motivation Basics
-  {c:"Motivation Basics", q:"Motivation — definition", a:"Internal drive that initiates, directs, and sustains behaviour towards a goal"},
-  {c:"Motivation Basics", q:"Intrinsic vs Extrinsic motivation", a:"Intrinsic = from within (interest, passion, satisfaction); Extrinsic = external rewards (money, praise, promotion)"},
-  {c:"Motivation Basics", q:"Who proposed Reinforcement Theory?", a:"B.F. Skinner — based on Operant Conditioning; behaviour shaped by consequences"},
-  {c:"Motivation Basics", q:"Content theories vs Process theories", a:"Content = WHAT motivates (needs); Process = HOW motivation works (cognitive processes)"},
-  // Reinforcement Theory
-  {c:"Reinforcement Theory", q:"4 types of reinforcement (Skinner)", a:"① Positive Reinforcement ② Negative Reinforcement ③ Punishment ④ Extinction"},
-  {c:"Reinforcement Theory", q:"Positive Reinforcement", a:"Add pleasant stimulus to increase desired behaviour (e.g., bonus for hitting targets)"},
-  {c:"Reinforcement Theory", q:"Negative Reinforcement", a:"Remove unpleasant stimulus to increase behaviour (e.g., stop criticism when employee improves)"},
-  {c:"Reinforcement Theory", q:"Punishment (reinforcement)", a:"Add unpleasant stimulus to decrease unwanted behaviour (e.g., reprimand for lateness)"},
-  {c:"Reinforcement Theory", q:"Extinction (reinforcement)", a:"Withdraw positive reinforcement to eliminate behaviour (e.g., ignore attention-seeking)"},
-  {c:"Reinforcement Theory", q:"Schedules of Reinforcement — 4 types", a:"Fixed Ratio · Variable Ratio · Fixed Interval · Variable Interval"},
-  {c:"Reinforcement Theory", q:"Most powerful (extinction-resistant) schedule", a:"Variable Ratio — unpredictable reward; e.g., gambling, social media likes"},
-  {c:"Reinforcement Theory", q:"Fixed Ratio schedule example", a:"Piecework pay — reward after every N responses (fast but post-reinforcement pause)"},
-  // Content Theories — Maslow
-  {c:"Maslow's Hierarchy", q:"Maslow's 5 levels (bottom → top)", a:"Physiological → Safety → Social/Love & Belonging → Esteem → Self-Actualisation"},
-  {c:"Maslow's Hierarchy", q:"Maslow's key assumption", a:"Lower-order needs must be substantially satisfied before higher needs emerge as motivators"},
-  {c:"Maslow's Hierarchy", q:"Physiological needs examples", a:"Food, water, shelter, sleep, warmth — basic survival"},
-  {c:"Maslow's Hierarchy", q:"Esteem needs — 2 types", a:"Lower esteem: status, recognition from others; Upper esteem: self-respect, achievement, confidence"},
-  {c:"Maslow's Hierarchy", q:"Self-Actualisation", a:"Reaching full potential; becoming what one is capable of being — differs person to person"},
-  // ERG Theory
-  {c:"ERG Theory", q:"ERG Theory — proposed by", a:"Clayton Alderfer (1969)"},
-  {c:"ERG Theory", q:"ERG stands for", a:"Existence · Relatedness · Growth"},
-  {c:"ERG Theory", q:"ERG vs Maslow — 2 key differences", a:"① Multiple needs active simultaneously (not strictly sequential) ② Frustration-Regression — if higher need frustrated, regress to lower need"},
-  {c:"ERG Theory", q:"Maslow → ERG mapping", a:"Physiological + Safety = Existence; Social = Relatedness; Esteem + Self-Actualisation = Growth"},
-  // McClelland
-  {c:"McClelland's Theory", q:"McClelland's 3 needs", a:"nAch (Achievement) · nPow (Power) · nAff (Affiliation)"},
-  {c:"McClelland's Theory", q:"Who suits entrepreneurship — McClelland", a:"High nAch — set challenging goals, want immediate feedback, take moderate risks"},
-  {c:"McClelland's Theory", q:"High nPow person", a:"Wants to influence/control others; can be social power (org benefit) or personal power (self-interest)"},
-  {c:"McClelland's Theory", q:"High nAff person", a:"Wants close relationships, approval, cooperative work — poor at objective decisions"},
-  // Herzberg
-  {c:"Herzberg's Theory", q:"Herzberg's 2-Factor Theory — 2 categories", a:"Hygiene Factors (prevent dissatisfaction) + Motivators (create satisfaction)"},
-  {c:"Herzberg's Theory", q:"Hygiene factors examples (6)", a:"Salary · Job security · Working conditions · Company policy · Supervision · Interpersonal relations"},
-  {c:"Herzberg's Theory", q:"Motivators examples (5)", a:"Achievement · Recognition · Responsibility · Advancement · Growth/Work itself"},
-  {c:"Herzberg's Theory", q:"Herzberg's key insight", a:"Opposite of dissatisfaction ≠ satisfaction — they are on separate scales; hygiene only prevents dissatisfaction"},
-  {c:"Herzberg's Theory", q:"Herzberg theory also called", a:"Two-Factor Theory / Motivation-Hygiene Theory"},
-  // McGregor & Ouchi
-  {c:"McGregor & Theory Z", q:"Theory X assumptions about workers", a:"Lazy · dislike work · need control/threats · avoid responsibility · motivated only by money"},
-  {c:"McGregor & Theory Z", q:"Theory Y assumptions about workers", a:"Self-motivated · seek responsibility · creative · enjoy work under right conditions · capable of self-direction"},
-  {c:"McGregor & Theory Z", q:"Theory X manager style", a:"Autocratic, micromanage, close supervision, top-down control"},
-  {c:"McGregor & Theory Z", q:"Theory Y manager style", a:"Participative, delegate, empower, trust employees to self-direct"},
-  {c:"McGregor & Theory Z", q:"Theory Z — proposed by & year", a:"William Ouchi (1981) — inspired by Japanese management practices"},
-  {c:"McGregor & Theory Z", q:"Theory Z features (4)", a:"Lifetime employment · Slow promotion · Collective decision-making · Holistic concern for employee (family too)"},
-  // Vroom & Adams
-  {c:"Vroom's Expectancy Theory", q:"Vroom's formula", a:"Motivation = Expectancy (E) × Instrumentality (I) × Valence (V)"},
-  {c:"Vroom's Expectancy Theory", q:"Expectancy (Vroom)", a:"Belief that effort → performance (can I do it?)"},
-  {c:"Vroom's Expectancy Theory", q:"Instrumentality (Vroom)", a:"Belief that performance → reward (will I get rewarded?)"},
-  {c:"Vroom's Expectancy Theory", q:"Valence (Vroom)", a:"Value/attractiveness of the reward to the individual (do I want it?)"},
-  {c:"Adams Equity Theory", q:"Adams Equity Theory — core idea", a:"People compare their input/output ratio to others; perceived inequity creates tension → motivation to restore balance"},
-  {c:"Adams Equity Theory", q:"Ways to restore equity (4)", a:"① Change inputs ② Change outputs ③ Change perception ④ Leave the job"},
-  // Comparisons / PYQ
-  {c:"Comparisons & PYQ", q:"Which theory uses Valence-Instrumentality-Expectancy?", a:"Vroom's Expectancy Theory (VIE model)"},
-  {c:"Comparisons & PYQ", q:"Herzberg said salary is a ____ factor", a:"Hygiene factor (prevents dissatisfaction; NOT a true motivator)"},
-  {c:"Comparisons & PYQ", q:"Alderfer's frustration-regression principle", a:"If a higher-order need is frustrated, person regresses to seeking more of a lower-order need"},
-  {c:"Comparisons & PYQ", q:"Who coined Theory Z and when?", a:"William Ouchi, 1981 — blended American + Japanese management styles"},
-];
-
-let deck=[], weakSet=new Set(), isFlipped=false, isWeakMode=false, gotCount=0, againCount=0;
-
-function loadWeak(){try{const w=JSON.parse(localStorage.getItem('d2-weak')||'[]');weakSet=new Set(w)}catch(e){}}
-function saveWeak(){localStorage.setItem('d2-weak',JSON.stringify([...weakSet]))}
-
-function buildDeck(weakOnly){
-  const src = weakOnly ? ALL_CARDS.filter((_,i)=>weakSet.has(i)) : [...ALL_CARDS];
-  if(src.length===0&&weakOnly){deck=[...ALL_CARDS];isWeakMode=false;document.getElementById('weak-btn').classList.remove('active')}
-  else deck=src.map((c,i)=>({...c,origIdx:weakOnly?[...weakSet][i]:i}));
-  gotCount=0;againCount=0;
+const META={
+  reinf:   {label:'Reinforcement Theory',  color:'#60a5fa'},
+  maslow:  {label:"Maslow's Hierarchy",    color:'#34d399'},
+  erg:     {label:'ERG Theory (Alderfer)', color:'#a78bfa'},
+  mcl:     {label:"McClelland's Needs",    color:'#f472b6'},
+  herzberg:{label:"Herzberg's 2-Factor",   color:'#fbbf24'},
+  mcg:     {label:'McGregor X/Y + Theory Z',color:'#fb923c'},
+  vroom:   {label:'Vroom + Adams Equity',  color:'#2dd4bf'},
+  compare: {label:'Cross-Theory & PYQ',    color:'#f87171'},
 }
 
-function showCard(){
-  if(deck.length===0){showDone();return}
-  const c=deck[0];
-  document.getElementById('q-text').textContent=c.q;
-  document.getElementById('a-text').textContent=c.a;
-  document.getElementById('category').textContent=c.c;
-  const el=document.getElementById('card');
-  el.classList.remove('flipped');isFlipped=false;
-  const total=isWeakMode?weakSet.size:ALL_CARDS.length;
-  const done=total-deck.length;
-  document.getElementById('progress-text').textContent=`Card ${done+1} of ${total}`;
-  document.getElementById('prog-fill').style.width=`${(done/total)*100}%`;
-  document.getElementById('counter').textContent=`✓ ${gotCount}  ✗ ${againCount}`;
+function buildAll(){
+  const R={}
+
+  R.reinf=[
+    {q:"Reinforcement Theory — who proposed & basis",a:"B.F. Skinner | Based on Operant Conditioning | Behaviour is shaped by its CONSEQUENCES, not internal needs",hint:"",cat:'reinf'},
+    {q:"4 types of reinforcement (Skinner)",a:"① Positive Reinforcement ② Negative Reinforcement ③ Punishment ④ Extinction",hint:"",cat:'reinf'},
+    {q:"Positive Reinforcement — definition",a:"ADD pleasant/desirable stimulus to INCREASE desired behaviour",hint:"Ex: Bonus for hitting targets, praise for good work",cat:'reinf'},
+    {q:"Negative Reinforcement — definition",a:"REMOVE unpleasant stimulus to INCREASE desired behaviour",hint:"Ex: Stop criticism when employee improves performance",cat:'reinf'},
+    {q:"Positive vs Negative Reinforcement — TRAP",a:"BOTH increase behaviour. Positive = add reward. Negative = remove punishment. Neither is 'bad'.",hint:"Most confused pair",cat:'reinf'},
+    {q:"Punishment — definition",a:"ADD unpleasant stimulus to DECREASE unwanted behaviour",hint:"Ex: Reprimand for lateness, demotion for misconduct",cat:'reinf'},
+    {q:"Extinction — definition",a:"WITHDRAW positive reinforcement to eliminate a behaviour (letting it fade away)",hint:"Ex: Ignore attention-seeking; remove praise for unwanted behaviour",cat:'reinf'},
+    {q:"Punishment vs Extinction — difference",a:"Punishment = ADDS something negative | Extinction = REMOVES something positive",hint:"",cat:'reinf'},
+    {q:"4 Schedules of Reinforcement",a:"Fixed Ratio · Variable Ratio · Fixed Interval · Variable Interval",hint:"",cat:'reinf'},
+    {q:"Fixed Ratio schedule",a:"Reward after every N responses. Fast performance but post-reinforcement pause.",hint:"Ex: Piecework — paid per 10 units made",cat:'reinf'},
+    {q:"Variable Ratio schedule — why most powerful",a:"Reward after UNPREDICTABLE number of responses. Most resistant to extinction. Highest response rate.",hint:"Ex: Slot machines, social media likes — you never know when next reward comes",cat:'reinf'},
+    {q:"Fixed Interval schedule",a:"Reward at FIXED TIME intervals regardless of responses. Performance rises near deadline, drops after.",hint:"Ex: Monthly salary, annual appraisal",cat:'reinf'},
+    {q:"Variable Interval schedule",a:"Reward at UNPREDICTABLE time intervals. Steady, consistent behaviour.",hint:"Ex: Random spot checks, pop quizzes",cat:'reinf'},
+    {q:"Criticism of Reinforcement Theory",a:"Ignores internal cognitive states and needs. Treats humans like rats. Oversimplifies complex motivation. No explanation of why rewards differ between people.",hint:"",cat:'reinf'},
+  ]
+
+  R.maslow=[
+    {q:"Maslow's Hierarchy — year & paper",a:"Abraham Maslow | 1943 | 'A Theory of Human Motivation'",hint:"Content theory",cat:'maslow'},
+    {q:"5 need levels — bottom to top",a:"① Physiological ② Safety ③ Social/Love & Belonging ④ Esteem ⑤ Self-Actualisation",hint:"Remember: PS³E SA",cat:'maslow'},
+    {q:"Physiological needs — examples",a:"Food, water, shelter, sleep, warmth, air. Basic survival needs.",hint:"Widest pyramid base",cat:'maslow'},
+    {q:"Safety needs — examples",a:"Job security, physical safety, financial stability, protection from illness, law and order",hint:"",cat:'maslow'},
+    {q:"Social/Love & Belonging needs",a:"Friendship, intimacy, affection, belonging to groups, family, team",hint:"",cat:'maslow'},
+    {q:"Esteem needs — 2 types",a:"Lower esteem: status, recognition from others, reputation | Upper esteem: self-respect, achievement, confidence, independence",hint:"",cat:'maslow'},
+    {q:"Self-Actualisation",a:"Reaching full potential. Becoming what one is capable of being. Differs person to person. Never fully 'done'.",hint:"Being needs (B-needs)",cat:'maslow'},
+    {q:"Maslow's key assumption",a:"Lower-order needs must be SUBSTANTIALLY SATISFIED before higher-order needs emerge as motivators",hint:"Strict sequential hierarchy",cat:'maslow'},
+    {q:"Deficiency needs vs Being needs (Maslow)",a:"D-needs = levels 1-4 (motivated by deficiency/lack) | B-needs = level 5 (motivated by desire to grow)",hint:"",cat:'maslow'},
+    {q:"Maslow limitations (4)",a:"① No empirical support ② Western individualist bias ③ Strict hierarchy not universally true ④ Hard to measure which level employee is at",hint:"",cat:'maslow'},
+    {q:"Salary/pay satisfies which Maslow level?",a:"Physiological (basic survival) + Safety (job security). NOT esteem or higher.",hint:"",cat:'maslow'},
+  ]
+
+  R.erg=[
+    {q:"ERG Theory — who and year",a:"Clayton Alderfer | 1969",hint:"Content theory",cat:'erg'},
+    {q:"E — Existence needs",a:"Maslow's Physiological + Safety needs. Basic material needs: pay, working conditions, job security.",hint:"",cat:'erg'},
+    {q:"R — Relatedness needs",a:"Maslow's Social + External Esteem. Relationships with colleagues, family, recognition from others.",hint:"",cat:'erg'},
+    {q:"G — Growth needs",a:"Maslow's Internal Esteem + Self-Actualisation. Personal development, creativity, realising potential.",hint:"",cat:'erg'},
+    {q:"Frustration-Regression principle (Alderfer)",a:"If a HIGHER need is frustrated (unmet) → person REGRESSES to seeking more of a lower-order need",hint:"Ex: Can't get promotion (Growth) → focuses on salary/security (Existence)",cat:'erg'},
+    {q:"ERG vs Maslow — 2 key differences",a:"① Multiple needs active SIMULTANEOUSLY (not strictly sequential) ② Frustration-Regression (Maslow has no regression)",hint:"",cat:'erg'},
+    {q:"ERG mapping to Maslow",a:"Physiological+Safety = Existence | Social+External Esteem = Relatedness | Internal Esteem+Self-Act = Growth",hint:"",cat:'erg'},
+    {q:"Why is ERG considered more realistic than Maslow?",a:"Empirically tested in real workplaces. Allows multiple needs active at once. Accounts for cultural differences. Includes regression.",hint:"",cat:'erg'},
+  ]
+
+  R.mcl=[
+    {q:"McClelland's Theory — year & book",a:"David McClelland | 1961 | 'The Achieving Society' | Key finding: needs are LEARNED through life experience",hint:"",cat:'mcl'},
+    {q:"McClelland's 3 needs",a:"nAch (Achievement) · nPow (Power) · nAff (Affiliation)",hint:"",cat:'mcl'},
+    {q:"nAch — 4 characteristics",a:"①Challenging but realistic goals (not too easy/hard) ②Personal responsibility for outcome ③Rapid concrete feedback ④Money = scoreboard not goal",hint:"",cat:'mcl'},
+    {q:"nAch — who is this ideal for?",a:"Entrepreneurs. Set challenging goals, take moderate risks, want immediate feedback.",hint:"",cat:'mcl'},
+    {q:"nPow — 2 types",a:"Institutional power: want power for ORG benefit = good manager | Personal power: want power for SELF-GAIN = toxic",hint:"",cat:'mcl'},
+    {q:"Ideal manager profile (McClelland)",a:"High nPow + Low nAff = ideal manager. Power to influence org + won't make decisions based on friendships.",hint:"",cat:'mcl'},
+    {q:"nAff — characteristics",a:"Desire for friendly, close relationships. Avoids conflict. Seeks approval. Good in customer-facing, team-building roles.",hint:"",cat:'mcl'},
+    {q:"Why is high nAff problematic in managers?",a:"Won't make tough decisions (firing poor performers, saying no to friends). Poor at objective decisions.",hint:"",cat:'mcl'},
+    {q:"McClelland vs Maslow — key distinction",a:"Maslow: needs are INNATE/universal. McClelland: needs are LEARNED through life experience, culture, upbringing.",hint:"",cat:'mcl'},
+  ]
+
+  R.herzberg=[
+    {q:"Herzberg — research basis",a:"Frederick Herzberg | 1950s | Studied 200 accountants & engineers in Pittsburgh | Asked what made them feel good/bad at work",hint:"",cat:'herzberg'},
+    {q:"Herzberg's 2 factor types",a:"Hygiene Factors (prevent dissatisfaction) + Motivators (create satisfaction)",hint:"Two-Factor Theory / Motivation-Hygiene Theory",cat:'herzberg'},
+    {q:"Herzberg's KEY INSIGHT",a:"Opposite of dissatisfaction ≠ satisfaction. TWO SEPARATE CONTINUUMS. Hygiene only moves you from dissatisfied to neutral. Motivators move you to satisfied.",hint:"Most tested concept",cat:'herzberg'},
+    {q:"Motivators — 6 examples (ARRWAG)",a:"Achievement · Recognition · Responsibility · Work itself (meaningful) · Advancement/Promotion · Growth",hint:"Mnemonic: ARRWAG",cat:'herzberg'},
+    {q:"Hygiene factors — 7 examples",a:"Company Policy · Supervision quality · Relationship with supervisor · Working conditions · Salary · Peer relationships · Status & Security",hint:"",cat:'herzberg'},
+    {q:"Is salary a motivator or hygiene factor?",a:"HYGIENE factor — prevents dissatisfaction but does NOT motivate. No one works harder for fear of losing salary (they just don't quit).",hint:"Most tested exam fact",cat:'herzberg'},
+    {q:"Best state: High Hygiene + High Motivators",a:"Ideal. Few complaints AND highly motivated. 'I love this job and the company treats me well.'",hint:"",cat:'herzberg'},
+    {q:"Worst state: Low Hygiene + Low Motivators",a:"Worst. Unmotivated AND complaining constantly. High attrition. Organisation in crisis.",hint:"",cat:'herzberg'},
+    {q:"High Hygiene + Low Motivators",a:"No complaints but zero motivation. 'Here for the pay cheque.' Show up, do minimum, leave.",hint:"",cat:'herzberg'},
+    {q:"Low Hygiene + High Motivators",a:"Motivated but complaining. 'I love my work but hate this company.' Common in NGOs/startups.",hint:"",cat:'herzberg'},
+    {q:"Herzberg criticisms (4)",a:"①Sample bias (only white-collar workers) ②Self-serving bias in responses ③No overall satisfaction measure ④Salary CAN motivate in some cultures",hint:"",cat:'herzberg'},
+    {q:"Herzberg — intrinsic vs extrinsic",a:"Motivators = INTRINSIC (from the work itself) | Hygiene factors = EXTRINSIC (surrounding conditions)",hint:"",cat:'herzberg'},
+  ]
+
+  R.mcg=[
+    {q:"McGregor — book & year",a:"Douglas McGregor | 'The Human Side of Enterprise' | 1960",hint:"",cat:'mcg'},
+    {q:"McGregor's core thesis",a:"Manager ASSUMPTIONS about workers shape how they manage → shapes how workers actually behave → SELF-FULFILLING PROPHECY",hint:"",cat:'mcg'},
+    {q:"Theory X — 6 assumptions about workers",a:"①Dislike work by nature ②No ambition, avoid responsibility ③Want security above all ④Need threats, coercion, control ⑤Self-centred ⑥Focus: Physiological + Safety needs",hint:"",cat:'mcg'},
+    {q:"Theory Y — 6 assumptions about workers",a:"①Work is natural, can be enjoyed ②Seek responsibility ③Self-directed when committed ④Rewards motivate ⑤Creative, intellectual potential underused ⑥Focus: Esteem + Self-Actualisation",hint:"",cat:'mcg'},
+    {q:"Theory X manager behaviour",a:"Autocratic, micromanage, close supervision, punish, monitor, top-down control",hint:"",cat:'mcg'},
+    {q:"Theory Y manager behaviour",a:"Participative, delegate, empower, trust employees to self-direct, collaborative",hint:"",cat:'mcg'},
+    {q:"Theory X ↔ Maslow connection",a:"Theory X workers are at PHYSIOLOGICAL + SAFETY level (basic needs). Theory Y workers at ESTEEM + SELF-ACTUALISATION level.",hint:"",cat:'mcg'},
+    {q:"Theory Y ↔ Herzberg connection",a:"Theory Y = same direction as Herzberg's Motivators (intrinsic, meaningful work, responsibility)",hint:"",cat:'mcg'},
+    {q:"Theory Z — who, year, inspiration",a:"William Ouchi | 1981 | Studied Japanese management — why Japan outperformed USA in 1970s manufacturing",hint:"",cat:'mcg'},
+    {q:"Theory Z — 6 core features",a:"①Long-term employment ②Collective decision-making (consensus/ringi) ③Individual responsibility ④Slow evaluation & promotion ⑤Holistic concern for employee (family too) ⑥Moderate specialisation (job rotation)",hint:"",cat:'mcg'},
+    {q:"Ringi system (Theory Z)",a:"Japanese collective decision-making — all levels consulted before decision. Consensus-based.",hint:"",cat:'mcg'},
+    {q:"Theory Z limitations (4)",a:"①Lifetime employment = costly in Western economies ②Slow promotion frustrates ambitious employees ③Cultural fit = works in collectivist Japan, not individualist cultures ④Group decisions → groupthink risk",hint:"",cat:'mcg'},
+    {q:"Theory A vs J vs Z — employment type",a:"Theory A (American) = Short-term | Theory J (Japanese) = Lifetime | Theory Z (Ouchi) = Long-term",hint:"",cat:'mcg'},
+    {q:"Theory A vs J vs Z — decision making",a:"Theory A = Individual | Theory J = Consensus | Theory Z = Consensus",hint:"",cat:'mcg'},
+    {q:"Theory A vs J vs Z — concern for employee",a:"Theory A = Segmented (work only) | Theory J = Holistic | Theory Z = Holistic",hint:"",cat:'mcg'},
+  ]
+
+  R.vroom=[
+    {q:"Vroom's Expectancy Theory — year",a:"Victor Vroom | 1964 | Process theory",hint:"",cat:'vroom'},
+    {q:"Vroom's formula",a:"MF = E × I × V | Motivational Force = Expectancy × Instrumentality × Valence",hint:"MULTIPLY not add",cat:'vroom'},
+    {q:"If ANY factor = 0 in Vroom's model",a:"Motivation = ZERO. All three must be non-zero. Multiply, not add. One zero kills everything.",hint:"",cat:'vroom'},
+    {q:"E — Expectancy (0→1)",a:"'Will my effort lead to performance?' 0='I can't do this' → 1='I'm confident I'll succeed' | Affected by: skills, experience, resources, self-confidence",hint:"",cat:'vroom'},
+    {q:"I — Instrumentality (0→1)",a:"'If I perform, will I get the reward?' 0='Good work is never rewarded here' → 1='Performance always leads to promised reward' | Affected by: trust in management, clarity",hint:"",cat:'vroom'},
+    {q:"V — Valence (-1→+1)",a:"'Do I want the reward?' +1=strongly want it | 0=indifferent | -1=want to AVOID it",hint:"Ex: Introvert doesn't want public award ceremony = negative valence",cat:'vroom'},
+    {q:"Negative Valence example",a:"Introvert employee given award ceremony (public speaking). Perceived as punishment = Valence negative → motivation decreases.",hint:"",cat:'vroom'},
+    {q:"Porter & Lawler extension (1968)",a:"Added intrinsic vs extrinsic rewards. KEY finding: Satisfaction is RESULT of performance, not its cause. Reversed common assumption.",hint:"",cat:'vroom'},
+    {q:"Adams Equity Theory — who and year",a:"John Stacey Adams | 1963 | Process theory",hint:"",cat:'vroom'},
+    {q:"Adams Equity Theory — core formula",a:"My Outcomes/My Inputs = Their Outcomes/Their Inputs | Equal ratios = equity → motivated | Unequal = inequity → behaviour change",hint:"",cat:'vroom'},
+    {q:"Adams — Inputs examples",a:"Education, experience, skills, effort, loyalty, commitment, risk-taking",hint:"What YOU give",cat:'vroom'},
+    {q:"Adams — Outcomes examples",a:"Salary, bonus, recognition, promotions, flexibility, status, job security",hint:"What YOU get",cat:'vroom'},
+    {q:"Under-rewarded (My O/I < Their O/I) — response",a:"Reduce effort · Complain · Demand more pay · Leave the job · Cognitive distortion (change perception of inputs/outputs)",hint:"",cat:'vroom'},
+    {q:"Over-rewarded (My O/I > Their O/I) — response",a:"Work harder briefly (guilt) → then rationalise inputs upward ('I deserve more, I work harder really')",hint:"",cat:'vroom'},
+    {q:"6 ways to restore equity (Adams)",a:"①Change own inputs ②Change own outcomes ③Change perception of own inputs/outputs ④Change perception of referent's inputs/outputs ⑤Change the referent ⑥Leave the field (quit)",hint:"",cat:'vroom'},
+  ]
+
+  R.compare=[
+    {q:"Content theories — list all 4",a:"Maslow's Hierarchy (1943) · ERG Theory-Alderfer (1969) · McClelland's Needs (1961) · Herzberg's Two-Factor (1950s)",hint:"WHAT motivates",cat:'compare'},
+    {q:"Process theories — list all 3",a:"Vroom's Expectancy (1964) · Adams' Equity (1963) · Porter & Lawler (1968)",hint:"HOW motivation works",cat:'compare'},
+    {q:"Maslow vs ERG — 3 differences",a:"Maslow: 5 levels; strict hierarchy; one need at a time | ERG: 3 levels; flexible; multiple simultaneous; frustration-regression",hint:"",cat:'compare'},
+    {q:"All theorists and years (8 theories)",a:"Maslow 1943 · McClelland 1961 · Adams 1963 · Vroom 1964 · Alderfer 1969 · Herzberg 1950s · McGregor 1960 · Ouchi 1981",hint:"",cat:'compare'},
+    {q:"Which theory says needs are LEARNED (not innate)?",a:"McClelland's Acquired Needs Theory. Needs develop through life experience, culture, upbringing.",hint:"",cat:'compare'},
+    {q:"Which theory has 'frustration-regression'?",a:"ERG Theory (Alderfer). Maslow does NOT have regression — only progression.",hint:"",cat:'compare'},
+    {q:"Salary = motivator or hygiene (Herzberg)?",a:"HYGIENE factor. Prevents dissatisfaction but does NOT motivate. Most tested Herzberg exam question.",hint:"",cat:'compare'},
+    {q:"Best predictor of job performance (Big Five)?",a:"Conscientiousness (C in OCEAN). Reliable, disciplined, goal-oriented.",hint:"Link Day 1 personality to management",cat:'compare'},
+    {q:"Theory X ↔ which content theory?",a:"Maslow's lower levels (Physiological + Safety). Workers assumed to be at basic needs level.",hint:"",cat:'compare'},
+    {q:"Theory Y ↔ which content theory?",a:"Maslow's higher levels (Esteem + Self-Actualisation) + Herzberg's Motivators",hint:"",cat:'compare'},
+    {q:"Vroom: talented employee stays demotivated — why?",a:"Low Instrumentality — doesn't trust appraisal system. 'Good work won't be rewarded here.' I=0 → MF=0.",hint:"",cat:'compare'},
+    {q:"Who said 'Satisfaction is a RESULT of performance, not its cause'?",a:"Porter & Lawler (1968) — extension of Vroom. Reversed common assumption.",hint:"",cat:'compare'},
+    {q:"McClelland ideal manager: nPow HIGH/LOW, nAff HIGH/LOW?",a:"High nPow (institutional) + LOW nAff | Power to drive org without personal bias",hint:"",cat:'compare'},
+    {q:"RBI PYQ: 'Discuss Maslow vs ERG with differences'",a:"5→3 levels | Sequential→flexible | No regression→frustration-regression | Innate→more empirical | Maslow Western bias | ERG real-workplace tested",hint:"2021 RBI question",cat:'compare'},
+    {q:"RBI PYQ: 'Two-factor theory — distinguish motivators from hygiene'",a:"Motivators (ARRWAG) = intrinsic, create satisfaction | Hygiene = extrinsic, prevent dissatisfaction only | Key: two separate continuums",hint:"2023, 2020 RBI",cat:'compare'},
+    {q:"UPSC overlap: Maslow appears in which UPSC papers?",a:"GS-II (governance, motivation) + GS-IV (ethics, human needs) + Essay",hint:"",cat:'compare'},
+  ]
+
+  return R
+}
+
+const CARDS=buildAll()
+const LS_KEY='rbi_d2mgmt_weak'
+function loadWeak(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'{}')}catch{return{}}}
+function saveWeak(obj){localStorage.setItem(LS_KEY,JSON.stringify(obj))}
+
+let selected=new Set(['reinf','maslow','erg','mcl'])
+let weakOnly=false,deck=[],cur=0,isFlipped=false,gotCount=0,sessionWeak=new Set(),origTotal=0
+
+function renderHome(){
+  const cg=document.getElementById('cat-grid')
+  cg.innerHTML=''
+  for(const[id,meta] of Object.entries(META)){
+    const n=CARDS[id].length,on=!weakOnly&&selected.has(id)
+    const btn=document.createElement('button')
+    btn.className='cat-btn'+(on?' active':'')
+    btn.innerHTML=`<span class="cat-name">${meta.label}</span><span class="cat-count">${n} cards</span>`
+    btn.onclick=()=>toggleCat(id)
+    cg.appendChild(btn)
+  }
+  const weak=loadWeak(),wc=Object.keys(weak).length
+  const wrap=document.getElementById('weak-wrap')
+  if(wc>0){
+    wrap.innerHTML=`<div class="weak-row ${weakOnly?'on':''}" onclick="toggleWeak()" style="margin-bottom:20px"><div><div class="wr-title">Weak Spots Only</div><div class="wr-sub">${wc} card${wc!==1?'s':''} flagged</div></div><div class="wr-check">${weakOnly?'✓':''}</div></div>`
+  }else{wrap.innerHTML='<div style="margin-bottom:20px"></div>'}
+  updateStart()
+}
+
+function toggleCat(id){
+  if(weakOnly)return
+  selected.has(id)?selected.delete(id):selected.add(id)
+  renderHome()
+}
+function toggleWeak(){
+  weakOnly=!weakOnly
+  if(weakOnly)selected.clear()
+  else selected=new Set(['reinf','maslow','erg','mcl'])
+  renderHome()
+}
+function countCards(){
+  if(weakOnly)return Object.keys(loadWeak()).length
+  let n=0;for(const id of selected)n+=CARDS[id].length;return n
+}
+function updateStart(){
+  const n=countCards(),btn=document.getElementById('start-btn'),h=document.getElementById('start-hint')
+  btn.disabled=n===0
+  btn.textContent=n>0?'Start Drill':'Select categories'
+  h.textContent=n>0?`${n} cards`:''
+}
+
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+  return a
+}
+function startDrill(){
+  const weak=loadWeak()
+  if(weakOnly){
+    deck=Object.entries(weak).map(([id,c])=>({...c,_wid:id}))
+  }else{
+    deck=[]
+    for(const id of selected)CARDS[id].forEach((c,i)=>deck.push({...c,_wid:`${id}_${i}`}))
+  }
+  shuffle(deck)
+  cur=0;isFlipped=false;gotCount=0;sessionWeak=new Set()
+  origTotal=deck.length
+  showScreen('drill');renderCard()
+}
+
+function renderCard(){
+  if(cur>=deck.length){endSession();return}
+  const card=deck[cur],remaining=deck.length-cur
+  const ai=sessionWeak.size
+  document.getElementById('drill-info').innerHTML=`<b>${remaining}</b> left · <span class="again-c">${ai>0?ai+' weak':''}</span>`
+  const pct=origTotal>0?(gotCount/origTotal)*100:0
+  document.getElementById('pfill').style.width=Math.min(pct,100)+'%'
+  const m=META[card.cat]
+  document.getElementById('fc-cat').textContent=m.label
+  document.getElementById('fc-cat').style.color=m.color
+  document.getElementById('fc-pos').textContent=`${cur+1}/${deck.length}`
+  document.getElementById('fc-q').textContent=card.q
+  document.getElementById('fc-a').textContent=card.a
+  document.getElementById('fc-hint').textContent=card.hint||''
+  isFlipped=false
+  document.getElementById('fc-front').style.display=''
+  document.getElementById('fc-back').style.display='none'
+  document.getElementById('flashcard').classList.remove('flipped','wrong')
+  document.getElementById('btn-again').disabled=true
+  document.getElementById('btn-got').disabled=true
 }
 
 function flipCard(){
-  const el=document.getElementById('card');
-  el.classList.toggle('flipped');isFlipped=!isFlipped;
+  if(isFlipped)return
+  isFlipped=true
+  document.getElementById('fc-front').style.display='none'
+  document.getElementById('fc-back').style.display=''
+  document.getElementById('flashcard').classList.add('flipped')
+  document.getElementById('btn-again').disabled=false
+  document.getElementById('btn-got').disabled=false
 }
 
-function grade(got){
-  if(!isFlipped){flipCard();return}
-  const c=deck.shift();
-  if(got){gotCount++;weakSet.delete(c.origIdx)}
-  else{againCount++;weakSet.add(c.origIdx);deck.splice(Math.min(4,deck.length),0,c)}
-  saveWeak();showCard();
+function markGot(){gotCount++;cur++;renderCard()}
+function markAgain(){
+  const card=deck[cur]
+  sessionWeak.add(card._wid)
+  document.getElementById('flashcard').classList.add('wrong')
+  setTimeout(()=>{
+    const rest=deck.length-cur-1
+    if(rest>0){const ins=cur+1+Math.min(3,Math.floor(Math.random()*rest));deck.splice(ins,0,card)}
+    else deck.push(card)
+    cur++;renderCard()
+  },200)
 }
 
-function toggleWeak(){
-  loadWeak();
-  if(weakSet.size===0){alert('No weak spots saved yet!');return}
-  isWeakMode=!isWeakMode;
-  document.getElementById('weak-btn').classList.toggle('active',isWeakMode);
-  buildDeck(isWeakMode);showCard();
-  document.getElementById('app').style.display='flex';
-  document.getElementById('done-screen').style.display='none';
-}
+function goHome(){showScreen('home');renderHome()}
 
-function showDone(){
-  document.getElementById('app').style.display='none';
-  document.getElementById('done-screen').style.display='flex';
-  document.getElementById('done-stats').textContent=`Got it: ${gotCount} · Again: ${againCount} · Weak spots saved: ${weakSet.size}`;
-}
-
-function restart(){
-  buildDeck(false);isWeakMode=false;
-  document.getElementById('weak-btn').classList.remove('active');
-  document.getElementById('app').style.display='flex';
-  document.getElementById('done-screen').style.display='none';
-  showCard();
-}
-
-function restartWeak(){
-  loadWeak();
-  if(weakSet.size===0){restart();return}
-  isWeakMode=true;buildDeck(true);
-  document.getElementById('weak-btn').classList.add('active');
-  document.getElementById('app').style.display='flex';
-  document.getElementById('done-screen').style.display='none';
-  showCard();
+function endSession(){
+  const prev=loadWeak(),next={},allIds=new Set(deck.map(c=>c._wid))
+  for(const[id,card]of Object.entries(prev)){if(!allIds.has(id))next[id]=card}
+  for(const id of sessionWeak){const card=deck.find(c=>c._wid===id);if(card)next[id]={q:card.q,a:card.a,hint:card.hint,cat:card.cat}}
+  saveWeak(next)
+  const wc=sessionWeak.size,pct=origTotal>0?Math.round((gotCount/origTotal)*100):100
+  document.getElementById('end-title').textContent=pct>=90?'Nailed it!':pct>=70?'Good session!':'Keep drilling.'
+  document.getElementById('end-tag').textContent=`${origTotal} cards · ${pct}% clean`
+  document.getElementById('sv-got').textContent=gotCount
+  document.getElementById('sv-weak').textContent=wc
+  document.getElementById('sv-pct').textContent=pct+'%'
+  const btns=document.getElementById('end-btns')
+  btns.innerHTML=''
+  const nwc=Object.keys(next).length
+  if(nwc>0){const b1=document.createElement('button');b1.className='ebtn primary';b1.textContent=`Drill Weak Spots (${nwc})`;b1.onclick=()=>{weakOnly=true;startDrill()};btns.appendChild(b1)}
+  const b2=document.createElement('button');b2.className='ebtn secondary';b2.textContent='New Session';b2.onclick=()=>{weakOnly=false;goHome()};btns.appendChild(b2)
+  const wlw=document.getElementById('wl-wrap')
+  if(wc>0){
+    const items=[...sessionWeak].map(id=>{const c=deck.find(x=>x._wid===id);return c?`<div class="wi"><span class="wi-q">${c.q}</span><span class="wi-a">${c.a}</span></div>`:''}).join('')
+    wlw.innerHTML=`<div class="wl"><div class="wl-title">Review these (${wc})</div>${items}</div>`
+  }else wlw.innerHTML=''
+  showScreen('end')
 }
 
 document.addEventListener('keydown',e=>{
-  if(e.code==='Space'){e.preventDefault();flipCard()}
-  else if(e.code==='ArrowRight')grade(true);
-  else if(e.code==='ArrowLeft')grade(false);
-});
+  if(document.getElementById('drill').classList.contains('hidden'))return
+  if(e.key===' '||e.key==='Enter'){e.preventDefault();flipCard()}
+  if(isFlipped){if(e.key==='ArrowRight'||e.key==='1')markGot();if(e.key==='ArrowLeft'||e.key==='2')markAgain()}
+})
 
-let tx=0;
-document.getElementById('card').addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
-document.getElementById('card').addEventListener('touchend',e=>{
-  const dx=e.changedTouches[0].clientX-tx;
-  if(Math.abs(dx)>60){grade(dx>0)}
-  else flipCard();
-});
+let tx0=0,ty0=0
+const fc=document.getElementById('flashcard')
+fc.addEventListener('touchstart',e=>{tx0=e.touches[0].clientX;ty0=e.touches[0].clientY},{passive:true})
+fc.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx0,dy=e.changedTouches[0].clientY-ty0
+  if(!isFlipped||Math.abs(dx)<50||Math.abs(dy)>Math.abs(dx))return
+  dx>0?markGot():markAgain()
+},{passive:true})
 
-loadWeak();buildDeck(false);showCard();
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden')}
+
+renderHome()
 </script>
 </body>
 </html>
